@@ -4,6 +4,8 @@
  */
 package clinicaveterinaria.view;
 
+import clinicaveterinaria.model.Pet;
+
 /**
  *
  * @author Artur
@@ -14,6 +16,7 @@ public class EditarPet extends javax.swing.JFrame {
 
     /**
      * Creates new form EditarPet
+     * @param petSelecionado
      */
     public EditarPet(Pet petSelecionado) {
         initComponents();
