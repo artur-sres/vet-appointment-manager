@@ -45,9 +45,6 @@ public class ValidarDados {
         if (!raca.matches("[A-Za-zÀ-ü\\s]+")) {
             throw new Exception("A raca digitado é inválido!");
         }
-        if (!alergia.matches("[A-Za-zÀ-ü\\s]+")) {
-            throw new Exception("As alergias digitadas são inválidas!");
-        }
         if (!temperamento.matches("[A-Za-zÀ-ü\\s]+")) {
             throw new Exception("O temperamento digitado é inválido!");
         } 

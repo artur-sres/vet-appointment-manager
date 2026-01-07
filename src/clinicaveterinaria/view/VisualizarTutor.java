@@ -7,10 +7,6 @@ package clinicaveterinaria.view;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
 
-/**
- *
- * @author Artur
- */
 public class VisualizarTutor extends javax.swing.JFrame {
     Tutor tutor;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarTutor.class.getName());
@@ -73,7 +69,7 @@ public class VisualizarTutor extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Visualizar Dados do Tutor");
+        jLabel1.setText("Dados do Tutor");
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(this::btnVoltarActionPerformed);

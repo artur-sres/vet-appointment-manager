@@ -192,7 +192,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarNovoTutorActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        // TODO add your handling code here:
+        ListaGerenciarPets tela = new ListaGerenciarPets();
+        tela.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

@@ -6,8 +6,11 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.PetController;
 import clinicaveterinaria.controller.TutorController;
+import clinicaveterinaria.model.Enums.Especie;
+import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.DataUtil;
+import java.awt.HeadlessException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
@@ -281,13 +284,19 @@ public class CadastrarPet extends javax.swing.JFrame {
             if(indiceTutor == 0){
                 JOptionPane.showMessageDialog(null, "O tutor deve ser cadastrado previamente!");
             }
+            Especie especie = Especie.valueOf(cmbEspecie.getSelectedItem().toString());
+            Sexo sexo = Sexo.valueOf(cmbSexo.getSelectedItem().toString());
             if (indiceTutor != 0) {
                 Tutor tutorSelecionado = TutorController.listaTutores.get(indiceTutor - 1);
-                PetController.cadastrarPet(tutorSelecionado, txtNome.getText(), (String) cmbEspecie.getSelectedItem(), txtRaca.getText(), (String) cmbSexo.getSelectedItem(), txtPeso.getText(), dataNasc, txtAlergias.getText(), txtTemperamento.getText(), ckbVacinacao.isSelected(), ckbCastrado.isSelected());
-                JOptionPane.showMessageDialog(this, "Pet cadastrado com sucesso para o tutor " + tutorSelecionado.getNome() + "!");               
+                try {
+                    PetController.cadastrarPet(tutorSelecionado, especie, txtNome.getText(), txtRaca.getText(), sexo, txtPeso.getText(), dataNasc, txtAlergias.getText(), txtTemperamento.getText(), ckbVacinacao.isSelected(), ckbCastrado.isSelected());
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+                }
+                JOptionPane.showMessageDialog(this, "Pet cadastrado com sucesso para " + tutorSelecionado.getNome() + "!");               
                 this.dispose();
             }
-        } catch (Exception e) {
+        } catch (HeadlessException | NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
