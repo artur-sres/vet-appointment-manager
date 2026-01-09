@@ -9,7 +9,7 @@
 
 O projeto foi o trabalho final para a disciplina de Programação Orientada a Objetos, ministrada pelo Prof. Dr. Mayrton Dias de Queiroz.
 
-O projeto tem como objetivo simula o dia a dia de uma clínica, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de consultas e cirurgias.
+O projeto tem como objetivo simular o dia a dia de uma clínica, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de consultas e cirurgias.
 
 ## Funcionalidades Principais
 
@@ -44,6 +44,9 @@ O código segue o padrão de projeto MVC para melhor organização e escalabilid
 * **Linguagem:** Java (JDK 17+)
 * **Interface Gráfica:** Java Swing
 * **IDE Recomendada:** NetBeans
+* **Bibliotecas Externas:**
+    * **[Caelum Stella Core](https://github.com/caelum/caelum-stella)** (`caelum-stella-core-2.2.2.jar`): Utilizada para validação robusta de CPFs brasileiros.
+    * **[Commons Validator](https://commons.apache.org/proper/commons-validator/)** (`commons-validator-1.10.1.jar`): Utilizada para validação segura de formatos de e-mail.
 
 ## Como Executar
 
