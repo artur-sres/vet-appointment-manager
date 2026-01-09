@@ -5,8 +5,6 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Pet;
-import clinicaveterinaria.model.Tutor;
-
 /**
  *
  * @author Artur
@@ -30,7 +28,7 @@ public class VisualizarPet extends javax.swing.JFrame {
         txtRaca.setText(this.pet.getRaca());
         txtTemperamento.setText(this.pet.getTemperamento());
         txtPeso.setText(Double.toString(this.pet.getPeso()));
-        cmbEspecie.setSelectedItem(pet.getEspecie());       // Cachorro/Gato
+        cmbEspecie.setSelectedItem(pet.getEspecie());     
         cmbSexo.setSelectedItem(pet.getSexo().toString()); 
         
         ckbCastrado.setSelected(pet.getIsCastrado());

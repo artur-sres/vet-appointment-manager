@@ -11,8 +11,7 @@ import clinicaveterinaria.model.Pet;
  * @author Artur
  */
 public class EditarPet extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarPet.class.getName());
+    private final Pet pet;
 
     /**
      * Creates new form EditarPet
@@ -20,6 +19,18 @@ public class EditarPet extends javax.swing.JFrame {
      */
     public EditarPet(Pet petSelecionado) {
         initComponents();
+        
+        this.pet = petSelecionado;
+        txtNome.setText(this.pet.getNome());
+        txtAlergias.setText(this.pet.getAlergias());
+        txtRaca.setText(this.pet.getRaca());
+        txtTemperamento.setText(this.pet.getTemperamento());
+        txtPeso.setText(Double.toString(this.pet.getPeso()));
+        cmbEspecie.setSelectedItem(pet.getEspecie());     
+        cmbSexo.setSelectedItem(pet.getSexo().toString()); 
+        
+        ckbCastrado.setSelected(pet.getIsCastrado());
+        ckbVacinacao.setSelected(pet.getIsVacinado());
     }
 
     /**
@@ -110,7 +121,7 @@ public class EditarPet extends javax.swing.JFrame {
 
         txtPeso.addActionListener(this::txtPesoActionPerformed);
 
-        btnVoltar.setText("Salvar");
+        btnVoltar.setText("Aplicar Alterações");
         btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         btnRemover.setText("Cancelar");
@@ -186,7 +197,7 @@ public class EditarPet extends javax.swing.JFrame {
                                 .addComponent(btnRemover)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnVoltar)
-                                .addGap(115, 115, 115)))
+                                .addGap(85, 85, 85)))
                         .addGap(11, 11, 11)))
                 .addContainerGap())
         );
