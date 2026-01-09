@@ -290,11 +290,12 @@ public class CadastrarPet extends javax.swing.JFrame {
                 Tutor tutorSelecionado = TutorController.listaTutores.get(indiceTutor - 1);
                 try {
                     PetController.cadastrarPet(tutorSelecionado, especie, txtNome.getText(), txtRaca.getText(), sexo, txtPeso.getText(), dataNasc, txtAlergias.getText(), txtTemperamento.getText(), ckbVacinacao.isSelected(), ckbCastrado.isSelected());
+                    JOptionPane.showMessageDialog(this, "Pet cadastrado com sucesso para " + tutorSelecionado.getNome() + "!");               
+                    this.dispose();
                 } catch (Exception ex) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
                 }
-                JOptionPane.showMessageDialog(this, "Pet cadastrado com sucesso para " + tutorSelecionado.getNome() + "!");               
-                this.dispose();
+
             }
         } catch (HeadlessException | NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());

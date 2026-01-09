@@ -48,6 +48,20 @@ public class VisualizarPet extends javax.swing.JFrame {
         cmbTutor.setEnabled(false);
         ckbCastrado.setEnabled(false);
         ckbVacinacao.setEnabled(false);
+        
+        // 1. Preenche as listas de data (senão elas ficam vazias ou com "Item 1")
+        clinicaveterinaria.util.DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
+
+        // 2. Pega a data do Pet e seleciona nos campos
+        java.time.LocalDate data = this.pet.getDataNascimento();
+        cmbDia.setSelectedItem(String.format("%02d", data.getDayOfMonth()));
+        cmbMes.setSelectedIndex(data.getMonthValue() - 1); // -1 pois o index começa em 0
+        cmbAno.setSelectedItem(String.valueOf(data.getYear()));
+
+        // 3. Bloqueia a edição (já que é apenas visualização)
+        cmbDia.setEnabled(false);
+        cmbMes.setEnabled(false);
+        cmbAno.setEnabled(false);
     }   
 
     /**
@@ -310,7 +324,8 @@ public class VisualizarPet extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        this.dispose();
+        EditarPet tela = new EditarPet(pet);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed

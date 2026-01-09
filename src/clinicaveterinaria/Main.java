@@ -14,6 +14,7 @@ public class Main {
         
         Teste.testeTutores();
         Teste.testeVeterinarios();
+        Teste.testePets();
       
         Menu menu = new Menu();
         menu.setVisible(true);
