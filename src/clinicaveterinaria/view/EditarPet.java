@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package clinicaveterinaria.view;
-
+import clinicaveterinaria.controller.TutorController;
+import clinicaveterinaria.model.Enums.Especie;
+import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.Pet;
+import clinicaveterinaria.model.Tutor;
+import clinicaveterinaria.util.DataUtil;
+import java.time.LocalDate;
 
-/**
- *
- * @author Artur
- */
 public class EditarPet extends javax.swing.JFrame {
     private final Pet pet;
 
@@ -17,61 +14,56 @@ public class EditarPet extends javax.swing.JFrame {
      * Creates new form EditarPet
      * @param petSelecionado
      */
+    
     public EditarPet(Pet petSelecionado) {
         initComponents();
-        
-        // 1. Inicializa as listas de data (Dia, Mês, Ano) usando a sua classe utilitária
-        clinicaveterinaria.util.DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
-        
-        // 2. Inicializa os outros combos (Tutor, Espécie, Sexo)
+   
+        DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
-        
-        // 3. Armazena o pet recebido na variável da classe
         this.pet = petSelecionado;
-        
-        // 4. Preenche os campos da tela com os dados do Pet
         preencherDados();
     }
     
     private void inicializarCombos() {
-        // Preenche a lista de Tutores
         cmbTutor.removeAllItems();
-        for (clinicaveterinaria.model.Tutor t : clinicaveterinaria.controller.TutorController.listaTutores) {
+        for (clinicaveterinaria.model.Tutor t : TutorController.listaTutores) {
             cmbTutor.addItem(t.getNome());
         }
-
-        // Preenche Espécie e Sexo (garantindo que as opções existam)
         cmbEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CACHORRO", "GATO" }));
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MACHO", "FEMEA" }));
     }
 
     private void preencherDados() {
-        // Preenche os campos de texto básicos
         txtNome.setText(this.pet.getNome());
         txtAlergias.setText(this.pet.getAlergias());
         txtRaca.setText(this.pet.getRaca());
         txtTemperamento.setText(this.pet.getTemperamento());
         txtPeso.setText(Double.toString(this.pet.getPeso()));
-        
-        // Seleciona os itens nas listas (Combos)
-        cmbEspecie.setSelectedItem(pet.getEspecie().toString());     
-        cmbSexo.setSelectedItem(pet.getSexo().toString()); 
-        
+
+        if (pet.getEspecie() != null) cmbEspecie.setSelectedItem(pet.getEspecie().toString());     
+        if (pet.getSexo() != null) cmbSexo.setSelectedItem(pet.getSexo().toString()); 
+
         if (this.pet.getTutor() != null) {
-            cmbTutor.setSelectedItem(this.pet.getTutor().getNome());
+            String nomeTutorAtual = this.pet.getTutor().getNome();
+            for (int i = 0; i < cmbTutor.getItemCount(); i++) {
+                if (cmbTutor.getItemAt(i).equals(nomeTutorAtual)) {
+                    cmbTutor.setSelectedIndex(i);
+                    break;
+                }
+            }
         }
 
-        // Configura a data de nascimento
         java.time.LocalDate data = this.pet.getDataNascimento();
-        cmbDia.setSelectedItem(String.format("%02d", data.getDayOfMonth()));
-        cmbMes.setSelectedIndex(data.getMonthValue() - 1);
-        cmbAno.setSelectedItem(String.valueOf(data.getYear()));
-        
-        // Checkboxes
+        if (data != null) {
+            cmbDia.setSelectedItem(String.format("%02d", data.getDayOfMonth()));
+            cmbMes.setSelectedIndex(data.getMonthValue() - 1);
+            cmbAno.setSelectedItem(String.valueOf(data.getYear()));
+        }
+
         ckbCastrado.setSelected(pet.getIsCastrado());
         ckbVacinacao.setSelected(pet.getIsVacinado());
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,7 +98,7 @@ public class EditarPet extends javax.swing.JFrame {
         txtTemperamento = new javax.swing.JTextField();
         txtPeso = new javax.swing.JTextField();
         btnAplicar = new javax.swing.JButton();
-        btnRemover = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -163,8 +155,8 @@ public class EditarPet extends javax.swing.JFrame {
         btnAplicar.setText("Aplicar Alterações");
         btnAplicar.addActionListener(this::btnAplicarActionPerformed);
 
-        btnRemover.setText("Cancelar");
-        btnRemover.addActionListener(this::btnRemoverActionPerformed);
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         jLabel2.setText("Espécie:");
 
@@ -233,7 +225,7 @@ public class EditarPet extends javax.swing.JFrame {
                             .addComponent(cmbTutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnRemover)
+                                .addComponent(btnCancelar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAplicar)
                                 .addGap(85, 85, 85)))
@@ -294,7 +286,7 @@ public class EditarPet extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAplicar)
-                    .addComponent(btnRemover))
+                    .addComponent(btnCancelar))
                 .addGap(14, 14, 14))
         );
 
@@ -327,29 +319,24 @@ public class EditarPet extends javax.swing.JFrame {
 
     private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
         try {
-            // 1. Coleta e monta a data de nascimento
             int dia = Integer.parseInt((String) cmbDia.getSelectedItem());
             int mes = cmbMes.getSelectedIndex() + 1;
             int ano = Integer.parseInt((String) cmbAno.getSelectedItem());
-            java.time.LocalDate dataNasc = java.time.LocalDate.of(ano, mes, dia);
+            LocalDate dataNasc = java.time.LocalDate.of(ano, mes, dia);
 
             // 2. Coleta Enums e Tutor
-            clinicaveterinaria.model.Enums.Especie especie = clinicaveterinaria.model.Enums.Especie.valueOf(cmbEspecie.getSelectedItem().toString());
-            clinicaveterinaria.model.Enums.Sexo sexo = clinicaveterinaria.model.Enums.Sexo.valueOf(cmbSexo.getSelectedItem().toString());
+            Especie especie = clinicaveterinaria.model.Enums.Especie.valueOf(cmbEspecie.getSelectedItem().toString());
+            Sexo sexo = clinicaveterinaria.model.Enums.Sexo.valueOf(cmbSexo.getSelectedItem().toString());
             
-            // Pega o tutor selecionado (Index - 1 pois o item 0 é o título "Tutor")
-            int indiceTutor = cmbTutor.getSelectedIndex();
-            clinicaveterinaria.model.Tutor novoTutor = null;
-            if (indiceTutor > 0) {
-                 novoTutor = clinicaveterinaria.controller.TutorController.listaTutores.get(indiceTutor - 1);
-            } else {
-                 throw new Exception("Selecione um Tutor válido!");
+            Tutor novoTutor = this.pet.getTutor();
+            if(!(pet.getTutor().getNome()).equals(cmbTutor.getSelectedItem())){
+                int indiceTutor = cmbTutor.getSelectedIndex();
+                novoTutor = TutorController.listaTutores.get(indiceTutor);
             }
-
-            // 3. Chama o Controller para salvar as alterações
+            
             clinicaveterinaria.controller.PetController.editarPet(
-                this.pet,         // O objeto Pet que estamos editando
-                novoTutor,        // O novo tutor (ou o mesmo)
+                this.pet,         
+                novoTutor,        
                 especie,
                 txtNome.getText(),
                 txtRaca.getText(),
@@ -362,24 +349,27 @@ public class EditarPet extends javax.swing.JFrame {
                 ckbCastrado.isSelected()
             );
 
-            // 4. Mensagem de Sucesso e Fechar Janela
             javax.swing.JOptionPane.showMessageDialog(this, "Dados do pet atualizados com sucesso!");
             this.dispose();
+            VisualizarPet tela = new VisualizarPet(pet);
+            tela.setVisible(true);
 
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnAplicarActionPerformed
 
-    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRemoverActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+        VisualizarPet tela = new VisualizarPet(pet);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAplicar;
-    private javax.swing.JButton btnRemover;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JCheckBox ckbCastrado;
     private javax.swing.JCheckBox ckbVacinacao;
     private javax.swing.JComboBox<String> cmbAno;

@@ -29,6 +29,7 @@ public class Tutor extends Pessoa{
         return pets;
     }
 
+    
     //Setters
     public void setNome(String nome) {
         this.nome = nome;

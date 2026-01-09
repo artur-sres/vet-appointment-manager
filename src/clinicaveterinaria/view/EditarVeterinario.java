@@ -137,6 +137,8 @@ public class EditarVeterinario extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
+        VisualizarVeterinario tela = new VisualizarVeterinario(this.veterinario);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed

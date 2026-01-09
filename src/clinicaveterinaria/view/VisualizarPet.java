@@ -324,6 +324,7 @@ public class VisualizarPet extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        this.dispose();
         EditarPet tela = new EditarPet(pet);
         tela.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed

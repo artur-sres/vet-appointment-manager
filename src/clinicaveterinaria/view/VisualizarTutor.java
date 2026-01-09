@@ -184,7 +184,8 @@ public class VisualizarTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnVisualizarPetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarPetsActionPerformed
-        // TODO add your handling code here:
+        PetsTutores tela = new PetsTutores(tutor);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnVisualizarPetsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

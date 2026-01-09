@@ -154,6 +154,8 @@ public class EditarTutor extends javax.swing.JFrame {
             TutorController.editarTutor(tutor, txtNome.getText(), txtEmail.getText(), txtTelefone.getText(), txtEndereco.getText(), txtCPF.getText()); 
             JOptionPane.showMessageDialog(rootPane, "Tutor editado com sucesso!");
             this.dispose();
+            VisualizarTutor tela = new VisualizarTutor(this.tutor);
+            tela.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
         }
