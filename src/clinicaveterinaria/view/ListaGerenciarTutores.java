@@ -4,10 +4,7 @@ import javax.swing.JOptionPane;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
 import javax.swing.table.DefaultTableModel;
-/**
- *
- * @author Artur
- */
+
 public class ListaGerenciarTutores extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaGerenciarTutores.class.getName());
