@@ -136,6 +136,7 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
         int linhaSelecionada = tabelaPets.getSelectedRow();
 
         if (linhaSelecionada != -1) {
+            this.dispose();
             Pet petSelecionado = PetController.listaPets.get(linhaSelecionada);
             VisualizarPet tela = new VisualizarPet(petSelecionado);
             tela.setVisible(true);

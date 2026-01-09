@@ -149,6 +149,7 @@ public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
         int linhaSelecionada = tabelaTutores.getSelectedRow();
 
         if (linhaSelecionada != -1) {
+            this.dispose();
             MedVet veterinarioSelecionado = VeterinarioController.listaVeterinarios.get(linhaSelecionada);
             VisualizarVeterinario tela = new VisualizarVeterinario(veterinarioSelecionado);
             tela.setVisible(true);

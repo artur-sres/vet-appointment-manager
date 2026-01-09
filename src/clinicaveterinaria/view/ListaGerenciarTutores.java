@@ -164,6 +164,7 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
         int linhaSelecionada = tabelaTutores.getSelectedRow();
         
         if (linhaSelecionada != -1) {
+            this.dispose();
             Tutor tutorSelecionado = TutorController.listaTutores.get(linhaSelecionada);
             VisualizarTutor tela = new VisualizarTutor(tutorSelecionado);
             tela.setVisible(true);    

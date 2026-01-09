@@ -167,6 +167,8 @@ public class EditarTutor extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
+        VisualizarTutor tela = new VisualizarTutor(this.tutor);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

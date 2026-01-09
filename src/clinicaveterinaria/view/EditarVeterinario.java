@@ -130,6 +130,8 @@ public class EditarVeterinario extends javax.swing.JFrame {
             VeterinarioController.editarVeterinario(this.veterinario, txtNome.getText(), txtEmail.getText(), txtTelefone.getText()); 
             JOptionPane.showMessageDialog(rootPane, "Veterinario editado com sucesso!");
             this.dispose();
+            VisualizarVeterinario tela = new VisualizarVeterinario(this.veterinario);
+            tela.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
         }
