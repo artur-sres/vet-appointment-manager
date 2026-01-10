@@ -14,6 +14,7 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
      */
     public ListaGerenciarTutores() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         carregarTabela();
     }
 

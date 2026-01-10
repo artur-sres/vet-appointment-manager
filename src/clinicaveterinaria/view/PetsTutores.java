@@ -13,6 +13,7 @@ public class PetsTutores extends javax.swing.JFrame {
      */
     public PetsTutores(Tutor tutorSelecionado) {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         this.tutor = tutorSelecionado;
         carregarTabela();
     }

@@ -17,6 +17,7 @@ public class VisualizarPet extends javax.swing.JFrame {
      */
     public VisualizarPet(Pet petSelecionado) {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         
         this.pet = petSelecionado;
         txtNome.setText(this.pet.getNome());

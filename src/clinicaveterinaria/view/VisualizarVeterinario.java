@@ -16,6 +16,7 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
      */
     public VisualizarVeterinario(MedVet veterinario) {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         this.veterinario = veterinario;
         
         txtNome.setText(veterinario.getNome());

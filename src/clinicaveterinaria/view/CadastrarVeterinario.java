@@ -16,6 +16,7 @@ public class CadastrarVeterinario extends javax.swing.JFrame {
      */
     public CadastrarVeterinario() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
     }
 
     /**

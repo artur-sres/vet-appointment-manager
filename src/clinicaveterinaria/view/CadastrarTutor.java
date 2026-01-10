@@ -15,6 +15,7 @@ public class CadastrarTutor extends javax.swing.JFrame {
      */
     public CadastrarTutor() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
     }
 
     /**

@@ -19,6 +19,7 @@ public class EditarTutor extends javax.swing.JFrame {
      */
     public EditarTutor(Tutor tutor) {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         
         this.tutor = tutor;
         txtNome.setText(tutor.getNome());

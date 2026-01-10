@@ -23,6 +23,7 @@ public class CadastrarPet extends javax.swing.JFrame {
      */
     public CadastrarPet() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
     }

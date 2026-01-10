@@ -17,6 +17,7 @@ public class VisualizarTutor extends javax.swing.JFrame {
      */
     public VisualizarTutor(Tutor tutor) {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         
         this.tutor = tutor;
         txtNome.setText(tutor.getNome());

@@ -18,6 +18,7 @@ public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
      */
     public ListaGerenciarVeterinarios() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         carregarTabela();
     }
     

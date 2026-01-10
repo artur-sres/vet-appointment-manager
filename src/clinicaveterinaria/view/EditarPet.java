@@ -17,6 +17,7 @@ public class EditarPet extends javax.swing.JFrame {
     
     public EditarPet(Pet petSelecionado) {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
    
         DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
