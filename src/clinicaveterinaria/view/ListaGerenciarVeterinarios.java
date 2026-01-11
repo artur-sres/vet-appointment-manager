@@ -24,7 +24,6 @@ public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
     
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaTutores.getModel();
-        System.out.println("Total de tutores na lista: " + VeterinarioController.listaVeterinarios.size());
 
         modelo.setNumRows(0);
 

@@ -40,7 +40,6 @@ public class PetsTutores extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         btnVoltar2 = new javax.swing.JButton();
-        btnAtualizar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaPets = new javax.swing.JTable();
         btnAvançar = new javax.swing.JButton();
@@ -53,9 +52,6 @@ public class PetsTutores extends javax.swing.JFrame {
 
         btnVoltar2.setText("Cancelar");
         btnVoltar2.addActionListener(this::btnVoltar2ActionPerformed);
-
-        btnAtualizar.setText("Atualizar Página");
-        btnAtualizar.addActionListener(this::btnAtualizarActionPerformed);
 
         tabelaPets.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,8 +91,6 @@ public class PetsTutores extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAtualizar)
-                        .addGap(201, 201, 201)
                         .addComponent(btnVoltar2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAvançar))
@@ -117,8 +111,7 @@ public class PetsTutores extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAvançar)
-                    .addComponent(btnVoltar2)
-                    .addComponent(btnAtualizar))
+                    .addComponent(btnVoltar2))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -130,18 +123,13 @@ public class PetsTutores extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltar2ActionPerformed
 
-    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        this.dispose();
-        ListaGerenciarPets tela = new ListaGerenciarPets();
-        tela.setVisible(true);
-    }//GEN-LAST:event_btnAtualizarActionPerformed
-
     private void btnAvançarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvançarActionPerformed
         int linhaSelecionada = tabelaPets.getSelectedRow();
 
         if (linhaSelecionada != -1) {
             Pet petSelecionado = tutor.getAnimais().get(linhaSelecionada);
             VisualizarPet tela = new VisualizarPet(petSelecionado);
+            this.dispose();
             tela.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um pet na lista primeiro!");
@@ -149,7 +137,6 @@ public class PetsTutores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAvançarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnAvançar;
     private javax.swing.JButton btnVoltar2;
     private javax.swing.JLabel jLabel1;

@@ -70,6 +70,7 @@ public class VisualizarPet extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         txtRaca = new javax.swing.JTextField();
         ckbVacinacao = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
@@ -101,6 +102,8 @@ public class VisualizarPet extends javax.swing.JFrame {
         txtPeso = new javax.swing.JTextField();
         btnRemover = new javax.swing.JButton();
         btnCancelar2 = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -380,6 +383,7 @@ public class VisualizarPet extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtAlergias;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPeso;

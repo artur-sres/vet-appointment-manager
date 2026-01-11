@@ -1,5 +1,5 @@
 package clinicaveterinaria.controller;
 
-public class ConsultaController {
+public class AtendimentoController {
     
 }

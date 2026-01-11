@@ -27,8 +27,6 @@
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnAtualizar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
                       <Component id="btnVoltar2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnAvançar" min="-2" max="-2" attributes="0"/>
@@ -55,7 +53,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnAvançar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnVoltar2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="13" max="32767" attributes="0"/>
           </Group>
@@ -78,14 +75,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltar2ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnAtualizar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Atualizar P&#xe1;gina"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtualizarActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">

@@ -3,22 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/ListaGerenciarTutores.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/controller/TutorController.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/model/Tutor.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/CadastrarTutor.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/Teste.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/EditarTutor.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/Main.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/PetsTutores.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/VisualizarPet.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/VisualizarVeterinario.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/Menu.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/ListaGerenciarVeterinarios.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/ListaGerenciarPets.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/EditarVeterinario.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/EditarPet.java</file>
-            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/CadastrarVeterinario.java</file>
+            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/model/Atendimento.java</file>
+            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/controller/ProcedimentoController.java</file>
+            <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/CadastrarAtendimento.java</file>
             <file>file:/C:/Users/Artur/Documents/NetBeansProjects/ClinicaVeterinaria/src/clinicaveterinaria/view/CadastrarPet.java</file>
         </group>
     </open-files>
