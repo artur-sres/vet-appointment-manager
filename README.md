@@ -9,7 +9,7 @@
 
 O projeto foi o trabalho final para a disciplina de Programação Orientada a Objetos, ministrada pelo Prof. Dr. Mayrton Dias de Queiroz.
 
-O projeto tem como objetivo simular o dia a dia de uma clínica, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de consultas e cirurgias.
+O projeto tem como objetivo simular o dia a dia de uma clínica, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de atendimentos.
 
 ## Funcionalidades Principais
 
@@ -25,8 +25,7 @@ O sistema conta com uma interface gráfica amigável desenvolvida em Swing, ofer
     * Funcionalidades de **Atualização** e **Remoção** de registros existentes.
 
 * **Agendamentos (Agenda do Dia):**
-    * Agendamento de **Consultas**.
-    * Agendamento de **Cirurgias**.
+    * Agendamento de **Atendimentos**.
     * Visualização rápida da agenda do dia na tela inicial.
 
 ## Estrutura do Projeto
