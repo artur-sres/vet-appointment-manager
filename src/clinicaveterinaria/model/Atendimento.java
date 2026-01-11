@@ -3,10 +3,11 @@ import clinicaveterinaria.model.Enums.Procedimento;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-class Atendimento {
+public class Atendimento {
     private Procedimento procedimento;
     private Pet petAtendido;
     private MedVet vetResponsavel;
+    private int duracaoMinutos;
     private LocalDate data; 
     private LocalTime hora; 
     private String descricao;
@@ -18,6 +19,10 @@ class Atendimento {
         this.data = data;
         this.hora = hora;
         this.descricao = descricao;
+    }
+
+    public void setDuracaoMinutos(int duracao) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
