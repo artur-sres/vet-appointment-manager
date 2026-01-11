@@ -47,7 +47,7 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnVisualizarPets = new javax.swing.JButton();
+        btnHistorico = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,8 +72,8 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
 
         jLabel3.setText("Email:");
 
-        btnVisualizarPets.setText("Visualizar Agenda");
-        btnVisualizarPets.addActionListener(this::btnVisualizarPetsActionPerformed);
+        btnHistorico.setText("Historico de Atendimentos");
+        btnHistorico.addActionListener(this::btnHistoricoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,19 +92,19 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
                                 .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtTelefone)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnVisualizarPets, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                .addComponent(btnHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRemover)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnEditar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnVoltar)))
-                        .addGap(0, 10, Short.MAX_VALUE)))
+                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -127,7 +127,7 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVoltar)
-                    .addComponent(btnVisualizarPets)
+                    .addComponent(btnHistorico)
                     .addComponent(btnEditar)
                     .addComponent(btnRemover))
                 .addGap(15, 15, 15))
@@ -194,14 +194,16 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void btnVisualizarPetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarPetsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVisualizarPetsActionPerformed
+    private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
+        AtendimentosVeterinarios tela = new AtendimentosVeterinarios(this.veterinario);
+        this.dispose();
+        tela.setVisible(true);  
+    }//GEN-LAST:event_btnHistoricoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnRemover;
-    private javax.swing.JButton btnVisualizarPets;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

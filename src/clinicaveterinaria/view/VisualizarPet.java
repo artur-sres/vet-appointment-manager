@@ -102,6 +102,7 @@ public class VisualizarPet extends javax.swing.JFrame {
         txtPeso = new javax.swing.JTextField();
         btnRemover = new javax.swing.JButton();
         btnCancelar2 = new javax.swing.JButton();
+        btnHistorico = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -168,6 +169,9 @@ public class VisualizarPet extends javax.swing.JFrame {
         btnCancelar2.setText("Visualizar Tutor");
         btnCancelar2.addActionListener(this::btnCancelar2ActionPerformed);
 
+        btnHistorico.setText("Histórico de Atendimentos");
+        btnHistorico.addActionListener(this::btnHistoricoActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,10 +204,10 @@ public class VisualizarPet extends javax.swing.JFrame {
                                         .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(cmbAno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(11, 11, 11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -232,10 +236,12 @@ public class VisualizarPet extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbTutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnRemover))
-                                    .addComponent(cmbTutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(btnRemover)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnHistorico)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnCancelar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -303,7 +309,8 @@ public class VisualizarPet extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnVoltar)
-                    .addComponent(btnRemover))
+                    .addComponent(btnRemover)
+                    .addComponent(btnHistorico))
                 .addGap(14, 14, 14))
         );
 
@@ -354,11 +361,18 @@ public class VisualizarPet extends javax.swing.JFrame {
         tutor.setVisible(true);
     }//GEN-LAST:event_btnCancelar2ActionPerformed
 
+    private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
+        AtendimentosPets tela = new AtendimentosPets(this.pet);
+        this.dispose();
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnHistoricoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar2;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JCheckBox ckbCastrado;

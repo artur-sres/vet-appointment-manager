@@ -1,54 +1,65 @@
-
 package clinicaveterinaria.model;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class MedVet extends Pessoa {
     private ArrayList<Atendimento> agendaConsultas = new ArrayList<>();
+    private boolean ativo = true;
 
     public MedVet(String nome, String email, String telefone) {
         super(nome, email, telefone);
     }
-    
-    // Adicione o LocalDate nos parâmetros
-    public boolean isHorarioDisponivel(java.time.LocalDate dataConsulta, java.time.LocalTime horaInicio, int duracaoMinutos) {
-        java.time.LocalTime almocoInicio = java.time.LocalTime.of(11, 30);
-        java.time.LocalTime almocoFim = java.time.LocalTime.of(14, 00);
-        java.time.LocalTime fimExpediente = java.time.LocalTime.of(17, 00);
 
-        java.time.LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
+    // --- MÉTODOS DE VALIDAÇÃO ---
 
-        // --- REGRA 1: Horário Fixo (Almoço e Fim de Expediente) ---
-        if (horaFim.isAfter(fimExpediente)) return false;
+    // Método 1: Usado no CADASTRO (Não ignora ninguém)
+    public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos) {
+        return isHorarioDisponivel(dataConsulta, horaInicio, duracaoMinutos, null);
+    }
 
-        boolean antesDoAlmoco = !horaInicio.isBefore(java.time.LocalTime.of(8, 0)) && (horaFim.isBefore(almocoInicio) || horaFim.equals(almocoInicio));
-        boolean depoisDoAlmoco = (horaInicio.isAfter(almocoFim) || horaInicio.equals(almocoFim));
+    // Método 2: Usado na EDIÇÃO (Ignora o agendamento atual para não dar conflito com ele mesmo)
+    public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos, Atendimento ignorar) {
+        LocalTime almocoInicio = LocalTime.of(11, 30);
+        LocalTime almocoFim = LocalTime.of(14, 00);
+        LocalTime inicioExpediente = LocalTime.of(8, 0);
+        LocalTime fimExpediente = LocalTime.of(17, 00);
+        
+        LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
 
-        if (!antesDoAlmoco && !depoisDoAlmoco) return false; // Se violou regra de almoço/expediente, já recusa
+        // 1. Validações Fixas (Expediente e Almoço)
+        if (horaFim.isAfter(fimExpediente) || horaInicio.isBefore(inicioExpediente)) return false;
 
-        // --- REGRA 2: Verificar Conflito na Agenda (NOVO!) ---
+        boolean antesDoAlmoco = !horaInicio.isBefore(inicioExpediente) && (horaFim.isBefore(almocoInicio) || horaFim.equals(almocoInicio));
+        boolean depoisDoAlmoco = (horaInicio.isAfter(almocoFim) || horaInicio.equals(almocoFim)) && !horaFim.isAfter(fimExpediente);
+
+        if (!antesDoAlmoco && !depoisDoAlmoco) return false;
+
+        // 2. Validação de Agenda (Conflitos)
         for (Atendimento agendado : this.agendaConsultas) {
-            // Só importa se for no MESMO dia
+            
+            // O PULO DO GATO: Se for o atendimento que estamos editando, PULA ele!
+            if (ignorar != null && agendado.equals(ignorar)) {
+                continue; 
+            }
+
             if (agendado.getData().equals(dataConsulta)) {
+                LocalTime inicioAgendado = agendado.getHora();
+                LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
 
-                // Calcula inicio e fim do agendamento que já existe
-                java.time.LocalTime inicioAgendado = agendado.getHora();
-                java.time.LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
-
-                // Verifica se os tempos se sobrepõem
-                // (Se o novo começa antes do outro terminar E termina depois do outro começar)
+                // Se houver sobreposição de horários
                 if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
-                    return false; // CONFLITO ENCONTRADO! O horário está ocupado.
+                    return false; // Ocupado!
                 }
             }
         }
 
-        return true; // Se passou por tudo, está livre!
+        return true; // Livre!
     }
 
-    // Como deve ficar (CORRETO):
-    public ArrayList<Atendimento> getAgendaConsultas() {
-        return this.agendaConsultas;
-    }
+    // --- Getters e Setters ---
+    public ArrayList<Atendimento> getAgendaConsultas() { return agendaConsultas; }
+    public boolean isAtivo() { return ativo; }
+    public void setAtivo(boolean ativo) { this.ativo = ativo; }
 }

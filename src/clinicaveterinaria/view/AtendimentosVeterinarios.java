@@ -1,14 +1,53 @@
 package clinicaveterinaria.view;
 
-public class AtendimentosVeterinarios extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtendimentosVeterinarios.class.getName());
+import clinicaveterinaria.model.Atendimento;
+import clinicaveterinaria.model.MedVet;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-    /**
-     * Creates new form AtendimentoaVeterinarios
-     */
+public class AtendimentosVeterinarios extends javax.swing.JFrame {
+
+    private MedVet veterinario;
+
+    // Construtor principal
+    public AtendimentosVeterinarios(MedVet vet) {
+        initComponents();
+        this.veterinario = vet;
+        // Dica: Se tiver um label de título, use: lblTitulo.setText("Agenda: " + vet.getNome());
+        carregarTabela();
+    }
+
+    // Construtor vazio
     public AtendimentosVeterinarios() {
         initComponents();
+    }
+
+    private void carregarTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        // 1. Pega a lista e ordena (Mais recentes no topo)
+        List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
+        Collections.sort(lista, (a1, a2) -> {
+            int c = a2.getData().compareTo(a1.getData());
+            if (c != 0) return c;
+            return a2.getHora().compareTo(a1.getHora());
+        });
+
+        // 2. Preenche a tabela
+        for (Atendimento a : lista) {
+            modelo.addRow(new Object[]{
+                a.getData().format(fmtData),
+                a.getHora(),
+                a.getPetAtendido().getNome(),       // Nome do Pet
+                a.getPetAtendido().getTutor().getNome(), // Nome do Tutor
+                a.getProcedimento().name()
+            });
+        }
     }
 
     /**
@@ -24,7 +63,7 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,13 +96,18 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         jButton1.setText("Visualizar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jButton3.setText("Voltar");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,7 +119,7 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(btnVoltar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -94,7 +138,7 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(btnVoltar))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -105,38 +149,44 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (evt.getClickCount() == 2) { // Duplo clique
+            int linha = jTable1.getSelectedRow();
+            if (linha == -1) return;
+
+            // Recria a lista ordenada para pegar o item certo (igual ao carregarTabela)
+            List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
+            Collections.sort(lista, (a1, a2) -> {
+                int c = a2.getData().compareTo(a1.getData());
+                if (c != 0) return c;
+                return a2.getHora().compareTo(a1.getHora());
+            });
+
+            Atendimento selecionado = lista.get(linha);
+            
+            // Abre a tela de visualizar
+            VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
+            tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            tela.setVisible(true);
+            
+            // Ao fechar a visualização, atualiza a tabela (caso tenha excluído/editado)
+            tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    carregarTabela();
                 }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            });
         }
-        //</editor-fold>
+    }//GEN-LAST:event_jTable1MouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AtendimentosVeterinarios().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

@@ -1,24 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package clinicaveterinaria.view;
 
-/**
- *
- * @author Artur
- */
-public class AtendimentosPets extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtendimentosPets.class.getName());
+import clinicaveterinaria.model.Atendimento;
+import clinicaveterinaria.model.Pet;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-    /**
-     * Creates new form AtendimentosPets
-     */
+public class AtendimentosPets extends javax.swing.JFrame {
+
+    private Pet pet;
+
+    public AtendimentosPets(Pet pet) {
+        initComponents();
+        this.pet = pet;
+        carregarTabela();
+    }
+
     public AtendimentosPets() {
         initComponents();
     }
 
+    private void carregarTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        // Pega a lista do PET
+        List<Atendimento> lista = new ArrayList<>(pet.getHistorico());
+        
+        // Ordena
+        Collections.sort(lista, (a1, a2) -> {
+            int c = a2.getData().compareTo(a1.getData());
+            if (c != 0) return c;
+            return a2.getHora().compareTo(a1.getHora());
+        });
+
+        for (Atendimento a : lista) {
+            modelo.addRow(new Object[]{
+                a.getData().format(fmtData),
+                a.getHora(),
+                a.getVetResponsavel().getNome(), // Mostra o Veterinário
+                a.getProcedimento().name(),
+                a.getDuracaoMinutos() + " min"
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,6 +99,11 @@ public class AtendimentosPets extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,30 +150,33 @@ public class AtendimentosPets extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (evt.getClickCount() == 2) {
+            int linha = jTable1.getSelectedRow();
+            if (linha == -1) return;
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AtendimentosPets().setVisible(true));
-    }
+            List<Atendimento> lista = new ArrayList<>(pet.getHistorico());
+            Collections.sort(lista, (a1, a2) -> {
+                int c = a2.getData().compareTo(a1.getData());
+                if (c != 0) return c;
+                return a2.getHora().compareTo(a1.getHora());
+            });
+
+            Atendimento selecionado = lista.get(linha);
+            
+            VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
+            tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            tela.setVisible(true);
+            
+            tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    carregarTabela();
+                }
+            });
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
