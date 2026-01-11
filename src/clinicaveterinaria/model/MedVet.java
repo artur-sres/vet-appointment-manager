@@ -31,4 +31,8 @@ public class MedVet extends Pessoa {
 
     return antesDoAlmoco || depoisDoAlmoco;
 }
+
+    public Object getAgendaConsultas() {
+        return this.agendaConsultas;
+    }
 }

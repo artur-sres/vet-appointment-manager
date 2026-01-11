@@ -19,8 +19,7 @@ public class Pet {
     protected String raca;
     protected String alergias;
     protected Tutor tutor;
-    protected ArrayList<Atendimento> consultasAgendadas;
-    protected ArrayList<Atendimento> consultasHistorico;
+    protected ArrayList<Atendimento> consultasHistorico = new ArrayList<>();;
 
 
     public Pet(Especie especie, String nome, LocalDate dataNascimento, Sexo sexo, boolean isCastrado,  boolean isVacinado, double peso, String temperamento, String raca, String alergias, Tutor tutor) {
@@ -37,7 +36,6 @@ public class Pet {
         this.raca = raca;
         this.alergias = alergias;
         this.tutor = tutor;
-        this.consultasAgendadas = new ArrayList<>();
         this.consultasHistorico = new ArrayList<>();
     }
     
@@ -132,14 +130,6 @@ public class Pet {
         this.tutor = tutor;
     }
 
-    public ArrayList<Atendimento> getConsultasAgendadas() {
-        return consultasAgendadas;
-    }
-
-    public void setConsultasAgendadas(ArrayList<Atendimento> consultasAgendadas) {
-        this.consultasAgendadas = consultasAgendadas;
-    }
-
     public ArrayList<Atendimento> getConsultasHistorico() {
         return consultasHistorico;
     }
@@ -154,6 +144,10 @@ public class Pet {
 
     public void setEspecie(Especie especie) {
         this.especie = especie;
+    }
+
+    public Object getHistorico() {
+        return consultasHistorico;
     }
     
     

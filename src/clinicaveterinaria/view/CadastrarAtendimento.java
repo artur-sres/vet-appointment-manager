@@ -282,6 +282,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHorariosDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosDisponiveisActionPerformed
@@ -382,7 +383,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             // Por enquanto vamos apenas imprimir para testar:
             System.out.println("Atendimento Criado com sucesso para: " + petReal.getNome());
             
-            // TODO: clinicaveterinaria.controller.AtendimentoController.cadastrar(novoAtendimento); 
+            clinicaveterinaria.controller.AtendimentoController.cadastrar(novoAtendimento); 
             
             javax.swing.JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
             this.dispose();
