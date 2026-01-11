@@ -146,7 +146,7 @@ public class Pet {
         this.especie = especie;
     }
 
-    public Object getHistorico() {
+    public ArrayList<Atendimento> getHistorico() {
         return consultasHistorico;
     }
     

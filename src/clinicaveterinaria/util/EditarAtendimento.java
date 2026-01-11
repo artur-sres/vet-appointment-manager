@@ -2,20 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package clinicaveterinaria.view;
+package clinicaveterinaria.util;
 
 /**
  *
  * @author Artur
  */
-public class AtendimentoaVeterinarios extends javax.swing.JFrame {
+public class EditarAtendimento extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtendimentoaVeterinarios.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarAtendimento.class.getName());
 
     /**
-     * Creates new form AtendimentoaVeterinarios
+     * Creates new form EditarAtendimento
      */
-    public AtendimentoaVeterinarios() {
+    public EditarAtendimento() {
         initComponents();
     }
 
@@ -66,7 +66,7 @@ public class AtendimentoaVeterinarios extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AtendimentoaVeterinarios().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new EditarAtendimento().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

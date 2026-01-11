@@ -1,9 +1,12 @@
 package clinicaveterinaria.view;
 
-/**
- *
- * @author Artur
- */
+import clinicaveterinaria.controller.AtendimentoController;
+import clinicaveterinaria.model.Atendimento;
+import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+
 public class Menu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Menu.class.getName());
@@ -14,8 +17,36 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        carregarAgendaDoDia();
     }
 
+    private void carregarAgendaDoDia() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); // Limpa as linhas
+
+        // --- NOVO: Define as colunas via código (Veterinário vem primeiro) ---
+        modelo.setColumnIdentifiers(new String[] {"Veterinário", "Espécie", "Nome", "Atendimento", "Horário"});
+        // (Ajuste os nomes das colunas acima como preferir)
+
+        LocalDate hoje = LocalDate.now();
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+
+        if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
+            for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
+
+                // Filtra só o que é HOJE
+                if (a.getData().equals(hoje)) {
+                    modelo.addRow(new Object[]{
+                        a.getVetResponsavel().getNome(),            // <--- 1. VETERINÁRIO (Novo)
+                        a.getPetAtendido().getEspecie().toString(), // 2. Espécie
+                        a.getPetAtendido().getNome(),               // 3. Nome do Pet
+                        a.getProcedimento().name(),                 // 5. Procedimento
+                        a.getHora().format(formatoHora)             // 6. Hora
+                    });
+                }
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,23 +92,23 @@ public class Menu extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Espécie", "Nome", "Atendimento", "Horário"
+                "Veterinário", "Espécie", "Nome", "Atendimento", "Horário"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -197,9 +228,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        this.dispose();
-        Menu menu = new Menu();
-        menu.setVisible(true);
+        carregarAgendaDoDia();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void gerenciarTutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarTutoresActionPerformed
@@ -231,30 +260,6 @@ public class Menu extends javax.swing.JFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Menu().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;

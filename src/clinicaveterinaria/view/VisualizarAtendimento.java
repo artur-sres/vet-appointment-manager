@@ -4,141 +4,21 @@
  */
 package clinicaveterinaria.view;
 
-import clinicaveterinaria.controller.VeterinarioController;
-import clinicaveterinaria.controller.PetController;
-import clinicaveterinaria.model.MedVet;
-import clinicaveterinaria.model.Pet;
-import clinicaveterinaria.model.Enums.Procedimento; // Para o tipo de atendimento
-import java.awt.HeadlessException;
-
 /**
  *
  * @author Artur
  */
-public class CadastrarAtendimento extends javax.swing.JFrame {
+public class VisualizarAtendimento extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarAtendimento.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarAtendimento.class.getName());
 
     /**
-     * Creates new form NewJFrame
+     * Creates new form VisualizarAtendimento
      */
-    public CadastrarAtendimento() {
+    public VisualizarAtendimento() {
         initComponents();
-        inicializarListas();
-    }
-    
-    private void inicializarListas() {
-        // 1. Configura os ANOS (Ano atual e próximo)
-        cmbAno1.removeAllItems();
-        int anoAtual = java.time.LocalDate.now().getYear();
-        cmbAno1.addItem(String.valueOf(anoAtual));
-        cmbAno1.addItem(String.valueOf(anoAtual + 1));
-
-        // 2. Adiciona Ação ao mudar o ANO
-        cmbAno1.addActionListener(evt -> atualizarMeses());
-
-        // 3. Adiciona Ação ao mudar o MÊS
-        cmbMes1.addActionListener(evt -> atualizarDias());
-
-        // 4. Carrega as listas iniciais
-        atualizarMeses();
-
-        // --- O RESTO (Vet, Pet, Atendimento...) CONTINUA IGUAL ---
-
-        // Preenche Veterinários
-        comboVet.removeAllItems();
-        for (clinicaveterinaria.model.MedVet vet : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
-            comboVet.addItem(vet.getNome());
-        }
-
-        // Preenche Pets
-        comboPet.removeAllItems();
-        for (clinicaveterinaria.model.Pet pet : clinicaveterinaria.controller.PetController.listaPets) {
-            comboPet.addItem(pet.getNome());
-        }
-
-        // Preenche Procedimentos
-        comboAtendimento.removeAllItems();
-        for (clinicaveterinaria.model.Enums.Procedimento proc : clinicaveterinaria.model.Enums.Procedimento.values()) {
-            comboAtendimento.addItem(proc.name());
-        }
-
-        // Preenche Duração
-        cmbDuracao.removeAllItems();
-        for (int i = 30; i <= 240; i += 30) {
-            cmbDuracao.addItem(String.valueOf(i));
-        }
     }
 
-    // --- Métodos novos para filtrar as datas ---
-
-    private void atualizarMeses() {
-        String anoSelecionadoStr = (String) cmbAno1.getSelectedItem();
-        if (anoSelecionadoStr == null) return;
-
-        int anoSelecionado = Integer.parseInt(anoSelecionadoStr);
-        int anoAtual = java.time.LocalDate.now().getYear();
-        int mesAtual = java.time.LocalDate.now().getMonthValue(); // 1 a 12
-
-        // Remove listener temporariamente para não travar
-        java.awt.event.ActionListener[] listeners = cmbMes1.getActionListeners();
-        for (java.awt.event.ActionListener l : listeners) cmbMes1.removeActionListener(l);
-
-        cmbMes1.removeAllItems();
-        String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
-
-        // Se for o ano atual, começa do mês atual. Se for ano que vem, mostra todos.
-        int inicio = (anoSelecionado == anoAtual) ? (mesAtual - 1) : 0;
-
-        for (int i = inicio; i < meses.length; i++) {
-            cmbMes1.addItem(meses[i]);
-        }
-
-        // Devolve o listener
-        for (java.awt.event.ActionListener l : listeners) cmbMes1.addActionListener(l);
-
-        atualizarDias(); // Força atualizar os dias também
-    }
-
-    private void atualizarDias() {
-        String anoStr = (String) cmbAno1.getSelectedItem();
-        String mesStr = (String) cmbMes1.getSelectedItem();
-
-        if (anoStr == null || mesStr == null) return;
-
-        int ano = Integer.parseInt(anoStr);
-        int mes = getNumeroMes(mesStr);
-
-        java.time.LocalDate hoje = java.time.LocalDate.now();
-
-        // Descobre quantos dias tem aquele mês
-        java.time.YearMonth anoMes = java.time.YearMonth.of(ano, mes);
-        int diasNoMes = anoMes.lengthOfMonth();
-
-        // Se for Mês e Ano atuais, começa do dia de hoje. Senão, começa do dia 1.
-        int diaInicial = 1;
-        if (ano == hoje.getYear() && mes == hoje.getMonthValue()) {
-            diaInicial = hoje.getDayOfMonth();
-        }
-
-        cmbDia1.removeAllItems();
-        for (int i = diaInicial; i <= diasNoMes; i++) {
-            String dia = (i < 10) ? "0" + i : String.valueOf(i);
-            cmbDia1.addItem(dia);
-        }
-    }
-
-    private int getNumeroMes(String nomeMes) {
-        String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
-        for (int i = 0; i < meses.length; i++) {
-            if (meses[i].equals(nomeMes)) {
-                return i + 1; // Retorna 1 para Janeiro, 2 para Fevereiro...
-            }
-        }
-        return 1; // Padrão
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,99 +28,82 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cmbDia = new javax.swing.JComboBox<>();
-        cmbMes = new javax.swing.JComboBox<>();
-        cmbAno = new javax.swing.JComboBox<>();
-        panel1 = new java.awt.Panel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        comboAtendimento = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        comboPet = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        comboVet = new javax.swing.JComboBox<>();
-        cmbDia1 = new javax.swing.JComboBox<>();
-        cmbMes1 = new javax.swing.JComboBox<>();
-        cmbAno1 = new javax.swing.JComboBox<>();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        btnHorariosDisponiveis = new javax.swing.JButton();
-        btnSalvar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        cmbDuracao = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        cmbHora = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
-
-        cmbDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbAno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jLabel2 = new javax.swing.JLabel();
+        btnHorariosDisponiveis = new javax.swing.JButton();
+        comboAtendimento = new javax.swing.JComboBox<>();
+        btnSalvar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+        comboPet = new javax.swing.JComboBox<>();
+        cmbDuracao = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        comboVet = new javax.swing.JComboBox<>();
+        cmbHora = new javax.swing.JComboBox<>();
+        cmbDia1 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        cmbMes1 = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cmbAno1 = new javax.swing.JComboBox<>();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        btnCancelar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Agendar Atendimento:");
-
-        jLabel2.setText("Tipo de Atendimento:");
-
-        comboAtendimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel3.setText("Paciente (Pet):");
-
-        comboPet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel4.setText("Veterinario Responsável:");
-
-        comboVet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbDia1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbMes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbAno1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnHorariosDisponiveis.setText("Ver Horários Disponíveis Para a Data");
-        btnHorariosDisponiveis.addActionListener(this::btnHorariosDisponiveisActionPerformed);
-
-        btnSalvar.setText("Salvar");
-        btnSalvar.addActionListener(this::btnSalvarActionPerformed);
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
-
-        cmbDuracao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel8.setText("Duração Estimada (Min) :");
-
-        cmbHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Horários" }));
-
-        jLabel5.setText("Data:");
-
-        jLabel6.setText("Horários Disponíveis:");
-
-        jLabel9.setText("Descrição:");
+        jLabel1.setText("Visualizar Atendimento");
 
         txtDescricao.setColumns(20);
         txtDescricao.setRows(5);
         jScrollPane2.setViewportView(txtDescricao);
+
+        jLabel2.setText("Tipo de Atendimento:");
+
+        btnHorariosDisponiveis.setText("Ver Horários Disponíveis Para a Data");
+        btnHorariosDisponiveis.addActionListener(this::btnHorariosDisponiveisActionPerformed);
+
+        comboAtendimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnSalvar.setText("Voltar");
+        btnSalvar.addActionListener(this::btnSalvarActionPerformed);
+
+        jLabel3.setText("Paciente (Pet):");
+
+        btnCancelar.setText("Editar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+
+        comboPet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbDuracao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel4.setText("Veterinario Responsável:");
+
+        jLabel8.setText("Duração Estimada (Min) :");
+
+        comboVet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Horários" }));
+
+        cmbDia1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel5.setText("Data:");
+
+        cmbMes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel6.setText("Horários Disponíveis:");
+
+        cmbAno1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel9.setText("Descrição:");
+
+        btnCancelar1.setText("Remover");
+        btnCancelar1.addActionListener(this::btnCancelar1ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -251,35 +114,42 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(102, 102, 102)
                         .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel9)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboPet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(comboVet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(comboAtendimento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jSeparator1)
-                            .addComponent(jSeparator2)
-                            .addComponent(jSeparator4)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(btnHorariosDisponiveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelar1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnCancelar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSalvar))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(23, 23, 23)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel9)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(comboPet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(comboVet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(comboAtendimento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jSeparator1)
+                                .addComponent(jSeparator2)
+                                .addComponent(jSeparator4)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cmbHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnHorariosDisponiveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cmbDuracao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cmbDia1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,13 +157,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
                                     .addComponent(cmbMes1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cmbAno1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalvar)
-                .addGap(116, 116, 116))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,7 +192,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHorariosDisponiveis)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -341,12 +205,12 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnCancelar1))
                 .addGap(14, 14, 14))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHorariosDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosDisponiveisActionPerformed
@@ -449,7 +313,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             clinicaveterinaria.model.Atendimento novoAtendimento = new clinicaveterinaria.model.Atendimento(
                 procedimento, petReal, vetReal, data, hora, descricao
             );
-            
+
             // Define a duração (se não tiver no construtor, usamos o set)
             int duracao = Integer.parseInt((String) cmbDuracao.getSelectedItem());
             novoAtendimento.setDuracaoMinutos(duracao); // <--- Certifique-se que criou esse método set no passo anterior!
@@ -457,9 +321,9 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             // 7. SALVAR (Aqui precisamos do Controller de Atendimento)
             // Por enquanto vamos apenas imprimir para testar:
             System.out.println("Atendimento Criado com sucesso para: " + petReal.getNome());
-            
-            clinicaveterinaria.controller.AtendimentoController.cadastrar(novoAtendimento); 
-            
+
+            clinicaveterinaria.controller.AtendimentoController.cadastrar(novoAtendimento);
+
             javax.swing.JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
             this.dispose();
 
@@ -472,17 +336,44 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new VisualizarAtendimento().setVisible(true));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnHorariosDisponiveis;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbAno;
     private javax.swing.JComboBox<String> cmbAno1;
-    private javax.swing.JComboBox<String> cmbDia;
     private javax.swing.JComboBox<String> cmbDia1;
     private javax.swing.JComboBox<String> cmbDuracao;
     private javax.swing.JComboBox<String> cmbHora;
-    private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JComboBox<String> cmbMes1;
     private javax.swing.JComboBox<String> comboAtendimento;
     private javax.swing.JComboBox<String> comboPet;
@@ -499,7 +390,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private java.awt.Panel panel1;
     private javax.swing.JTextArea txtDescricao;
     // End of variables declaration//GEN-END:variables
 }

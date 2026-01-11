@@ -2,6 +2,10 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.model.MedVet;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import clinicaveterinaria.controller.VeterinarioController;
+import clinicaveterinaria.model.MedVet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +37,8 @@ public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
             });
         }
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

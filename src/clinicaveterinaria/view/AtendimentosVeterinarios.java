@@ -1,21 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package clinicaveterinaria.view;
 
-/**
- *
- * @author Artur
- */
-public class AtendimentosPets extends javax.swing.JFrame {
+public class AtendimentosVeterinarios extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtendimentosPets.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtendimentosVeterinarios.class.getName());
 
     /**
-     * Creates new form AtendimentosPets
+     * Creates new form AtendimentoaVeterinarios
      */
-    public AtendimentosPets() {
+    public AtendimentosVeterinarios() {
         initComponents();
     }
 
@@ -28,22 +20,16 @@ public class AtendimentosPets extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Visualizar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-
-        jButton3.setText("Voltar");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Página de Agendamentos de Pets");
+        jLabel1.setText("Página de Agendamentos de Veterinários");
         jLabel1.setAutoscrolls(true);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -73,6 +59,12 @@ public class AtendimentosPets extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        jButton1.setText("Visualizar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton3.setText("Voltar");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,22 +80,22 @@ public class AtendimentosPets extends javax.swing.JFrame {
                                 .addComponent(jButton1))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addGap(176, 176, 176)
                         .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -139,7 +131,7 @@ public class AtendimentosPets extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AtendimentosPets().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new AtendimentosVeterinarios().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
