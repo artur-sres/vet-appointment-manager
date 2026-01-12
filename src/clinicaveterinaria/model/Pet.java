@@ -3,6 +3,7 @@ package clinicaveterinaria.model;
 import clinicaveterinaria.model.Enums.Especie;
 import clinicaveterinaria.model.Enums.Sexo;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.time.Period;
 
@@ -39,6 +40,45 @@ public class Pet {
         this.consultasHistorico = new ArrayList<>();
     }
     
+    // Adicione este método na classe Pet
+    public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos) {
+        LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
+
+        for (Atendimento agendado : this.consultasHistorico) {
+            if (agendado.getData().equals(dataConsulta)) {
+                LocalTime inicioAgendado = agendado.getHora();
+                LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
+
+                // Verifica se os horários se sobrepõem
+                if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
+                    return false; // O Pet já está ocupado neste horário!
+                }
+            }
+        }
+        return true; // O Pet está livre
+    }
+    
+    public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos, Atendimento ignorar) {
+        LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
+
+        for (Atendimento agendado : this.consultasHistorico) {
+            // Se for o atendimento que estamos editando, PULA a verificação
+            if (ignorar != null && agendado.equals(ignorar)) {
+                continue; 
+            }
+
+            if (agendado.getData().equals(dataConsulta)) {
+                LocalTime inicioAgendado = agendado.getHora();
+                LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
+
+                // Verifica colisão de horário
+                if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
+                    return false; // Ocupado
+                }
+            }
+        }
+        return true; // Livre
+    }
     
     public int getIdade() {
         LocalDate hoje = LocalDate.now();

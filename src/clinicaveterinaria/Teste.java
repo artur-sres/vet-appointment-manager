@@ -4,14 +4,18 @@
  */
 package clinicaveterinaria;
 
+import clinicaveterinaria.controller.AtendimentoController;
 import clinicaveterinaria.controller.PetController;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.controller.VeterinarioController;
+import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.Enums.Especie;
+import clinicaveterinaria.model.Enums.Procedimento;
 import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.MedVet;
 import clinicaveterinaria.model.Tutor;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -112,6 +116,46 @@ public class Teste {
             );
         } catch (Exception ex) {
             System.getLogger(Teste.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+    public static void testeAtendimentos() {
+        try {
+            if (PetController.listaPets.isEmpty() || VeterinarioController.listaVeterinarios.isEmpty()) {
+                System.out.println("Não há pets ou veterinários suficientes para gerar atendimentos de teste.");
+                return;
+            }
+
+            // Atendimento 1: Hoje às 10:00 - Lylica com Dr. Leticia
+            Atendimento a1;
+            a1 = new Atendimento(
+                    Procedimento.CONSULTA,
+                    PetController.listaPets.get(0),          
+                    VeterinarioController.listaVeterinarios.get(0), 
+                    LocalDate.now(),                         
+                    LocalTime.of(10, 0),                     
+                    "Check-up anual, animal apresentando cansaço."
+            );
+            a1.setDuracaoMinutos(60);
+            AtendimentoController.cadastrar(a1);
+
+            int indiceVet = (VeterinarioController.listaVeterinarios.size() > 1) ? 1 : 0;
+            
+            Atendimento a2 = new Atendimento(
+                Procedimento.VACINACAO,
+                PetController.listaPets.get(1),          
+                VeterinarioController.listaVeterinarios.get(indiceVet), 
+                LocalDate.now().plusDays(1),             
+                LocalTime.of(15, 30),
+                "Reforço da vacina V4."
+            );
+            a2.setDuracaoMinutos(30);
+            AtendimentoController.cadastrar(a2);
+
+            System.out.println("Atendimentos de teste gerados com sucesso!");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar atendimentos: " + e.getMessage());
         }
     }
 }

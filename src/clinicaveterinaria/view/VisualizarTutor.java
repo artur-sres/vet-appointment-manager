@@ -181,7 +181,21 @@ public class VisualizarTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        // TODO add your handling code here:
+        int confirmacao = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Tem certeza que deseja excluir o tutor " + this.tutor.getNome() + "?\n"
+            + "ATENÇÃO: Todos os animais e agendamentos deste tutor também serão apagados!", 
+            "Cuidado: Exclusão Permanente", 
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE); // Ícone de alerta amarelo
+
+        if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
+            // Chama a função cascata completa (Tutor -> Pets -> Agendamentos)
+            clinicaveterinaria.controller.TutorController.excluirTutor(this.tutor);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Tutor e todos seus vínculos excluídos!");
+            
+            this.dispose();
+        }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnVisualizarPetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarPetsActionPerformed

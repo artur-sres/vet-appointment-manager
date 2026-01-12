@@ -204,10 +204,11 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
                     .addComponent(btnVoltar)
                     .addComponent(btnEditar)
                     .addComponent(btnRemover))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

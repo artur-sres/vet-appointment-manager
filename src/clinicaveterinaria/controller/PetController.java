@@ -1,5 +1,6 @@
 package clinicaveterinaria.controller;
 
+import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.Enums.Especie;
 import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.Pet;
@@ -63,6 +64,28 @@ public class PetController {
         pet.setTemperamento(temperamento);
         pet.setIsVacinado(vacinado);
         pet.setIsCastrado(castrado);
+    }
+    
+    public static void excluirPet(Pet pet) {
+        if (pet == null) return;
+
+        // 1. Cancelar todos os agendamentos desse Pet (Libera horários dos Vets)
+        // Criamos uma cópia da lista para não dar erro ao remover enquanto percorre
+        java.util.ArrayList<Atendimento> copiahistorico = new java.util.ArrayList<>(pet.getHistorico());
+        
+        for (Atendimento agendamento : copiahistorico) {
+            AtendimentoController.remover(agendamento);
+        }
+
+        // 2. Remover o Pet da lista do seu Tutor
+        if (pet.getTutor() != null) {
+            pet.getTutor().getAnimais().remove(pet);
+        }
+
+        // 3. Remover o Pet da lista geral do sistema
+        listaPets.remove(pet);
+        
+        System.out.println("Pet " + pet.getNome() + " excluído com sucesso!");
     }
 }
 

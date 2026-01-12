@@ -57,6 +57,7 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         canvas1 = new java.awt.Canvas();
+        jMenu4 = new javax.swing.JMenu();
         btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -73,12 +74,16 @@ public class Menu extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenu5 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+
+        jMenu4.setText("jMenu4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -115,6 +120,11 @@ public class Menu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         btnAtualizar.setText("Atualizar Janela");
@@ -149,26 +159,28 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem12.setText("Gerenciar Pets");
         jMenuItem12.addActionListener(this::jMenuItem12ActionPerformed);
         jMenu1.add(jMenuItem12);
+        jMenu1.add(jSeparator5);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Agendamentos");
+        jMenu5.setText("Agendamentos");
 
         jMenuItem1.setText("Agendar Novo Atendimento");
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jMenu2.add(jMenuItem1);
+        jMenu5.add(jMenuItem1);
 
-        jMenuItem2.setText("Atendimentos Agendados");
+        jMenuItem2.setText("Histórico de Agendamentos");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
-        jMenu2.add(jMenuItem2);
-        jMenu2.add(jSeparator3);
+        jMenu5.add(jMenuItem2);
+        jMenu5.add(jSeparator3);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu5);
 
         jMenu3.setText("Ajuda");
 
         jMenuItem14.setText("Informações");
         jMenu3.add(jMenuItem14);
+        jMenu3.add(jSeparator4);
 
         jMenuBar1.add(jMenu3);
 
@@ -183,8 +195,8 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(302, 302, 302)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(288, 288, 288)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -237,7 +249,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_gerenciarTutoresActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        ListaGerenciarAtendimentos tela = new ListaGerenciarAtendimentos();
+        tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        tela.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -260,6 +274,10 @@ public class Menu extends javax.swing.JFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
@@ -270,8 +288,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;
@@ -284,6 +303,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
