@@ -21,6 +21,7 @@ public class MedVet extends Pessoa {
 
     // Método 2: Usado na EDIÇÃO (Ignora o agendamento atual para não dar conflito com ele mesmo)
     public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos, Atendimento ignorar) {
+        if (!this.ativo) return false;
         LocalTime almocoInicio = LocalTime.of(11, 30);
         LocalTime almocoFim = LocalTime.of(14, 00);
         LocalTime inicioExpediente = LocalTime.of(8, 0);

@@ -22,28 +22,37 @@ public class Menu extends javax.swing.JFrame {
 
     private void carregarAgendaDoDia() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); // Limpa as linhas
+        modelo.setRowCount(0); // Limpa a tabela
 
-        // --- NOVO: Define as colunas via código (Veterinário vem primeiro) ---
         modelo.setColumnIdentifiers(new String[] {"Veterinário", "Espécie", "Nome", "Atendimento", "Horário"});
-        // (Ajuste os nomes das colunas acima como preferir)
 
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
         if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
-            for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
+            
+            // 1. Cria uma lista temporária apenas com os atendimentos de HOJE
+            java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
 
-                // Filtra só o que é HOJE
+            for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
                 if (a.getData().equals(hoje)) {
-                    modelo.addRow(new Object[]{
-                        a.getVetResponsavel().getNome(),            // <--- 1. VETERINÁRIO (Novo)
-                        a.getPetAtendido().getEspecie().toString(), // 2. Espécie
-                        a.getPetAtendido().getNome(),               // 3. Nome do Pet
-                        a.getProcedimento().name(),                 // 5. Procedimento
-                        a.getHora().format(formatoHora)             // 6. Hora
-                    });
+                    agendaHoje.add(a);
                 }
+            }
+
+            // 2. Ordena essa lista pelo HORÁRIO (Do mais cedo para o mais tarde)
+            // Usamos a classe Comparator para comparar os horários (getHora)
+            java.util.Collections.sort(agendaHoje, java.util.Comparator.comparing(clinicaveterinaria.model.Atendimento::getHora));
+
+            // 3. Adiciona na tabela (Agora já ordenado)
+            for (clinicaveterinaria.model.Atendimento a : agendaHoje) {
+                modelo.addRow(new Object[]{
+                    a.getVetResponsavel().getNome(),
+                    a.getPetAtendido().getEspecie().toString(),
+                    a.getPetAtendido().getNome(),
+                    a.getProcedimento().name(),
+                    a.getHora().format(formatoHora)
+                });
             }
         }
     }
@@ -79,9 +88,6 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
 
         jMenu4.setText("jMenu4");
 
@@ -113,7 +119,7 @@ public class Menu extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -175,14 +181,6 @@ public class Menu extends javax.swing.JFrame {
         jMenu5.add(jSeparator3);
 
         jMenuBar1.add(jMenu5);
-
-        jMenu3.setText("Ajuda");
-
-        jMenuItem14.setText("Informações");
-        jMenu3.add(jMenuItem14);
-        jMenu3.add(jSeparator4);
-
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -275,7 +273,50 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
+        // 1. Verifica se foi CLIQUE DUPLO
+        if (evt.getClickCount() == 2) {
+            int linhaSelecionada = jTable1.getSelectedRow();
+            
+            if (linhaSelecionada != -1) {
+                // 2. Reconstrói a lista de "Hoje" para achar o objeto correto
+                // (Precisamos fazer isso porque a tabela está ordenada por horário, 
+                // então o índice da linha não bate com a lista geral do Controller)
+                
+                java.time.LocalDate hoje = java.time.LocalDate.now();
+                java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
+
+                // Filtra os de hoje
+                if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
+                    for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
+                        if (a.getData().equals(hoje)) {
+                            agendaHoje.add(a);
+                        }
+                    }
+                }
+
+                // Ordena por horário (Igualzinho ao carregarTabela)
+                java.util.Collections.sort(agendaHoje, java.util.Comparator.comparing(clinicaveterinaria.model.Atendimento::getHora));
+
+                // 3. Pega o atendimento correspondente à linha clicada
+                if (linhaSelecionada < agendaHoje.size()) {
+                    clinicaveterinaria.model.Atendimento atendimentoAlvo = agendaHoje.get(linhaSelecionada);
+
+                    // 4. Abre a tela de Visualizar
+                    VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);
+                    tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                    
+                    // Truque: Quando fechar a visualização, atualiza o Menu automaticamente
+                    tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosed(java.awt.event.WindowEvent e) {
+                            carregarAgendaDoDia(); // Atualiza a tabela ao voltar
+                        }
+                    });
+                    
+                    tela.setVisible(true);
+                }
+            }
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
 
@@ -288,14 +329,12 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
@@ -303,7 +342,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

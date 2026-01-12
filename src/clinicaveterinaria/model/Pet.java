@@ -37,7 +37,6 @@ public class Pet {
         this.raca = raca;
         this.alergias = alergias;
         this.tutor = tutor;
-        this.consultasHistorico = new ArrayList<>();
     }
     
     // Adicione este método na classe Pet
