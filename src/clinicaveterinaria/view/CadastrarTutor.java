@@ -2,17 +2,11 @@ package clinicaveterinaria.view;
 import javax.swing.JOptionPane;
 import clinicaveterinaria.controller.TutorController;
 
-/**
- *
- * @author Artur
- */
+
 public class CadastrarTutor extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarTutor.class.getName());
 
-    /**
-     * Creates new form CadastrarTutor
-     */
     public CadastrarTutor() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

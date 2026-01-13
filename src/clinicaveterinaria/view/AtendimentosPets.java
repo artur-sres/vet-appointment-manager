@@ -8,16 +8,9 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- * jFrame para tela de Historicos de todas as consultas de um Pet
- * @author Artur
- */
 public class AtendimentosPets extends javax.swing.JFrame {
     private Pet pet;
 
-    /**
-     * Construtor
-     */
     public AtendimentosPets(Pet pet) {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
@@ -25,9 +18,6 @@ public class AtendimentosPets extends javax.swing.JFrame {
         carregarTabela();
     }
 
-    /**
-     * Carrega a jTable com todos os agendamentos de um determinado Pet
-     */
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
@@ -35,7 +25,6 @@ public class AtendimentosPets extends javax.swing.JFrame {
         
         List<Atendimento> lista = new ArrayList<>(pet.getHistorico());
         
-        //Ordena para aparecer os mais recentes como primeiros
         Collections.sort(lista, (a1, a2) -> {
             int c = a2.getData().compareTo(a1.getData());
             if (c != 0) return c;
@@ -146,10 +135,6 @@ public class AtendimentosPets extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * Acessa uma das consultas a partir de um duplo clique do cursor e mantem a tabela atualizada caso alguma coisa seja editada
-     * @param evt Clique do Cursor
-     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) {
             int linha = jTable1.getSelectedRow();

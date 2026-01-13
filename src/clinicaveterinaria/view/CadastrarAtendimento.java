@@ -16,15 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- * jFrame para agendar novos atendimentos
- * @author Artur
- */
 public class CadastrarAtendimento extends javax.swing.JFrame {
    
-    /**
-     * Construtor
-     */
     public CadastrarAtendimento() {
         initComponents();
         inicializarListas();
@@ -32,9 +25,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
-    /**
-     * Inicializa as comboBox utilizadas para o agendamento de novos Atendimentos
-     */
     private void inicializarListas() {
         cmbAno1.removeAllItems();
         int anoAtual = java.time.LocalDate.now().getYear();
@@ -44,35 +34,28 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         cmbMes1.addActionListener(evt -> atualizarDias());
 
         atualizarMeses();
-
-        // Preenche Veterinários
+        
         comboVet.removeAllItems();
         for (MedVet vet : VeterinarioController.listaVeterinarios) {
             comboVet.addItem(vet.getNome());
         }
 
-        // Preenche Pets
         comboPet.removeAllItems();
         for (Pet pet : PetController.listaPets) {
             comboPet.addItem(pet.getNome());
         }
 
-        // Preenche Procedimentos
         comboAtendimento.removeAllItems();
         for (Procedimento proc : Procedimento.values()) {
             comboAtendimento.addItem(proc.name());
         }
 
-        // Preenche Duração
         cmbDuracao.removeAllItems();
         for (int i = 30; i <= 240; i += 30) {
             cmbDuracao.addItem(String.valueOf(i));
         }
     }
 
-    /**
-     * Mantem os meses atualizados para que não tenham meses que já passaram da data
-     */
     private void atualizarMeses() {
         String anoSelecionadoStr = (String) cmbAno1.getSelectedItem();
         if (anoSelecionadoStr == null) return;
@@ -99,9 +82,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         atualizarDias();
     }
 
-    /**
-     * Mantem os dias atualizados para que não tenham dias que já passaram da data
-     */
     private void atualizarDias() {
         String anoStr = (String) cmbAno1.getSelectedItem();
         String mesStr = (String) cmbMes1.getSelectedItem();
@@ -128,10 +108,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Pegar o número de um mes de acordo com o nome
-     * @return número do mês
-     */
     private int getNumeroMes(String nomeMes) {
         String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
@@ -349,10 +325,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Atualiza nas comboBox de acordo com o veterinario e com o pet selecionados
-     * @param evt clique no botão
-     */
     private void btnHorariosDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosDisponiveisActionPerformed
         cmbHora.removeAllItems();
         try {
@@ -413,10 +385,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnHorariosDisponiveisActionPerformed
 
-    /**
-     * Salva todas as informações e faz validações para que informações inválidas não deem erro
-     * @param evt 
-     */
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
             if (comboVet.getSelectedItem() == null || comboPet.getSelectedItem() == null) {
@@ -470,7 +438,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             this.dispose();
 
         } catch (HeadlessException | NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

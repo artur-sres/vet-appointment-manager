@@ -2,21 +2,13 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.model.MedVet;
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Artur
- */
 public class EditarVeterinario extends javax.swing.JFrame {
     MedVet veterinario;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarVeterinario.class.getName());
 
-    /**
-     * Creates new form EditarVeterinario
-     */
     public EditarVeterinario(MedVet veterinario) {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

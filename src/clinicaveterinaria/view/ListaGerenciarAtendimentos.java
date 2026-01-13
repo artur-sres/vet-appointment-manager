@@ -14,7 +14,6 @@ public class ListaGerenciarAtendimentos extends javax.swing.JFrame {
         this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
     
-    // Método para preencher a tabela
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tblAtendimentos.getModel();
         modelo.setNumRows(0); 
@@ -145,16 +144,12 @@ public class ListaGerenciarAtendimentos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblAtendimentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAtendimentosMouseClicked
-        // Verifica se foi clique duplo (click count == 2)
         if (evt.getClickCount() == 2) {
             int linha = tblAtendimentos.getSelectedRow();
             if (linha != -1) {
-                // Recupera o atendimento clicado
                 Atendimento atendimentoSelecionado = AtendimentoController.listaAtendimentos.get(linha);
                 
-                // Abre a tela de Visualizar passando o objeto
                 VisualizarAtendimento telaVisualizar = new VisualizarAtendimento(atendimentoSelecionado);
-                telaVisualizar.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE); // Fecha só ela, não o sistema todo
                 telaVisualizar.setVisible(true);
             }
         }

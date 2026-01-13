@@ -9,17 +9,8 @@ import clinicaveterinaria.model.MedVet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Artur
- */
 public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaGerenciarVeterinarios.class.getName());
-
-    /**
-     * Creates new form ListaGerenciarVeterinarios
-     */
+   
     public ListaGerenciarVeterinarios() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

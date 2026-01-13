@@ -10,17 +10,8 @@ import java.awt.HeadlessException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Artur
- */
 public class CadastrarPet extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarPet.class.getName());
-
-    /**
-     * Creates new form CadastrarPet
-     */
     public CadastrarPet() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

@@ -5,26 +5,21 @@ import javax.swing.JOptionPane;
 
 public class VisualizarAtendimento extends javax.swing.JFrame {
 
-    // Variável para guardar qual agendamento estamos vendo
     private final Atendimento atendimentoAtual;
 
-    // CONSTRUTOR QUE RECEBE O AGENDAMENTO
     public VisualizarAtendimento(Atendimento atendimento) {
         initComponents();
         
-        // Salva o atendimento na variável
         this.atendimentoAtual = atendimento;
         
-        // Preenche os campos da tela
         txtAtendimento.setText(atendimento.getProcedimento().toString());
         txtVet.setText(atendimento.getVetResponsavel().getNome());
         txtPet.setText(atendimento.getPetAtendido().getNome());
-        txtData.setText(atendimento.getData().toString()); // Formato YYYY-MM-DD
+        txtData.setText(atendimento.getData().toString()); 
         txtHora.setText(atendimento.getHora().toString());
         txtDescricao.setText(atendimento.getDescricao());
         txtDuracao.setText(atendimentoAtual.getDuracaoMinutos() + " min");
-        
-        // Bloqueia para não deixar digitar (é só visualizar)
+       
         txtAtendimento.setEditable(false);
         txtVet.setEditable(false);
         txtPet.setEditable(false);
@@ -212,37 +207,32 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        this.dispose(); // Apenas fecha
+        this.dispose(); 
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Abre a tela de Editar (passando o agendamento atual)
         EditarAtendimento telaEditar = new EditarAtendimento(this.atendimentoAtual);
         telaEditar.setVisible(true);
         telaEditar.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         
-        this.dispose(); // Fecha a tela de visualizar para ficar só na de editar
+        this.dispose(); 
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        // 1. Pergunta se tem certeza
         int opcao = JOptionPane.showConfirmDialog(this, 
             "Tem certeza que deseja cancelar este agendamento?", 
             "Cancelar Agendamento", 
             JOptionPane.YES_NO_OPTION);
             
         if (opcao == JOptionPane.YES_OPTION) {
-            // 2. Remove da lista GERAL
             clinicaveterinaria.controller.AtendimentoController.listaAtendimentos.remove(atendimentoAtual);
             
-            // 3. Remove da lista do VETERINÁRIO
             atendimentoAtual.getVetResponsavel().getAgendaConsultas().remove(atendimentoAtual);
-            
-            // 4. Remove da lista do PET
+   
             atendimentoAtual.getPetAtendido().getHistorico().remove(atendimentoAtual);
             
             JOptionPane.showMessageDialog(this, "Agendamento cancelado!");
-            this.dispose(); // Fecha a janela
+            this.dispose();
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 

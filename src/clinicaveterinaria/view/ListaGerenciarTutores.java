@@ -9,9 +9,6 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaGerenciarTutores.class.getName());
 
-    /**
-     * Creates new form GerenciarTutores
-     */
     public ListaGerenciarTutores() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

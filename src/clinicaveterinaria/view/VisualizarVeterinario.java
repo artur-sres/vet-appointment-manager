@@ -2,18 +2,11 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.MedVet;
 
-/**
- *
- * @author Artur
- */
 public class VisualizarVeterinario extends javax.swing.JFrame {
     private MedVet veterinario;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarVeterinario.class.getName());
 
-    /**
-     * Creates new form VizualizarVeterinario
-     */
     public VisualizarVeterinario(MedVet veterinario) {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
@@ -151,14 +144,11 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        // 1. Verificação de Segurança: Agendamentos Pendentes
         boolean temPendente = false;
         java.time.LocalDate hoje = java.time.LocalDate.now();
         java.time.LocalTime agora = java.time.LocalTime.now();
 
-        // Verifica a agenda do PRÓPRIO veterinário que estamos visualizando
         for (clinicaveterinaria.model.Atendimento a : this.veterinario.getAgendaConsultas()) {
-            // Se tiver consulta no futuro (ou hoje mais tarde), bloqueia
             if (a.getData().isAfter(hoje) || (a.getData().equals(hoje) && a.getHora().isAfter(agora))) {
                 temPendente = true;
                 break;
@@ -170,22 +160,19 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
                 "ERRO: Não é possível remover este veterinário!\n" +
                 "Ele possui consultas agendadas pendentes."
             );
-            return; // Cancela a ação
+            return; 
         }
 
-        // 2. Confirmação
         int opcao = javax.swing.JOptionPane.showConfirmDialog(this, 
             "Tem certeza que deseja remover " + this.veterinario.getNome() + "?\nEssa ação é irreversível.", 
             "Confirmar Exclusão", 
             javax.swing.JOptionPane.YES_NO_OPTION);
         
         if (opcao == javax.swing.JOptionPane.YES_OPTION) {
-            // 3. Remove da Lista Global usando o objeto direto
             clinicaveterinaria.controller.VeterinarioController.listaVeterinarios.remove(this.veterinario);
             
             javax.swing.JOptionPane.showMessageDialog(this, "Veterinário removido com sucesso!");
-            
-            // 4. Fecha a tela de visualização (pois o veterinário não existe mais)
+
             this.dispose();
         }
     }//GEN-LAST:event_btnRemoverActionPerformed

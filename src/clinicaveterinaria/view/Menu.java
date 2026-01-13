@@ -11,9 +11,6 @@ public class Menu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Menu.class.getName());
 
-    /**
-     * Creates new form MenuInicial
-     */
     public Menu() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
@@ -22,7 +19,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void carregarAgendaDoDia() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); // Limpa a tabela
+        modelo.setRowCount(0); 
 
         modelo.setColumnIdentifiers(new String[] {"Veterinário", "Espécie", "Nome", "Atendimento", "Horário"});
 
@@ -30,8 +27,6 @@ public class Menu extends javax.swing.JFrame {
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
         if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
-            
-            // 1. Cria uma lista temporária apenas com os atendimentos de HOJE
             java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
 
             for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
@@ -40,11 +35,8 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
 
-            // 2. Ordena essa lista pelo HORÁRIO (Do mais cedo para o mais tarde)
-            // Usamos a classe Comparator para comparar os horários (getHora)
             java.util.Collections.sort(agendaHoje, java.util.Comparator.comparing(clinicaveterinaria.model.Atendimento::getHora));
 
-            // 3. Adiciona na tabela (Agora já ordenado)
             for (clinicaveterinaria.model.Atendimento a : agendaHoje) {
                 modelo.addRow(new Object[]{
                     a.getVetResponsavel().getNome(),
@@ -273,19 +265,14 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // 1. Verifica se foi CLIQUE DUPLO
+
         if (evt.getClickCount() == 2) {
             int linhaSelecionada = jTable1.getSelectedRow();
             
             if (linhaSelecionada != -1) {
-                // 2. Reconstrói a lista de "Hoje" para achar o objeto correto
-                // (Precisamos fazer isso porque a tabela está ordenada por horário, 
-                // então o índice da linha não bate com a lista geral do Controller)
-                
                 java.time.LocalDate hoje = java.time.LocalDate.now();
                 java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
 
-                // Filtra os de hoje
                 if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
                     for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
                         if (a.getData().equals(hoje)) {
@@ -294,22 +281,17 @@ public class Menu extends javax.swing.JFrame {
                     }
                 }
 
-                // Ordena por horário (Igualzinho ao carregarTabela)
                 java.util.Collections.sort(agendaHoje, java.util.Comparator.comparing(clinicaveterinaria.model.Atendimento::getHora));
 
-                // 3. Pega o atendimento correspondente à linha clicada
                 if (linhaSelecionada < agendaHoje.size()) {
                     clinicaveterinaria.model.Atendimento atendimentoAlvo = agendaHoje.get(linhaSelecionada);
 
-                    // 4. Abre a tela de Visualizar
-                    VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);
-                    tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                    VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);    
                     
-                    // Truque: Quando fechar a visualização, atualiza o Menu automaticamente
                     tela.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosed(java.awt.event.WindowEvent e) {
-                            carregarAgendaDoDia(); // Atualiza a tabela ao voltar
+                            carregarAgendaDoDia(); 
                         }
                     });
                     

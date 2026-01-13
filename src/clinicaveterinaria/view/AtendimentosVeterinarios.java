@@ -8,18 +8,10 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- * jFrame para tela de agendamentos de um MedVet
- * @author Artur
- */
 public class AtendimentosVeterinarios extends javax.swing.JFrame {
 
     private MedVet veterinario;
 
-    /**
-     * Construtor
-     * @param vet 
-     */
     public AtendimentosVeterinarios(MedVet vet) {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
@@ -27,15 +19,11 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         carregarTabela();
     }
 
-    /**
-     * Carrega a jTable com todos os agendamentos de um determinado MedVet
-     */
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
         DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        //Ordena para aparecer os mais recentes como primeiros
         List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
         Collections.sort(lista, (a1, a2) -> {
             int c = a2.getData().compareTo(a1.getData());
@@ -147,10 +135,6 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
     
-    /**
-     * Acessa uma das consultas a partir de um duplo clique do cursor e mantem a tabela atualizada caso alguma coisa seja editada
-     * @param evt 
-     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) { // Duplo clique
             int linha = jTable1.getSelectedRow();

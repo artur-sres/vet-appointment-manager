@@ -10,11 +10,6 @@ import java.time.LocalDate;
 public class EditarPet extends javax.swing.JFrame {
     private final Pet pet;
 
-/**
-     * Creates new form EditarPet
-     * @param petSelecionado
-     */
-    
     public EditarPet(Pet petSelecionado) {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
@@ -325,7 +320,6 @@ public class EditarPet extends javax.swing.JFrame {
             int ano = Integer.parseInt((String) cmbAno.getSelectedItem());
             LocalDate dataNasc = java.time.LocalDate.of(ano, mes, dia);
 
-            // 2. Coleta Enums e Tutor
             Especie especie = clinicaveterinaria.model.Enums.Especie.valueOf(cmbEspecie.getSelectedItem().toString());
             Sexo sexo = clinicaveterinaria.model.Enums.Sexo.valueOf(cmbSexo.getSelectedItem().toString());
             

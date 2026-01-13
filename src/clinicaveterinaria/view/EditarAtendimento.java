@@ -12,15 +12,12 @@ public class EditarAtendimento extends javax.swing.JFrame {
 
     private Atendimento atendimentoOriginal;
 
-    // Construtor que recebe o atendimento para editar
     public EditarAtendimento(Atendimento atendimento) {
         initComponents();
         this.atendimentoOriginal = atendimento;
-        
-        // 1. Carrega as listas vazias (igual ao Cadastro)
+
         inicializarListas();
-        
-        // 2. Seleciona os itens certos baseados no atendimento original
+
         preencherCampos();
     }
 
@@ -29,22 +26,17 @@ public class EditarAtendimento extends javax.swing.JFrame {
         inicializarListas();
     }
 
-    // --- Mesma lógica do Cadastro para encher as caixinhas ---
     private void inicializarListas() {
-        // Preenche Anos
         cmbAno1.removeAllItems();
         int anoAtual = LocalDate.now().getYear();
         cmbAno1.addItem(String.valueOf(anoAtual));
         cmbAno1.addItem(String.valueOf(anoAtual + 1));
         
-        // Listeners para atualizar dias/meses automaticamente
         cmbAno1.addActionListener(evt -> atualizarMeses());
         cmbMes1.addActionListener(evt -> atualizarDias());
 
-        // Preenche Vets, Pets, Procedimentos e Duração
         comboVet.removeAllItems();
         for (MedVet vet : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
-            // Só adiciona ativos, MAS se o vet original estiver inativo, ele precisa aparecer!
             if (vet.isAtivo() || (atendimentoOriginal != null && vet.equals(atendimentoOriginal.getVetResponsavel()))) {
                  comboVet.addItem(vet.getNome());
             }
@@ -68,7 +60,6 @@ public class EditarAtendimento extends javax.swing.JFrame {
         atualizarMeses(); // Dispara a cascata inicial
     }
 
-    // --- Lógica EXCLUSIVA da Edição: Selecionar o que já estava salvo ---
     private void preencherCampos() {
         if (atendimentoOriginal == null) return;
 
@@ -79,27 +70,21 @@ public class EditarAtendimento extends javax.swing.JFrame {
         cmbDuracao.setSelectedItem(String.valueOf(atendimentoOriginal.getDuracaoMinutos()));
         txtDescricao.setText(atendimentoOriginal.getDescricao());
 
-        // 2. Seleciona a Data (Mais chatinho, tem que converter)
         LocalDate data = atendimentoOriginal.getData();
         
-        // Seleciona Ano
         cmbAno1.setSelectedItem(String.valueOf(data.getYear()));
         
-        // Seleciona Mês (Converte número 1 -> "Janeiro")
         String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         if (data.getMonthValue() >= 1 && data.getMonthValue() <= 12) {
             cmbMes1.setSelectedItem(meses[data.getMonthValue() - 1]);
         }
         
-        // Força atualizar os dias para o mês selecionado aparecer correto
         atualizarDias();
-        
-        // Seleciona Dia (Formata 5 -> "05" se necessário)
+
         String diaFormatado = String.format("%02d", data.getDayOfMonth());
         cmbDia1.setSelectedItem(diaFormatado);
 
-        // 3. Adiciona a hora atual na lista (para não parecer vazio) e seleciona
         cmbHora.removeAllItems();
         cmbHora.addItem(atendimentoOriginal.getHora().toString());
     }
@@ -110,9 +95,8 @@ public class EditarAtendimento extends javax.swing.JFrame {
 
         int anoSelecionado = Integer.parseInt(anoSelecionadoStr);
         int anoAtual = java.time.LocalDate.now().getYear();
-        int mesAtual = java.time.LocalDate.now().getMonthValue(); // 1 a 12
+        int mesAtual = java.time.LocalDate.now().getMonthValue(); 
 
-        // Remove listener temporariamente para evitar loops ou travamentos
         java.awt.event.ActionListener[] listeners = cmbMes1.getActionListeners();
         for (java.awt.event.ActionListener l : listeners) cmbMes1.removeActionListener(l);
 
@@ -120,15 +104,12 @@ public class EditarAtendimento extends javax.swing.JFrame {
         String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
-        // Se for o ano atual, começa do mês atual. Se for ano futuro, mostra todos.
         int inicio = (anoSelecionado == anoAtual) ? (mesAtual - 1) : 0;
 
-        // IMPORTANTE PARA EDIÇÃO: Se a data original for ANTIGA (antes de hoje), 
-        // forçamos mostrar o mês dela para não dar erro ao abrir.
         if (atendimentoOriginal != null && atendimentoOriginal.getData().getYear() == anoSelecionado) {
              int mesOriginal = atendimentoOriginal.getData().getMonthValue() - 1;
              if (mesOriginal < inicio) {
-                 inicio = mesOriginal; // Recua o início para mostrar o mês do agendamento
+                 inicio = mesOriginal; 
              }
         }
 
@@ -136,10 +117,9 @@ public class EditarAtendimento extends javax.swing.JFrame {
             cmbMes1.addItem(meses[i]);
         }
 
-        // Devolve o listener
         for (java.awt.event.ActionListener l : listeners) cmbMes1.addActionListener(l);
 
-        atualizarDias(); // Força atualizar os dias também
+        atualizarDias(); 
     }
 
     private void atualizarDias() {
@@ -153,18 +133,14 @@ public class EditarAtendimento extends javax.swing.JFrame {
 
         java.time.LocalDate hoje = java.time.LocalDate.now();
 
-        // Descobre quantos dias tem aquele mês
         java.time.YearMonth anoMes = java.time.YearMonth.of(ano, mes);
         int diasNoMes = anoMes.lengthOfMonth();
 
-        // Se for Mês e Ano atuais, começa do dia de hoje.
         int diaInicial = 1;
         if (ano == hoje.getYear() && mes == hoje.getMonthValue()) {
             diaInicial = hoje.getDayOfMonth();
         }
         
-        // IMPORTANTE PARA EDIÇÃO: Se for a data original, permite ver o dia original
-        // (mesmo que seja "ontem", para você poder ver o que estava salvo)
         if (atendimentoOriginal != null 
                 && atendimentoOriginal.getData().getYear() == ano 
                 && atendimentoOriginal.getData().getMonthValue() == mes) {
@@ -384,14 +360,12 @@ public class EditarAtendimento extends javax.swing.JFrame {
     private void btnHorariosDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosDisponiveisActionPerformed
         cmbHora.removeAllItems();
         try {
-            // 1. Recupera o VETERINÁRIO selecionado
             String nomeVet = (String) comboVet.getSelectedItem();
             MedVet vetReal = null;
             for (MedVet v : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
                 if (v.getNome().equals(nomeVet)) { vetReal = v; break; }
             }
-            
-            // 2. Recupera o PET selecionado (FALTAVA ISSO AQUI)
+
             String nomePet = (String) comboPet.getSelectedItem();
             Pet petReal = null;
             for (Pet p : clinicaveterinaria.controller.PetController.listaPets) {
@@ -400,28 +374,23 @@ public class EditarAtendimento extends javax.swing.JFrame {
 
             if (vetReal == null || petReal == null) return;
 
-            // 3. Monta a Data
             int ano = Integer.parseInt((String) cmbAno1.getSelectedItem());
             int mes = getNumeroMes((String) cmbMes1.getSelectedItem());
             int dia = Integer.parseInt((String) cmbDia1.getSelectedItem());
             LocalDate dataConsulta = LocalDate.of(ano, mes, dia);
 
             int duracao = Integer.parseInt((String) cmbDuracao.getSelectedItem());
-            
-            // 4. Loop de horários
+
             LocalTime horario = LocalTime.of(8, 0);
             LocalTime fimDia = LocalTime.of(17, 0);
             LocalTime agora = LocalTime.now();
 
             while (horario.isBefore(fimDia)) {
-                // Filtro de passado
                 if (dataConsulta.equals(LocalDate.now()) && horario.isBefore(agora)) {
                     horario = horario.plusMinutes(30);
                     continue;
                 }
 
-                // --- A GRANDE CORREÇÃO ---
-                // Verifica Vet E Pet, passando 'this.atendimentoOriginal' para ambos ignorarem o conflito com eles mesmos
                 boolean vetLivre = vetReal.isHorarioDisponivel(dataConsulta, horario, duracao, this.atendimentoOriginal);
                 boolean petLivre = petReal.isHorarioDisponivel(dataConsulta, horario, duracao, this.atendimentoOriginal);
 
@@ -445,21 +414,17 @@ public class EditarAtendimento extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            // 1. Validar seleção de DATA e HORA
-            // Se o usuário não clicou em "Ver Horários", o combo pode estar vazio ou nulo.
             if (cmbHora.getSelectedItem() == null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Por favor, clique em 'Ver Horários' e selecione um horário válido!");
                 return;
             }
 
-            // Recupera Data e Hora da tela
             String dia = (String) cmbDia1.getSelectedItem();
             String ano = (String) cmbAno1.getSelectedItem();
             int mes = getNumeroMes((String) cmbMes1.getSelectedItem());
             java.time.LocalDate novaData = java.time.LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
             java.time.LocalTime novaHora = java.time.LocalTime.parse((String) cmbHora.getSelectedItem());
 
-            // 2. Recupera o NOVO Veterinário e PET selecionados
             String nomeVet = (String) comboVet.getSelectedItem();
             clinicaveterinaria.model.MedVet novoVet = null;
             for (clinicaveterinaria.model.MedVet v : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
@@ -472,35 +437,22 @@ public class EditarAtendimento extends javax.swing.JFrame {
                 if (p.getNome().equals(nomePet)) { novoPet = p; break; }
             }
             
-            // 3. Recupera os outros dados
             clinicaveterinaria.model.Enums.Procedimento procedimento = 
                 clinicaveterinaria.model.Enums.Procedimento.valueOf((String) comboAtendimento.getSelectedItem());
             String descricao = txtDescricao.getText();
             int duracao = Integer.parseInt((String) cmbDuracao.getSelectedItem());
 
-            // --- LÓGICA CRUCIAL DE TROCA (Igual fizemos no Pet com Tutor) ---
-            
-            // A. Se mudou o Veterinário:
             if (novoVet != null && !atendimentoOriginal.getVetResponsavel().equals(novoVet)) {
-                 // Remove da agenda do médico antigo
                  atendimentoOriginal.getVetResponsavel().getAgendaConsultas().remove(atendimentoOriginal);
-                 // Adiciona na agenda do novo
                  novoVet.getAgendaConsultas().add(atendimentoOriginal);
-                 // Atualiza a referência no atendimento
                  atendimentoOriginal.setVetResponsavel(novoVet);
             }
 
-            // B. Se mudou o Pet:
             if (novoPet != null && !atendimentoOriginal.getPetAtendido().equals(novoPet)) {
-                // Remove do histórico do pet antigo
                 atendimentoOriginal.getPetAtendido().getHistorico().remove(atendimentoOriginal);
-                // Adiciona no histórico do novo
                 novoPet.getHistorico().add(atendimentoOriginal);
-                // Atualiza a referência no atendimento
                 atendimentoOriginal.setPetAtendido(novoPet);
             }
-
-            // 4. Atualiza os dados do Agendamento (Objeto já existente)
             atendimentoOriginal.setData(novaData);
             atendimentoOriginal.setHora(novaHora);
             atendimentoOriginal.setDuracaoMinutos(duracao);

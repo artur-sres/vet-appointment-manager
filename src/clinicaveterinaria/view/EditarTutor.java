@@ -4,19 +4,11 @@ import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Artur
- */
 public class EditarTutor extends javax.swing.JFrame {
     Tutor tutor;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarTutor.class.getName());
 
-    /**
-     * Creates new form EditarTutor
-     * @param tutor
-     */
     public EditarTutor(Tutor tutor) {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

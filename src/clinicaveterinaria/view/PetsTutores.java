@@ -7,10 +7,6 @@ import javax.swing.table.DefaultTableModel;
 public class PetsTutores extends javax.swing.JFrame {
     private final Tutor tutor;
 
-    /**
-     * Creates new form PetsTutr
-     * @param tutorSelecionado
-     */
     public PetsTutores(Tutor tutorSelecionado) {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());

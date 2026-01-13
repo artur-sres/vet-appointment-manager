@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.TutorController;
@@ -9,12 +5,7 @@ import clinicaveterinaria.model.Tutor;
 
 public class VisualizarTutor extends javax.swing.JFrame {
     Tutor tutor;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarTutor.class.getName());
 
-    /**
-     * Creates new form VisualizarTutor
-     * @param tutor
-     */
     public VisualizarTutor(Tutor tutor) {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
@@ -189,11 +180,8 @@ public class VisualizarTutor extends javax.swing.JFrame {
             javax.swing.JOptionPane.WARNING_MESSAGE); // Ícone de alerta amarelo
 
         if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-            // Chama a função cascata completa (Tutor -> Pets -> Agendamentos)
             clinicaveterinaria.controller.TutorController.excluirTutor(this.tutor);
-            
-            javax.swing.JOptionPane.showMessageDialog(this, "Tutor e todos seus vínculos excluídos!");
-            
+            javax.swing.JOptionPane.showMessageDialog(this, "Tutor e todos seus vínculos excluídos!"); 
             this.dispose();
         }
     }//GEN-LAST:event_btnRemoverActionPerformed

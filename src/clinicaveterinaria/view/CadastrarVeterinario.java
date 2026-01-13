@@ -3,17 +3,10 @@ package clinicaveterinaria.view;
 import clinicaveterinaria.controller.VeterinarioController;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Artur
- */
 public class CadastrarVeterinario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarVeterinario.class.getName());
 
-    /**
-     * Creates new form CadastrarVeterinario
-     */
     public CadastrarVeterinario() {
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
