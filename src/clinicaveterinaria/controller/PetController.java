@@ -1,17 +1,22 @@
 package clinicaveterinaria.controller;
 
-import clinicaveterinaria.model.Atendimento;
-import clinicaveterinaria.model.Enums.Especie;
-import clinicaveterinaria.model.Enums.Sexo;
-import clinicaveterinaria.model.Pet;
-import clinicaveterinaria.model.Tutor;
-import static clinicaveterinaria.util.ValidarDados.validarDados;
+import clinicaveterinaria.model.Enums.*;
+import clinicaveterinaria.model.*;
+import static clinicaveterinaria.util.ValidarDados.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Classe que guarda os metódos responsáveis por cuidar da lógica dos Pets
+ * @author Artur
+ */
 public class PetController {
     public static ArrayList<Pet> listaPets = new ArrayList<>();
     
+    /**
+     * Chama o construtor e cadastra um Pet na listaPets e relaciona com um tutor anteriormente cadastrado
+     * @throws Exception Quando dados inválidos são inseridos
+     */
     public static void cadastrarPet(Tutor tutor, Especie especie, String nome, String raca, Sexo sexo, String pesoTexto, LocalDate nascimento, String alergias, String temperamento, boolean vacinado, boolean castrado) throws Exception{
         validarDados(nome, raca, alergias, temperamento);
         
@@ -27,7 +32,10 @@ public class PetController {
         listaPets.add(novoPet);
     }
    
-    // Adicione este método na classe PetController
+    /**
+     * Edita os dados de um Pet já existente
+     * @throws Exception Quando dados inválidos são inseridos
+     */
     public static void editarPet(Pet pet, Tutor novoTutor, clinicaveterinaria.model.Enums.Especie especie, String nome, String raca, clinicaveterinaria.model.Enums.Sexo sexo, String pesoTexto, java.time.LocalDate nascimento, String alergias, String temperamento, boolean vacinado, boolean castrado) throws Exception {
         validarDados(nome, raca, alergias, temperamento);
 
@@ -38,22 +46,13 @@ public class PetController {
             throw new Exception("O peso informado é inválido!");
         }
 
-        // --- LÓGICA DE TROCA DE TUTOR (Resolve o Problema 2) ---
-        // Verifica se há um novo tutor E se ele é diferente do atual
+        //Lógica para troca de tutor
         if (novoTutor != null && pet.getTutor() != novoTutor) {
-            System.out.println("Alterando tutor de " + pet.getTutor().getNome() + " para " + novoTutor.getNome());
-
-            // 1. Remove o pet da lista do tutor ANTIGO
             pet.getTutor().getAnimais().remove(pet);
-
-            // 2. Atualiza o tutor no objeto Pet (Esta linha é CRUCIAL)
             pet.setTutor(novoTutor);
-
-            // 3. Adiciona o pet na lista do NOVO tutor
             novoTutor.adicionarPet(pet);
         }
 
-        // --- ATUALIZAÇÃO DOS OUTROS DADOS ---
         pet.setEspecie(especie);
         pet.setNome(nome);
         pet.setRaca(raca);
@@ -66,26 +65,27 @@ public class PetController {
         pet.setIsCastrado(castrado);
     }
     
+    /**
+     * Exclui um Pet do sistema, apagando seus agendamentos e desvinculando do Tutor
+     */
     public static void excluirPet(Pet pet) {
-        if (pet == null) return;
-
-        // 1. Cancelar todos os agendamentos desse Pet (Libera horários dos Vets)
-        // Criamos uma cópia da lista para não dar erro ao remover enquanto percorre
-        java.util.ArrayList<Atendimento> copiahistorico = new java.util.ArrayList<>(pet.getHistorico());
+        if (pet == null) {
+            return;
+        }
         
-        for (Atendimento agendamento : copiahistorico) {
+        // Cancelar todos os agendamentos desse Pet
+        // Cria uma cópia da lista para não dar erro ao remover enquanto percorre
+        java.util.ArrayList<Atendimento> aux = new java.util.ArrayList<>(pet.getHistorico());
+        
+        for (Atendimento agendamento : aux) {
             AtendimentoController.remover(agendamento);
         }
 
-        // 2. Remover o Pet da lista do seu Tutor
         if (pet.getTutor() != null) {
             pet.getTutor().getAnimais().remove(pet);
         }
-
-        // 3. Remover o Pet da lista geral do sistema
-        listaPets.remove(pet);
         
-        System.out.println("Pet " + pet.getNome() + " excluído com sucesso!");
+        listaPets.remove(pet);
     }
 }
 

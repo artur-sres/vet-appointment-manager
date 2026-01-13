@@ -4,8 +4,15 @@ import java.time.LocalDate;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+/**
+ * Classe para auxiliar na criação de datas
+ * @author Artur
+ */
 public class DataUtil {
 
+    /**
+     * Adiciona as datas em comboBox para auxiliar as jFrame 
+     */
     public static void inicializarCombos(JComboBox cmbDia, JComboBox cmbMes, JComboBox cmbAno) {
         cmbDia.removeAllItems();
         cmbMes.removeAllItems();
@@ -19,13 +26,17 @@ public class DataUtil {
                           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         cmbMes.setModel(new DefaultComboBoxModel<>(meses));
 
-        // 3. Anos (De 1990 até hoje)
         int anoAtual = LocalDate.now().getYear();
         for (int i = 1990; i <= anoAtual; i++) {
             cmbAno.addItem(String.valueOf(i));
         }
     }
 
+    /**
+     * Monta uma data no formato brasileiro
+     * @return Uma data no formato brasileiro
+     * @throws Exception 
+     */
     public static LocalDate montarData(JComboBox cmbDia, JComboBox cmbMes, JComboBox cmbAno) throws Exception {
         try {
             int dia = Integer.parseInt(cmbDia.getSelectedItem().toString());

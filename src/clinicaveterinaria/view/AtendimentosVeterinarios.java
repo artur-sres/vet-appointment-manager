@@ -8,29 +8,34 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * jFrame para tela de agendamentos de um MedVet
+ * @author Artur
+ */
 public class AtendimentosVeterinarios extends javax.swing.JFrame {
 
     private MedVet veterinario;
 
-    // Construtor principal
+    /**
+     * Construtor
+     * @param vet 
+     */
     public AtendimentosVeterinarios(MedVet vet) {
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         this.veterinario = vet;
-        // Dica: Se tiver um label de título, use: lblTitulo.setText("Agenda: " + vet.getNome());
         carregarTabela();
     }
 
-    // Construtor vazio
-    public AtendimentosVeterinarios() {
-        initComponents();
-    }
-
+    /**
+     * Carrega a jTable com todos os agendamentos de um determinado MedVet
+     */
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
         DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
-        // 1. Pega a lista e ordena (Mais recentes no topo)
+
+        //Ordena para aparecer os mais recentes como primeiros
         List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
         Collections.sort(lista, (a1, a2) -> {
             int c = a2.getData().compareTo(a1.getData());
@@ -38,13 +43,12 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
             return a2.getHora().compareTo(a1.getHora());
         });
 
-        // 2. Preenche a tabela
         for (Atendimento a : lista) {
             modelo.addRow(new Object[]{
                 a.getData().format(fmtData),
                 a.getHora(),
-                a.getPetAtendido().getNome(),       // Nome do Pet
-                a.getPetAtendido().getTutor().getNome(), // Nome do Tutor
+                a.getPetAtendido().getNome(),       
+                a.getPetAtendido().getTutor().getNome(), 
                 a.getProcedimento().name()
             });
         }
@@ -59,17 +63,13 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Página de Agendamentos de Veterinários");
-        jLabel1.setAutoscrolls(true);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -103,42 +103,39 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        jButton1.setText("Visualizar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(this::btnVoltarActionPerformed);
+
+        jLabel2.setText("(Para visualizar clique duas vezes no agendamento desejado)");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Agendamentos do Veterinário");
+        jLabel1.setAutoscrolls(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnVoltar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(jLabel1)))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVoltar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(btnVoltar))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVoltar)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -146,20 +143,19 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
-
+    
+    /**
+     * Acessa uma das consultas a partir de um duplo clique do cursor e mantem a tabela atualizada caso alguma coisa seja editada
+     * @param evt 
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) { // Duplo clique
             int linha = jTable1.getSelectedRow();
             if (linha == -1) return;
 
-            // Recria a lista ordenada para pegar o item certo (igual ao carregarTabela)
             List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
             Collections.sort(lista, (a1, a2) -> {
                 int c = a2.getData().compareTo(a1.getData());
@@ -169,12 +165,9 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
 
             Atendimento selecionado = lista.get(linha);
             
-            // Abre a tela de visualizar
             VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
-            tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             tela.setVisible(true);
             
-            // Ao fechar a visualização, atualiza a tabela (caso tenha excluído/editado)
             tela.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
@@ -187,8 +180,8 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVoltar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

@@ -1,54 +1,65 @@
 package clinicaveterinaria.view;
 
+import clinicaveterinaria.controller.AtendimentoController;
 import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.controller.PetController;
+import clinicaveterinaria.model.Atendimento;
+import clinicaveterinaria.model.Enums.Procedimento;
 import clinicaveterinaria.model.MedVet;
 import clinicaveterinaria.model.Pet;
-import clinicaveterinaria.model.Enums.Procedimento; 
 import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
+/**
+ * jFrame para agendar novos atendimentos
+ * @author Artur
+ */
 public class CadastrarAtendimento extends javax.swing.JFrame {
    
+    /**
+     * Construtor
+     */
     public CadastrarAtendimento() {
         initComponents();
         inicializarListas();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
+    /**
+     * Inicializa as comboBox utilizadas para o agendamento de novos Atendimentos
+     */
     private void inicializarListas() {
-        // 1. Configura os ANOS (Ano atual e próximo)
         cmbAno1.removeAllItems();
         int anoAtual = java.time.LocalDate.now().getYear();
         cmbAno1.addItem(String.valueOf(anoAtual));
         cmbAno1.addItem(String.valueOf(anoAtual + 1));
-
-        // 2. Adiciona Ação ao mudar o ANO
         cmbAno1.addActionListener(evt -> atualizarMeses());
-
-        // 3. Adiciona Ação ao mudar o MÊS
         cmbMes1.addActionListener(evt -> atualizarDias());
 
-        // 4. Carrega as listas iniciais
         atualizarMeses();
-
-        // --- O RESTO (Vet, Pet, Atendimento...) CONTINUA IGUAL ---
 
         // Preenche Veterinários
         comboVet.removeAllItems();
-        for (clinicaveterinaria.model.MedVet vet : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
+        for (MedVet vet : VeterinarioController.listaVeterinarios) {
             comboVet.addItem(vet.getNome());
         }
 
         // Preenche Pets
         comboPet.removeAllItems();
-        for (clinicaveterinaria.model.Pet pet : clinicaveterinaria.controller.PetController.listaPets) {
+        for (Pet pet : PetController.listaPets) {
             comboPet.addItem(pet.getNome());
         }
 
         // Preenche Procedimentos
         comboAtendimento.removeAllItems();
-        for (clinicaveterinaria.model.Enums.Procedimento proc : clinicaveterinaria.model.Enums.Procedimento.values()) {
+        for (Procedimento proc : Procedimento.values()) {
             comboAtendimento.addItem(proc.name());
         }
 
@@ -59,8 +70,9 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         }
     }
 
-    // --- Métodos novos para filtrar as datas ---
-
+    /**
+     * Mantem os meses atualizados para que não tenham meses que já passaram da data
+     */
     private void atualizarMeses() {
         String anoSelecionadoStr = (String) cmbAno1.getSelectedItem();
         if (anoSelecionadoStr == null) return;
@@ -69,27 +81,27 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         int anoAtual = java.time.LocalDate.now().getYear();
         int mesAtual = java.time.LocalDate.now().getMonthValue(); // 1 a 12
 
-        // Remove listener temporariamente para não travar
         java.awt.event.ActionListener[] listeners = cmbMes1.getActionListeners();
-        for (java.awt.event.ActionListener l : listeners) cmbMes1.removeActionListener(l);
+        for (ActionListener l : listeners) cmbMes1.removeActionListener(l);
 
         cmbMes1.removeAllItems();
         String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
-        // Se for o ano atual, começa do mês atual. Se for ano que vem, mostra todos.
         int inicio = (anoSelecionado == anoAtual) ? (mesAtual - 1) : 0;
 
         for (int i = inicio; i < meses.length; i++) {
             cmbMes1.addItem(meses[i]);
         }
 
-        // Devolve o listener
-        for (java.awt.event.ActionListener l : listeners) cmbMes1.addActionListener(l);
+        for (ActionListener l : listeners) cmbMes1.addActionListener(l);
 
-        atualizarDias(); // Força atualizar os dias também
+        atualizarDias();
     }
 
+    /**
+     * Mantem os dias atualizados para que não tenham dias que já passaram da data
+     */
     private void atualizarDias() {
         String anoStr = (String) cmbAno1.getSelectedItem();
         String mesStr = (String) cmbMes1.getSelectedItem();
@@ -99,18 +111,16 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         int ano = Integer.parseInt(anoStr);
         int mes = getNumeroMes(mesStr);
 
-        java.time.LocalDate hoje = java.time.LocalDate.now();
+        LocalDate hoje = java.time.LocalDate.now();
 
-        // Descobre quantos dias tem aquele mês
-        java.time.YearMonth anoMes = java.time.YearMonth.of(ano, mes);
+        YearMonth anoMes = java.time.YearMonth.of(ano, mes);
         int diasNoMes = anoMes.lengthOfMonth();
 
-        // Se for Mês e Ano atuais, começa do dia de hoje. Senão, começa do dia 1.
         int diaInicial = 1;
         if (ano == hoje.getYear() && mes == hoje.getMonthValue()) {
             diaInicial = hoje.getDayOfMonth();
         }
-
+        
         cmbDia1.removeAllItems();
         for (int i = diaInicial; i <= diasNoMes; i++) {
             String dia = (i < 10) ? "0" + i : String.valueOf(i);
@@ -118,15 +128,19 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Pegar o número de um mes de acordo com o nome
+     * @return número do mês
+     */
     private int getNumeroMes(String nomeMes) {
         String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                           "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         for (int i = 0; i < meses.length; i++) {
             if (meses[i].equals(nomeMes)) {
-                return i + 1; // Retorna 1 para Janeiro, 2 para Fevereiro...
+                return i + 1; 
             }
         }
-        return 1; // Padrão
+        return 1;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -187,7 +201,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         setTitle("VetLet - Tela de Agendamento");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Agendar Atendimento:");
+        jLabel1.setText("Agendar Novo Atendimento:");
 
         jLabel2.setText("Tipo de Atendimento:");
 
@@ -335,23 +349,25 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Atualiza nas comboBox de acordo com o veterinario e com o pet selecionados
+     * @param evt clique no botão
+     */
     private void btnHorariosDisponiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosDisponiveisActionPerformed
         cmbHora.removeAllItems();
         try {
-            // 1. Recupera o VETERINÁRIO selecionado
             String nomeVetSelecionado = (String) comboVet.getSelectedItem();
-            clinicaveterinaria.model.MedVet vetReal = null;
-            for (clinicaveterinaria.model.MedVet v : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
+            MedVet vetReal = null;
+            for (MedVet v : VeterinarioController.listaVeterinarios) {
                 if (v.getNome().equals(nomeVetSelecionado)) {
                     vetReal = v;
                     break;
                 }
             }
             
-            // 2. Recupera o PET selecionado (NOVO TRECHO)
             String nomePetSelecionado = (String) comboPet.getSelectedItem();
-            clinicaveterinaria.model.Pet petReal = null;
-            for (clinicaveterinaria.model.Pet p : clinicaveterinaria.controller.PetController.listaPets) {
+            Pet petReal = null;
+            for (Pet p : PetController.listaPets) {
                 if (p.getNome().equals(nomePetSelecionado)) {
                     petReal = p;
                     break;
@@ -360,30 +376,26 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
 
             if (vetReal == null || petReal == null) return;
 
-            // 3. Monta a DATA
             String dia = (String) cmbDia1.getSelectedItem();
             String ano = (String) cmbAno1.getSelectedItem();
             int mes = getNumeroMes((String) cmbMes1.getSelectedItem());
-            java.time.LocalDate dataConsulta = java.time.LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
+            LocalDate dataConsulta = LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
 
             int duracaoMinutos = Integer.parseInt((String) cmbDuracao.getSelectedItem());
 
-            java.time.LocalTime horarioAnalise = java.time.LocalTime.of(8, 0);
-            java.time.LocalTime fimDia = java.time.LocalTime.of(17, 0);
-            java.time.LocalTime agora = java.time.LocalTime.now();
+            LocalTime horarioAnalise = java.time.LocalTime.of(8, 0);
+            LocalTime fimDia = java.time.LocalTime.of(17, 0);
+            LocalTime agora = java.time.LocalTime.now();
 
-            // 4. Loop de Verificação (AGORA TESTA OS DOIS)
             while (horarioAnalise.isBefore(fimDia)) {
 
-                // Filtro de passado (se for hoje)
                 if (dataConsulta.equals(java.time.LocalDate.now()) && horarioAnalise.isBefore(agora)) {
                     horarioAnalise = horarioAnalise.plusMinutes(30);
                     continue;
                 }
 
-                // VERIFICAÇÃO DUPLA: O Médico está livre? E o Pet está livre?
                 boolean medicoLivre = vetReal.isHorarioDisponivel(dataConsulta, horarioAnalise, duracaoMinutos);
-                boolean petLivre = petReal.isHorarioDisponivel(dataConsulta, horarioAnalise, duracaoMinutos); // <--- O PULO DO GATO
+                boolean petLivre = petReal.isHorarioDisponivel(dataConsulta, horarioAnalise, duracaoMinutos); 
 
                 if (medicoLivre && petLivre) {
                     cmbHora.addItem(horarioAnalise.toString());
@@ -393,81 +405,71 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             }
 
             if (cmbHora.getItemCount() == 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Nenhum horário disponível (Agenda cheia ou conflito de horários)!");
+                JOptionPane.showMessageDialog(this, "Nenhum horário disponível (Agenda cheia ou conflito de horários)!");
             }
 
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
     }//GEN-LAST:event_btnHorariosDisponiveisActionPerformed
 
+    /**
+     * Salva todas as informações e faz validações para que informações inválidas não deem erro
+     * @param evt 
+     */
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            // --- 1. VALIDAÇÕES INICIAIS (Antes de tentar ler qualquer dado) ---
-
-            // Valida se tem Veterinário e Pet selecionados (caso o sistema esteja vazio)
             if (comboVet.getSelectedItem() == null || comboPet.getSelectedItem() == null) {
-                javax.swing.JOptionPane.showMessageDialog(this, "É necessário ter Veterinários e Pets cadastrados!");
+                JOptionPane.showMessageDialog(this, "É necessário ter Veterinários e Pets cadastrados!");
                 return;
             }
 
-            // Valida se clicou no botão de buscar horários (Combo de hora não pode ser nulo)
             if (cmbHora.getSelectedItem() == null) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, clique em 'Ver Horários' e selecione um horário!");
+                JOptionPane.showMessageDialog(this, "Por favor, clique em 'Ver Horários' e selecione um horário!");
                 return;
             }
 
-            // Valida a Descrição (Não pode ser vazia ou só espaços)
             if (txtDescricao.getText().trim().isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "A descrição do atendimento é obrigatória!");
+                JOptionPane.showMessageDialog(this, "A descrição do atendimento é obrigatória!");
                 return;
             }
 
-            // --- 2. RECUPERAÇÃO DOS DADOS ---
-            
-            // Data
             String dia = (String) cmbDia1.getSelectedItem();
             String ano = (String) cmbAno1.getSelectedItem();
             int mes = getNumeroMes((String) cmbMes1.getSelectedItem());
-            java.time.LocalDate data = java.time.LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
+            LocalDate data = java.time.LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
 
-            // Hora (Agora seguro, pois já validamos o null acima)
-            java.time.LocalTime hora = java.time.LocalTime.parse((String) cmbHora.getSelectedItem());
+            LocalTime hora = java.time.LocalTime.parse((String) cmbHora.getSelectedItem());
 
-            // Objetos (Vet e Pet)
             String nomeVet = (String) comboVet.getSelectedItem();
             clinicaveterinaria.model.MedVet vetReal = null;
-            for (clinicaveterinaria.model.MedVet v : clinicaveterinaria.controller.VeterinarioController.listaVeterinarios) {
-                if (v.getNome().equals(nomeVet)) { vetReal = v; break; }
+            for (MedVet v : VeterinarioController.listaVeterinarios) {
+                if (v.getNome().equals(nomeVet)) { 
+                    vetReal = v; 
+                    break; 
+                }
             }
 
             String nomePet = (String) comboPet.getSelectedItem();
-            clinicaveterinaria.model.Pet petReal = null;
-            for (clinicaveterinaria.model.Pet p : clinicaveterinaria.controller.PetController.listaPets) {
+            Pet petReal = null;
+            for (Pet p : PetController.listaPets) {
                 if (p.getNome().equals(nomePet)) { petReal = p; break; }
             }
 
-            // Procedimento e Descrição
-            clinicaveterinaria.model.Enums.Procedimento procedimento = 
-                    clinicaveterinaria.model.Enums.Procedimento.valueOf((String) comboAtendimento.getSelectedItem());
+            Procedimento procedimento = 
+                    Procedimento.valueOf((String) comboAtendimento.getSelectedItem());
             String descricao = txtDescricao.getText();
             int duracao = Integer.parseInt((String) cmbDuracao.getSelectedItem());
 
-            // --- 3. CRIAÇÃO E SALVAMENTO ---
-            
-            clinicaveterinaria.model.Atendimento novoAtendimento = new clinicaveterinaria.model.Atendimento(
-                procedimento, petReal, vetReal, data, hora, descricao
-            );
+            Atendimento novoAtendimento = new Atendimento(procedimento, petReal, vetReal, data, hora, descricao  );
             novoAtendimento.setDuracaoMinutos(duracao);
 
-            // Chama o Controller
-            clinicaveterinaria.controller.AtendimentoController.cadastrar(novoAtendimento); 
+            AtendimentoController.cadastrar(novoAtendimento); 
             
             javax.swing.JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
             this.dispose();
 
-        } catch (Exception e) {
-            // Captura qualquer outro erro inesperado
+        } catch (HeadlessException | NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed

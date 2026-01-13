@@ -1,5 +1,9 @@
 package clinicaveterinaria.model.Enums;
 
+/**
+ * Classe Enum para adicionar o tipo Procedimento
+ * @author Artur
+ */
 public enum Procedimento {
     CONSULTA("Consulta"),
     CIRURGIA("Cirurgia"),

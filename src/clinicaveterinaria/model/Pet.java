@@ -7,6 +7,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.time.Period;
 
+/**
+ * Classe Model para Pet
+ * @author Artur
+ */
 public class Pet {
     protected Especie especie;
     protected String nome;
@@ -20,9 +24,12 @@ public class Pet {
     protected String raca;
     protected String alergias;
     protected Tutor tutor;
-    protected ArrayList<Atendimento> consultasHistorico = new ArrayList<>();;
+    protected ArrayList<Atendimento> consultasHistorico = new ArrayList<>();
 
 
+    /**
+     * Construtor
+     */
     public Pet(Especie especie, String nome, LocalDate dataNascimento, Sexo sexo, boolean isCastrado,  boolean isVacinado, double peso, String temperamento, String raca, String alergias, Tutor tutor) {
         this.especie = especie;
         this.nome = nome;
@@ -39,46 +46,41 @@ public class Pet {
         this.tutor = tutor;
     }
     
-    // Adicione este método na classe Pet
-    public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos) {
-        LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
-
-        for (Atendimento agendado : this.consultasHistorico) {
-            if (agendado.getData().equals(dataConsulta)) {
-                LocalTime inicioAgendado = agendado.getHora();
-                LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
-
-                // Verifica se os horários se sobrepõem
-                if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
-                    return false; // O Pet já está ocupado neste horário!
-                }
-            }
-        }
-        return true; // O Pet está livre
+    /**
+     * Verifica se o Pet já tem algum agendamento que pode vir a conflitar com um futuro novo Agendamento
+     * Esse metodo é usado quando se esta cadastrando um novo Atendimento
+     * @return uma chamada para a função que contém toda a lógica necessária, retorna um valor booleano
+     */
+    public boolean isHorarioDisponivel(LocalDate dataAtendimento, LocalTime horaInicio, int duracaoMinutos) {
+        return isHorarioDisponivel(dataAtendimento, horaInicio, duracaoMinutos, null);
     }
     
-    public boolean isHorarioDisponivel(LocalDate dataConsulta, LocalTime horaInicio, int duracaoMinutos, Atendimento ignorar) {
+    /**
+     * Verifica se um horario é vago para adicionar um novo agendamento para o Pet
+     * Este metodo é usado quando se vai editar um agendamento, então ele ignora o horario do agendamento atual para que ele apareça normalmente
+     * @return um valor booleano, se True = horario dispoíivel, se False = horario não disponível
+     */
+    public boolean isHorarioDisponivel(LocalDate dataAtendimento, LocalTime horaInicio, int duracaoMinutos, Atendimento ignorar) {
         LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
 
         for (Atendimento agendado : this.consultasHistorico) {
-            // Se for o atendimento que estamos editando, PULA a verificação
             if (ignorar != null && agendado.equals(ignorar)) {
                 continue; 
             }
 
-            if (agendado.getData().equals(dataConsulta)) {
+            if (agendado.getData().equals(dataAtendimento)) {
                 LocalTime inicioAgendado = agendado.getHora();
                 LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
 
-                // Verifica colisão de horário
                 if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
-                    return false; // Ocupado
+                    return false; 
                 }
             }
         }
-        return true; // Livre
+        return true; 
     }
     
+    //Getters e Setters
     public int getIdade() {
         LocalDate hoje = LocalDate.now();
         setIdade(Period.between(this.dataNascimento, hoje).getYears());

@@ -207,7 +207,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Agendar Atendimento:"/>
+        <Property name="text" type="java.lang.String" value="Agendar Novo Atendimento:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

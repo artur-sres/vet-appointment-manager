@@ -4,9 +4,16 @@ import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
 import org.apache.commons.validator.routines.EmailValidator;
 
+/**
+ * Classe para validar dados no momento de cadastro e edição das entidades do sistema
+ * @author Artur
+ */
 public class ValidarDados {
         
-    //Valida os dados para cadastrar veterinarios
+    /**
+     * Valida os dados para o cadastro e edição de MedVet
+     * @throws Exception caso algum dado não esteja no formato correto
+     */
     public static void validarDados(String nome, String email, String telefone) throws Exception{
         if (nome.isEmpty() || email.isEmpty() || telefone.isEmpty()) {
             throw new Exception("Preencha todos os campos obrigatórios!");
@@ -16,7 +23,10 @@ public class ValidarDados {
         ValidarDados.validarTelefone(telefone);
     }
     
-    //Valida os dados para cadastrar tutores
+    /**
+     * Valida os dados para o cadastro e edição de Tutores
+     * @throws Exception caso algum dado não esteja no formato correto 
+     */
     public static void validarDados(String nome, String email, String telefone, String endereco, String cpf) throws Exception {
         if (nome.isEmpty() || email.isEmpty() || telefone.isEmpty() || endereco.isEmpty() || cpf.isEmpty()) {
             throw new Exception("Preencha todos os campos obrigatórios!");
@@ -34,7 +44,10 @@ public class ValidarDados {
         }
     }
     
-    //Valida os dados para cadastrar pets
+    /**
+     * Valida os dados para o cadastro e edição de Pets
+     * @throws Exception 
+     */
     public static void validarDados(String nome, String raca, String alergia, String temperamento) throws Exception{
         if(nome.isEmpty() || temperamento.isEmpty()){
             throw new Exception("Preencha todos os campos obrigatórios!");
@@ -50,6 +63,8 @@ public class ValidarDados {
         } 
    }
    
+    
+    //Metodos auxiliares para os validadores
     private static void validarNome(String nome) throws Exception{
         if (!nome.matches("[A-Za-zÀ-ü\\s]+")) {
             throw new Exception("O nome digitado é inválido!");

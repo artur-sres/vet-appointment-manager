@@ -8,29 +8,34 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * jFrame para tela de Historicos de todas as consultas de um Pet
+ * @author Artur
+ */
 public class AtendimentosPets extends javax.swing.JFrame {
-
     private Pet pet;
 
+    /**
+     * Construtor
+     */
     public AtendimentosPets(Pet pet) {
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         this.pet = pet;
         carregarTabela();
     }
 
-    public AtendimentosPets() {
-        initComponents();
-    }
-
+    /**
+     * Carrega a jTable com todos os agendamentos de um determinado Pet
+     */
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
         DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         
-        // Pega a lista do PET
         List<Atendimento> lista = new ArrayList<>(pet.getHistorico());
         
-        // Ordena
+        //Ordena para aparecer os mais recentes como primeiros
         Collections.sort(lista, (a1, a2) -> {
             int c = a2.getData().compareTo(a1.getData());
             if (c != 0) return c;
@@ -41,7 +46,7 @@ public class AtendimentosPets extends javax.swing.JFrame {
             modelo.addRow(new Object[]{
                 a.getData().format(fmtData),
                 a.getHora(),
-                a.getVetResponsavel().getNome(), // Mostra o Veterinário
+                a.getVetResponsavel().getNome(), 
                 a.getProcedimento().name(),
                 a.getDuracaoMinutos() + " min"
             });
@@ -60,14 +65,15 @@ public class AtendimentosPets extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton3.setText("Voltar");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Página de Agendamentos de Pets");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Histórico de Agendamentos do Pet");
         jLabel1.setAutoscrolls(true);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -102,32 +108,34 @@ public class AtendimentosPets extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        jLabel2.setText("(Para visualizar clique duas vezes no agendamento desejado)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,6 +146,10 @@ public class AtendimentosPets extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * Acessa uma das consultas a partir de um duplo clique do cursor e mantem a tabela atualizada caso alguma coisa seja editada
+     * @param evt Clique do Cursor
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) {
             int linha = jTable1.getSelectedRow();
@@ -153,7 +165,6 @@ public class AtendimentosPets extends javax.swing.JFrame {
             Atendimento selecionado = lista.get(linha);
             
             VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
-            tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             tela.setVisible(true);
             
             tela.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -169,6 +180,7 @@ public class AtendimentosPets extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

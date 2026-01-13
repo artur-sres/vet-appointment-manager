@@ -4,16 +4,23 @@ import clinicaveterinaria.model.Enums.Procedimento;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Atendimento { // <--- Mudei para public
+/**
+ * Classe Model para Atendimento
+ * @author Artur
+ */
+public class Atendimento { 
     private Procedimento procedimento;
     private Pet petAtendido;
     private MedVet vetResponsavel;
     private LocalDate data; 
     private LocalTime hora; 
     private String descricao;
-    private int duracaoMinutos; // <--- Variável nova que faltava
+    private int duracaoMinutos; 
 
-    // Construtor principal
+    
+    /**
+     * Construtor da Classe
+     */
     public Atendimento(Procedimento procedimento, Pet petAtendido, MedVet vetResponsavel, LocalDate data, LocalTime hora, String descricao) {
         this.procedimento = procedimento;
         this.petAtendido = petAtendido;
@@ -23,14 +30,14 @@ public class Atendimento { // <--- Mudei para public
         this.descricao = descricao;
     }
 
-    // --- Getters e Setters ---
+    //Getters e Setters
 
     public int getDuracaoMinutos() {
         return duracaoMinutos;
     }
 
     public void setDuracaoMinutos(int duracaoMinutos) {
-        this.duracaoMinutos = duracaoMinutos; // <--- A implementação correta é essa
+        this.duracaoMinutos = duracaoMinutos; 
     }
 
     public Procedimento getProcedimento() {

@@ -1,24 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clinicaveterinaria;
 
-import clinicaveterinaria.controller.AtendimentoController;
-import clinicaveterinaria.controller.PetController;
-import clinicaveterinaria.controller.TutorController;
-import clinicaveterinaria.controller.VeterinarioController;
-import clinicaveterinaria.model.Atendimento;
-import clinicaveterinaria.model.Enums.Especie;
-import clinicaveterinaria.model.Enums.Procedimento;
-import clinicaveterinaria.model.Enums.Sexo;
-import clinicaveterinaria.model.MedVet;
-import clinicaveterinaria.model.Tutor;
+import clinicaveterinaria.controller.*;
+import clinicaveterinaria.model.*;
+import clinicaveterinaria.model.Enums.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- *
+ * Classe que guarda os testes com dados ficticius para que o programa não inicie vazio
  * @author Artur
  */
 public class Teste {
