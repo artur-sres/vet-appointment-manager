@@ -22,7 +22,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         initComponents();
         inicializarListas();
         setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
     
     private void inicializarListas() {

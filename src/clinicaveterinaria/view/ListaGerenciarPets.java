@@ -2,6 +2,7 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.PetController;
 import clinicaveterinaria.model.Pet;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,8 +12,17 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
 
     public ListaGerenciarPets() {
         initComponents();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         carregarTabela();
+        this.addWindowListener(
+                new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowActivated(java.awt.event.WindowEvent e) {
+                        carregarTabela();
+                    }
+                }
+            );  
     }
     
     private void carregarTabela() {
@@ -34,7 +44,6 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
         btnAvançar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnVoltar2 = new javax.swing.JButton();
-        btnAtualizar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaPets = new javax.swing.JTable();
 
@@ -43,15 +52,13 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
         btnAvançar.setText("Avançar");
         btnAvançar.addActionListener(this::btnAvançarActionPerformed);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Selecione um Pet:");
 
         btnVoltar2.setText("Cancelar");
         btnVoltar2.addActionListener(this::btnVoltar2ActionPerformed);
 
-        btnAtualizar.setText("Atualizar Página");
-        btnAtualizar.addActionListener(this::btnAtualizarActionPerformed);
-
+        tabelaPets.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         tabelaPets.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -77,41 +84,37 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaPets.setRowHeight(30);
         jScrollPane3.setViewportView(tabelaPets);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(155, 155, 155))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAtualizar)
-                        .addGap(201, 201, 201)
-                        .addComponent(btnVoltar2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAvançar))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnVoltar2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnAvançar))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAvançar)
-                    .addComponent(btnVoltar2)
-                    .addComponent(btnAtualizar))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(btnVoltar2))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,15 +138,8 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltar2ActionPerformed
 
-    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        this.dispose();
-        ListaGerenciarPets tela = new ListaGerenciarPets();
-        tela.setVisible(true);
-    }//GEN-LAST:event_btnAtualizarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnAvançar;
     private javax.swing.JButton btnVoltar2;
     private javax.swing.JLabel jLabel1;

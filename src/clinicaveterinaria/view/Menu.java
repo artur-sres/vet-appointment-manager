@@ -16,6 +16,15 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         carregarAgendaDoDia();
+        
+        this.addWindowListener(
+                new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowActivated(java.awt.event.WindowEvent e) {
+                        carregarAgendaDoDia();
+                    }
+                }
+            );  
     }
 
     private void carregarAgendaDoDia() {
@@ -60,12 +69,11 @@ public class Menu extends javax.swing.JFrame {
 
         canvas1 = new java.awt.Canvas();
         jMenu4 = new javax.swing.JMenu();
-        btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnAtualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -78,8 +86,8 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
 
         jMenu4.setText("jMenu4");
@@ -87,13 +95,11 @@ public class Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
 
-        btnVoltar.setText("Encerrar Operação");
-        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("AGENDA DO DIA:");
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -119,6 +125,7 @@ public class Menu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setRowHeight(30);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -126,35 +133,42 @@ public class Menu extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        btnAtualizar.setText("Atualizar Janela");
-        btnAtualizar.addActionListener(this::btnAtualizarActionPerformed);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/Menu.png"))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/menu.jpg"))); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("(Para visualizar clique duas vezes no atendimento desejado)");
 
         jMenu1.setText("Cadastros");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem7.setText("Cadastrar Novo Veterinário");
         jMenuItem7.addActionListener(this::jMenuItem7ActionPerformed);
         jMenu1.add(jMenuItem7);
 
+        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem8.setText("Gerenciar Veterinários");
         jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
         jMenu1.add(jMenuItem8);
         jMenu1.add(jSeparator1);
 
+        cadastrarNovoTutor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cadastrarNovoTutor.setText("Cadastrar Novo Tutor");
         cadastrarNovoTutor.addActionListener(this::cadastrarNovoTutorActionPerformed);
         jMenu1.add(cadastrarNovoTutor);
 
+        gerenciarTutores.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         gerenciarTutores.setText("Gerenciar Tutores");
         gerenciarTutores.addActionListener(this::gerenciarTutoresActionPerformed);
         jMenu1.add(gerenciarTutores);
         jMenu1.add(jSeparator2);
 
+        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem11.setText("Cadastrar Novo Pet");
         jMenuItem11.addActionListener(this::jMenuItem11ActionPerformed);
         jMenu1.add(jMenuItem11);
 
+        jMenuItem12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem12.setText("Gerenciar Pets");
         jMenuItem12.addActionListener(this::jMenuItem12ActionPerformed);
         jMenu1.add(jMenuItem12);
@@ -163,14 +177,17 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu5.setText("Agendamentos");
+        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenuItem1.setText("Agendar Novo Atendimento");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jMenu5.add(jMenuItem1);
-
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem2.setText("Histórico de Agendamentos");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
         jMenu5.add(jMenuItem2);
+
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jMenuItem1.setText("Agendar Novo Atendimento");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jMenu5.add(jMenuItem1);
         jMenu5.add(jSeparator3);
 
         jMenuBar1.add(jMenu5);
@@ -181,35 +198,28 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(288, 288, 288)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVoltar)
-                    .addComponent(btnAtualizar))
-                .addGap(14, 14, 14))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -225,14 +235,6 @@ public class Menu extends javax.swing.JFrame {
         ListaGerenciarPets tela = new ListaGerenciarPets();
         tela.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
-
-    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnVoltarActionPerformed
-
-    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        carregarAgendaDoDia();
-    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void gerenciarTutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarTutoresActionPerformed
         ListaGerenciarTutores tela = new ListaGerenciarTutores();
@@ -304,13 +306,12 @@ public class Menu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizar;
-    private javax.swing.JButton btnVoltar;
     private javax.swing.JMenuItem cadastrarNovoTutor;
     private java.awt.Canvas canvas1;
     private javax.swing.JMenuItem gerenciarTutores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;

@@ -3,16 +3,25 @@ package clinicaveterinaria.view;
 import javax.swing.JOptionPane;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public class ListaGerenciarTutores extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaGerenciarTutores.class.getName());
-
     public ListaGerenciarTutores() {
         initComponents();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         carregarTabela();
+        
+        this.addWindowListener(
+                new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowActivated(java.awt.event.WindowEvent e) {
+                        carregarTabela();
+                    }
+                }
+            );  
     }
 
     private void carregarTabela() {
@@ -41,7 +50,6 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
         btnAvançar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnVoltar2 = new javax.swing.JButton();
-        btnAtualizar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaTutores = new javax.swing.JTable();
 
@@ -77,15 +85,13 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
         btnAvançar.setText("Avançar");
         btnAvançar.addActionListener(this::btnAvançarActionPerformed);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Selecione um Tutor:");
 
         btnVoltar2.setText("Cancelar");
         btnVoltar2.addActionListener(this::btnVoltar2ActionPerformed);
 
-        btnAtualizar.setText("Atualizar Página");
-        btnAtualizar.addActionListener(this::btnAtualizarActionPerformed);
-
+        tabelaTutores.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         tabelaTutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -111,6 +117,7 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaTutores.setRowHeight(30);
         jScrollPane3.setViewportView(tabelaTutores);
         if (tabelaTutores.getColumnModel().getColumnCount() > 0) {
             tabelaTutores.getColumnModel().getColumn(0).setResizable(false);
@@ -120,20 +127,16 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(155, 155, 155))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAtualizar)
-                        .addGap(201, 201, 201)
-                        .addComponent(btnVoltar2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAvançar))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnVoltar2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnAvançar))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -141,13 +144,12 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAvançar)
-                    .addComponent(btnVoltar2)
-                    .addComponent(btnAtualizar))
+                    .addComponent(btnVoltar2))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -172,15 +174,8 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltar2ActionPerformed
 
-    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        this.dispose();
-        ListaGerenciarTutores tela = new ListaGerenciarTutores();
-        tela.setVisible(true);
-    }//GEN-LAST:event_btnAtualizarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnAvançar;
     private javax.swing.JButton btnVoltar2;
     private javax.swing.JLabel jLabel1;
