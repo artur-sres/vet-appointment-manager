@@ -53,13 +53,19 @@ O código segue o padrão de projeto MVC para melhor organização e escalabilid
 2.  Clone este repositório.
 3.  Compile o projeto através de sua IDE de preferência ou via linha de comando.
 4.  Execute a classe principal:
+    <br></br>
     ```bash
     java -cp bin clinicaveterinaria.Main
     ```
+    
+## "Problemas"
+Durante o desenvolvimento deste projeto aprendi algumas ferramentas novas, e por conta disso, é possível notar uma diferença de codificação entre os mudulos iniciais e os modulos finais.
+
+Ao implementar o módulo de Atendimentos, a complexidade aumentou significativamente e tive um pouco de dificuldade de lídar, e por isso acabou que parte da lógica de decisão findou sendo implementada diretamente nas Views. Reconheço que isso é um problema no encapsulamento do código pois essa lógica deveria estar exclusivamente nos Controllers.
+
+Durante o desenvolvimento, aprendi algumas tecnicas novas (listeners, por exemplo) que estão presentes nas telas mais recentes mas não nas mais antigas. Optei por não refatora-las já que estavam estáveis e o prazo de entrega já estava proximo.
 
 ## Autor
 
 Feito por **[Artur Saraiva Rabelo](https://github.com/artur-sres)**.
 
----
-*Obs: A documentação deste projeto (README) foi gerada com auxílio de Inteligência Artificial.*
