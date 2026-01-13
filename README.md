@@ -3,7 +3,7 @@
 ![Java](https://img.shields.io/badge/Java-orange?logo=java&logoColor=white)
 ![UFC](https://img.shields.io/badge/Universidade%20Federal%20do%20Cear%C3%A1-blue)
 ![Programação Orientada a Objetos](https://img.shields.io/badge/Programação%20Orientada%20a%20Objetos-orange)
-![Status](https://img.shields.io/badge/Status-Em%20Andamento-yellow)
+![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 
 ## Sobre o Projeto
 
