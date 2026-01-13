@@ -64,7 +64,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         int anoAtual = java.time.LocalDate.now().getYear();
         int mesAtual = java.time.LocalDate.now().getMonthValue(); // 1 a 12
 
-        java.awt.event.ActionListener[] listeners = cmbMes1.getActionListeners();
+        ActionListener[] listeners = cmbMes1.getActionListeners();
         for (ActionListener l : listeners) cmbMes1.removeActionListener(l);
 
         cmbMes1.removeAllItems();
@@ -405,9 +405,9 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             String dia = (String) cmbDia1.getSelectedItem();
             String ano = (String) cmbAno1.getSelectedItem();
             int mes = getNumeroMes((String) cmbMes1.getSelectedItem());
-            LocalDate data = java.time.LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
+            LocalDate data = LocalDate.of(Integer.parseInt(ano), mes, Integer.parseInt(dia));
 
-            LocalTime hora = java.time.LocalTime.parse((String) cmbHora.getSelectedItem());
+            LocalTime hora = LocalTime.parse((String) cmbHora.getSelectedItem());
 
             String nomeVet = (String) comboVet.getSelectedItem();
             clinicaveterinaria.model.MedVet vetReal = null;
@@ -424,8 +424,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
                 if (p.getNome().equals(nomePet)) { petReal = p; break; }
             }
 
-            Procedimento procedimento = 
-                    Procedimento.valueOf((String) comboAtendimento.getSelectedItem());
+            Procedimento procedimento = Procedimento.valueOf((String) comboAtendimento.getSelectedItem());
             String descricao = txtDescricao.getText();
             int duracao = Integer.parseInt((String) cmbDuracao.getSelectedItem());
 
@@ -434,7 +433,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
 
             AtendimentoController.cadastrar(novoAtendimento); 
             
-            javax.swing.JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
+            JOptionPane.showMessageDialog(this, "Agendamento realizado com sucesso!");
             this.dispose();
 
         } catch (HeadlessException | NumberFormatException e) {

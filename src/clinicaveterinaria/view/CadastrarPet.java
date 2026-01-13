@@ -8,13 +8,15 @@ import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.DataUtil;
 import java.awt.HeadlessException;
 import java.time.LocalDate;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class CadastrarPet extends javax.swing.JFrame {
     
     public CadastrarPet() {
         initComponents();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
     }
@@ -27,8 +29,8 @@ public class CadastrarPet extends javax.swing.JFrame {
             cmbTutor.addItem(t.getNome());
         }
         
-        cmbEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CACHORRO", "GATO" }));
-        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MACHO", "FEMEA" }));        
+        cmbEspecie.setModel(new DefaultComboBoxModel<>(new String[] { "CACHORRO", "GATO" }));
+        cmbSexo.setModel(new DefaultComboBoxModel<>(new String[] { "MACHO", "FEMEA" }));        
     }
 
     /**
@@ -281,12 +283,12 @@ public class CadastrarPet extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Pet cadastrado com sucesso para " + tutorSelecionado.getNome() + "!");               
                     this.dispose();
                 } catch (Exception ex) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
                 }
 
             }
         } catch (HeadlessException | NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

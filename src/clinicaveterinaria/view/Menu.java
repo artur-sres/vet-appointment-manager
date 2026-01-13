@@ -5,15 +5,16 @@ import clinicaveterinaria.model.Atendimento;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import javax.swing.ImageIcon;
 
 
 public class Menu extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Menu.class.getName());
-
     public Menu() {
         initComponents();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         carregarAgendaDoDia();
     }
 
@@ -26,18 +27,18 @@ public class Menu extends javax.swing.JFrame {
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-        if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
+        if (AtendimentoController.listaAtendimentos != null) {
             java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
 
-            for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
+            for (Atendimento a : AtendimentoController.listaAtendimentos) {
                 if (a.getData().equals(hoje)) {
                     agendaHoje.add(a);
                 }
             }
 
-            java.util.Collections.sort(agendaHoje, java.util.Comparator.comparing(clinicaveterinaria.model.Atendimento::getHora));
+            Collections.sort(agendaHoje, Comparator.comparing(Atendimento::getHora));
 
-            for (clinicaveterinaria.model.Atendimento a : agendaHoje) {
+            for (Atendimento a : agendaHoje) {
                 modelo.addRow(new Object[]{
                     a.getVetResponsavel().getNome(),
                     a.getPetAtendido().getEspecie().toString(),
@@ -270,21 +271,21 @@ public class Menu extends javax.swing.JFrame {
             int linhaSelecionada = jTable1.getSelectedRow();
             
             if (linhaSelecionada != -1) {
-                java.time.LocalDate hoje = java.time.LocalDate.now();
-                java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
+                LocalDate hoje = java.time.LocalDate.now();
+                List<Atendimento> agendaHoje = new java.util.ArrayList<>();
 
-                if (clinicaveterinaria.controller.AtendimentoController.listaAtendimentos != null) {
-                    for (clinicaveterinaria.model.Atendimento a : clinicaveterinaria.controller.AtendimentoController.listaAtendimentos) {
+                if (AtendimentoController.listaAtendimentos != null) {
+                    for (Atendimento a : AtendimentoController.listaAtendimentos) {
                         if (a.getData().equals(hoje)) {
                             agendaHoje.add(a);
                         }
                     }
                 }
 
-                java.util.Collections.sort(agendaHoje, java.util.Comparator.comparing(clinicaveterinaria.model.Atendimento::getHora));
+                Collections.sort(agendaHoje, Comparator.comparing(Atendimento::getHora));
 
                 if (linhaSelecionada < agendaHoje.size()) {
-                    clinicaveterinaria.model.Atendimento atendimentoAlvo = agendaHoje.get(linhaSelecionada);
+                    Atendimento atendimentoAlvo = agendaHoje.get(linhaSelecionada);
 
                     VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);    
                     
