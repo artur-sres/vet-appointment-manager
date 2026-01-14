@@ -3,13 +3,15 @@
 ![Java](https://img.shields.io/badge/Java-orange?logo=java&logoColor=white)
 ![UFC](https://img.shields.io/badge/Universidade%20Federal%20do%20Cear%C3%A1-blue)
 ![Programação Orientada a Objetos](https://img.shields.io/badge/Programação%20Orientada%20a%20Objetos-orange)
-![Status](https://img.shields.io/badge/Status-Em%20Andamento-yellow)
+![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 
 ## Sobre o Projeto
 
 O projeto foi o trabalho final para a disciplina de Programação Orientada a Objetos, ministrada pelo Prof. Dr. Mayrton Dias de Queiroz.
 
 O projeto tem como objetivo simular o dia a dia de uma clínica, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de atendimentos.
+
+A ideia do tema se deu por conta de uma amiga minha, chamada Letícia. Ela  cursa médicina veterinária e as vezes nos brincamos sobre ser eu quem vai desenvolver um sistema pra quando ela abrir uma clínica própria.
 
 ## Funcionalidades Principais
 
@@ -58,6 +60,13 @@ O código segue o padrão de projeto MVC para melhor organização e escalabilid
     java -cp bin clinicaveterinaria.Main
     ```
     
+## Alguns Prints do Sistema
+
+![Menu do Sistema](assets/1.png)
+![Menu do Sistema](assets/5.png)
+![Menu do Sistema](assets/2.png)
+![Menu do Sistema](assets/6.png)
+
 ## "Problemas"
 Durante o desenvolvimento deste projeto aprendi algumas ferramentas novas, e por conta disso, é possível notar uma diferença de codificação entre os mudulos iniciais e os modulos finais.
 
