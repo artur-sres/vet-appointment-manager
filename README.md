@@ -63,7 +63,7 @@ O código segue o padrão de projeto MVC para melhor organização e escalabilid
 ## Alguns Prints do Sistema
 
 ![Menu do Sistema](assets/1.png)
-![Menu do Sistema](assets/5.png)
+![Menu do Sistema](assets/foto.png)
 ![Menu do Sistema](assets/2.png)
 ![Menu do Sistema](assets/6.png)
 
