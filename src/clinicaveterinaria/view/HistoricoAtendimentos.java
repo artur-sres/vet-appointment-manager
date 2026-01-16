@@ -2,53 +2,74 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.MedVet;
-import clinicaveterinaria.util.GerenciadorViews;
+import clinicaveterinaria.model.Pet;
+import clinicaveterinaria.util.GerenciadorViews; // ou GerenciadorJanela
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
-public class AtendimentosVeterinarios extends javax.swing.JFrame {
-    private MedVet veterinario;
-    private List<Atendimento> listaExibida;
+public class HistoricoAtendimentos extends javax.swing.JFrame {
+    private final Pet petAlvo;
+    private final MedVet vetAlvo;
+    private List<Atendimento> listaExibida; 
 
-    public AtendimentosVeterinarios(MedVet vet) {
+    public HistoricoAtendimentos(Pet pet) {
         initComponents();
         GerenciadorViews.configurar(this);
-        this.veterinario = vet;
+        
+        this.petAlvo = pet;
+        this.vetAlvo = null; // Garante que o outro é nulo
+        
+        setTitle("Histórico do Paciente: " + pet.getNome());
         carregarTabela();
     }
 
+    public HistoricoAtendimentos(MedVet vet) {
+        initComponents();
+        GerenciadorViews.configurar(this);
+        
+        this.vetAlvo = vet;
+        this.petAlvo = null;
+        
+        setTitle("Agenda do Dr(a). " + vet.getNome());
+        carregarTabela();
+    }
+    
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
         
         DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+        
+        List<Atendimento> fonteDados;
+        if (petAlvo != null) {
+            fonteDados = petAlvo.getHistorico();
+        } else {
+            fonteDados = vetAlvo.getAgendaConsultas();
+        }
 
-        this.listaExibida = new ArrayList<>(veterinario.getAgendaConsultas());
-        Collections.sort(listaExibida, (a1, a2) -> {
-            int c = a2.getData().compareTo(a1.getData());
-            if (c != 0) {
-                return c;
-            }
+        this.listaExibida = new ArrayList<>(fonteDados);
+        Collections.sort(this.listaExibida, (a1, a2) -> {
+            int c = a2.getData().compareTo(a1.getData()); 
+            if (c != 0) return c;
             return a2.getHora().compareTo(a1.getHora());
         });
 
-        for (Atendimento a : listaExibida) {
+        for (Atendimento a : this.listaExibida) {
             modelo.addRow(new Object[]{
-                a.getVetResponsavel().getNome(),
-                a.getPetAtendido().getEspecie(),
-                a.getPetAtendido().getNome(),
-                a.getProcedimento(),
                 a.getData().format(fmtData),
-                a.getHora().format(formatoHora) 
+                a.getHora(),
+                a.getProcedimento().name(),
+                a.getVetResponsavel().getNome(),
+                a.getPetAtendido().getNome(),
+                a.getPetAtendido().getEspecie()
             });
         }
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +84,7 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Atendimentos do Veterinário");
+        setTitle("Histórico de Agendamentos");
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -116,34 +137,37 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if (evt.getClickCount() == 2) { 
-            int linha = jTable1.getSelectedRow();
-            if (linha != -1 && listaExibida != null && linha < listaExibida.size()) {
-                Atendimento selecionado = listaExibida.get(linha);
-                
-                VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
-                tela.setVisible(true);
-                
-                tela.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosed(java.awt.event.WindowEvent e) {
-                        carregarTabela();
-                    }
-                });
-            }
+        // Verifica se foi duplo clique
+    if (evt.getClickCount() == 2) {
+        int linha = jTable1.getSelectedRow();
+        
+        if (linha != -1 && listaExibida != null && linha < listaExibida.size()) {
+            
+            Atendimento selecionado = listaExibida.get(linha);
+            
+            VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
+            tela.setVisible(true);
+            
+            tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    carregarTabela();
+                }
+            });
         }
+    }
     }//GEN-LAST:event_jTable1MouseClicked
 
 

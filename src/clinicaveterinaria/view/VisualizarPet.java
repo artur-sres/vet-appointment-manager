@@ -349,7 +349,7 @@ public class VisualizarPet extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelar2ActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
-        AtendimentosPets tela = new AtendimentosPets(this.pet);
+        HistoricoAtendimentos tela = new HistoricoAtendimentos(this.pet);
         this.dispose();
         tela.setVisible(true);
     }//GEN-LAST:event_btnHistoricoActionPerformed

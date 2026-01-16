@@ -170,7 +170,7 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
-        AtendimentosVeterinarios tela = new AtendimentosVeterinarios(this.veterinario);
+        HistoricoAtendimentos tela = new HistoricoAtendimentos(this.veterinario);
         this.dispose();
         tela.setVisible(true);  
     }//GEN-LAST:event_btnHistoricoActionPerformed
