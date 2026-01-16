@@ -2,6 +2,7 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.util.GerenciadorViews;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,8 +16,7 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
 
     public AtendimentosVeterinarios(MedVet vet) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         this.veterinario = vet;
         carregarTabela();
     }

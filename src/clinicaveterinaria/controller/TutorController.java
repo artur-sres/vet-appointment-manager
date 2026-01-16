@@ -9,7 +9,7 @@ import clinicaveterinaria.model.Pet;
  * @author Artur
  */
 public class TutorController {
-    public static ArrayList<Tutor> listaTutores = new ArrayList<>();
+    private static ArrayList<Tutor> listaTutores = new ArrayList<>();
     
     /**
      * Chama o construtor para Tutor e adiciona na listaTutores
@@ -49,4 +49,10 @@ public class TutorController {
         
         System.out.println("Tutor " + tutor.getNome() + " e seus animais foram excluídos!");
     }
+
+    public static ArrayList<Tutor> getListaTutores() {
+        return listaTutores;
+    }
+    
+    
 }

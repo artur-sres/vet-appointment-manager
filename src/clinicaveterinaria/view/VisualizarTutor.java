@@ -1,16 +1,14 @@
 package clinicaveterinaria.view;
 
-import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 
 public class VisualizarTutor extends javax.swing.JFrame {
     Tutor tutor;
 
     public VisualizarTutor(Tutor tutor) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         
         this.tutor = tutor;
         txtNome.setText(tutor.getNome());

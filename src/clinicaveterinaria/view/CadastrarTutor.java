@@ -1,15 +1,14 @@
 package clinicaveterinaria.view;
+
 import javax.swing.JOptionPane;
 import clinicaveterinaria.controller.TutorController;
-import javax.swing.ImageIcon;
-
+import clinicaveterinaria.util.GerenciadorViews;
 
 public class CadastrarTutor extends javax.swing.JFrame {
 
     public CadastrarTutor() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
     }
 
     /**

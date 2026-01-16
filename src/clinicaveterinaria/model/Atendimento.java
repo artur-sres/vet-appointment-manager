@@ -30,6 +30,14 @@ public class Atendimento {
         this.descricao = descricao;
     }
 
+    public boolean temConflito(LocalTime horaInicioNovo, int duracaoMinutosNovo) {
+        LocalTime horaFimNovo = horaInicioNovo.plusMinutes(duracaoMinutosNovo);
+
+        LocalTime meuInicio = this.getHora();
+        LocalTime meuFim = meuInicio.plusMinutes(this.getDuracaoMinutos());
+
+        return horaInicioNovo.isBefore(meuFim) && horaFimNovo.isAfter(meuInicio);
+    }
     //Getters e Setters
 
     public int getDuracaoMinutos() {

@@ -6,19 +6,18 @@ import clinicaveterinaria.model.Enums.Especie;
 import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.DataUtil;
+import clinicaveterinaria.util.GerenciadorViews;
 import java.awt.HeadlessException;
 import java.time.LocalDate;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class CadastrarPet extends javax.swing.JFrame {
     
     public CadastrarPet() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-        DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
+        GerenciadorViews.configurar(this);
+        DataUtil.inicializarCombosCadastro(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
     }
     
@@ -26,7 +25,7 @@ public class CadastrarPet extends javax.swing.JFrame {
         cmbTutor.removeAllItems();
         cmbTutor.addItem("Tutor"); 
         
-        for (clinicaveterinaria.model.Tutor t : clinicaveterinaria.controller.TutorController.listaTutores) {
+        for (clinicaveterinaria.model.Tutor t : clinicaveterinaria.controller.TutorController.getListaTutores()) {
             cmbTutor.addItem(t.getNome());
         }
         
@@ -268,7 +267,7 @@ public class CadastrarPet extends javax.swing.JFrame {
             Especie especie = Especie.valueOf(cmbEspecie.getSelectedItem().toString());
             Sexo sexo = Sexo.valueOf(cmbSexo.getSelectedItem().toString());
             if (indiceTutor != 0) {
-                Tutor tutorSelecionado = TutorController.listaTutores.get(indiceTutor - 1);
+                Tutor tutorSelecionado = TutorController.getListaTutores().get(indiceTutor - 1);
                 try {
                     PetController.cadastrarPet(tutorSelecionado, especie, txtNome.getText(), txtRaca.getText(), sexo, txtPeso.getText(), dataNasc, txtAlergias.getText(), txtTemperamento.getText(), ckbVacinacao.isSelected(), ckbCastrado.isSelected());
                     JOptionPane.showMessageDialog(this, "Pet cadastrado com sucesso para " + tutorSelecionado.getNome() + "!");               

@@ -1,6 +1,7 @@
 package clinicaveterinaria.view;
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.model.Tutor;
+import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -10,8 +11,7 @@ public class PetsTutores extends javax.swing.JFrame {
 
     public PetsTutores(Tutor tutorSelecionado) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         this.tutor = tutorSelecionado;
         carregarTabela();
     }

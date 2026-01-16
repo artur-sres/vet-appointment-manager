@@ -2,18 +2,15 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.PetController;
 import clinicaveterinaria.model.Pet;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ListaGerenciarPets extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaGerenciarPets.class.getName());
 
     public ListaGerenciarPets() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         carregarTabela();
         this.addWindowListener(
                 new java.awt.event.WindowAdapter() {
@@ -30,7 +27,7 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
 
         modelo.setNumRows(0);
 
-        for (Pet t : PetController.listaPets) {
+        for (Pet t : PetController.getListaPets()) {
             modelo.addRow(new Object[]{
                 t.getNome()
             });
@@ -126,7 +123,7 @@ public class ListaGerenciarPets extends javax.swing.JFrame {
 
         if (linhaSelecionada != -1) {
             this.dispose();
-            Pet petSelecionado = PetController.listaPets.get(linhaSelecionada);
+            Pet petSelecionado = PetController.getListaPets().get(linhaSelecionada);
             VisualizarPet tela = new VisualizarPet(petSelecionado);
             tela.setVisible(true);
         } else {

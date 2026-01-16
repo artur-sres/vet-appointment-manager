@@ -5,18 +5,17 @@ import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.DataUtil;
+import clinicaveterinaria.util.GerenciadorViews;
 import java.time.LocalDate;
-import javax.swing.ImageIcon;
 
 public class EditarPet extends javax.swing.JFrame {
     private final Pet pet;
 
     public EditarPet(Pet petSelecionado) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
    
-        DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
+        DataUtil.inicializarCombosCadastro(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
         this.pet = petSelecionado;
         preencherDados();
@@ -24,7 +23,7 @@ public class EditarPet extends javax.swing.JFrame {
     
     private void inicializarCombos() {
         cmbTutor.removeAllItems();
-        for (clinicaveterinaria.model.Tutor t : TutorController.listaTutores) {
+        for (clinicaveterinaria.model.Tutor t : TutorController.getListaTutores()) {
             cmbTutor.addItem(t.getNome());
         }
         cmbEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CACHORRO", "GATO" }));
@@ -318,7 +317,7 @@ public class EditarPet extends javax.swing.JFrame {
             Tutor novoTutor = this.pet.getTutor();
             if(!(pet.getTutor().getNome()).equals(cmbTutor.getSelectedItem())){
                 int indiceTutor = cmbTutor.getSelectedIndex();
-                novoTutor = TutorController.listaTutores.get(indiceTutor);
+                novoTutor = TutorController.getListaTutores().get(indiceTutor);
             }
             
             clinicaveterinaria.controller.PetController.editarPet(

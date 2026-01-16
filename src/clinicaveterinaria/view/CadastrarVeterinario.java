@@ -1,7 +1,7 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.VeterinarioController;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 
 public class CadastrarVeterinario extends javax.swing.JFrame {
@@ -10,8 +10,7 @@ public class CadastrarVeterinario extends javax.swing.JFrame {
 
     public CadastrarVeterinario() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
     }
 
     /**

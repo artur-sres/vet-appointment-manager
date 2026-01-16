@@ -2,7 +2,8 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.AtendimentoController;
 import clinicaveterinaria.model.Atendimento;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 public class VisualizarAtendimento extends javax.swing.JFrame {
@@ -10,20 +11,29 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
     private final Atendimento atendimentoAtual;
 
     public VisualizarAtendimento(Atendimento atendimento) {
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         initComponents();
+        GerenciadorViews.configurar(this);     
+        this.atendimentoAtual = atendimento;  
+        preencherDados();
+        bloquearCampos(); 
+    }
+    
+    private void preencherDados() {
+        if (atendimentoAtual == null) return;
+
+        txtAtendimento.setText(atendimentoAtual.getProcedimento().toString());
+        txtVet.setText(atendimentoAtual.getVetResponsavel().getNome());
+        txtPet.setText(atendimentoAtual.getPetAtendido().getNome());
         
-        this.atendimentoAtual = atendimento;
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        txtData.setText(atendimentoAtual.getData().format(fmt));
         
-        txtAtendimento.setText(atendimento.getProcedimento().toString());
-        txtVet.setText(atendimento.getVetResponsavel().getNome());
-        txtPet.setText(atendimento.getPetAtendido().getNome());
-        txtData.setText(atendimento.getData().toString()); 
-        txtHora.setText(atendimento.getHora().toString());
-        txtDescricao.setText(atendimento.getDescricao());
+        txtHora.setText(atendimentoAtual.getHora().toString());
+        txtDescricao.setText(atendimentoAtual.getDescricao());
         txtDuracao.setText(atendimentoAtual.getDuracaoMinutos() + " min");
-       
+    }
+    
+    private void bloquearCampos() {
         txtAtendimento.setEditable(false);
         txtVet.setEditable(false);
         txtPet.setEditable(false);
@@ -32,7 +42,6 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
         txtDescricao.setEditable(false);
         txtDuracao.setEditable(false);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -203,8 +212,6 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         EditarAtendimento telaEditar = new EditarAtendimento(this.atendimentoAtual);
         telaEditar.setVisible(true);
-        telaEditar.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-        
         this.dispose(); 
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -215,13 +222,8 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             
         if (opcao == JOptionPane.YES_OPTION) {
-            AtendimentoController.listaAtendimentos.remove(atendimentoAtual);
-            
-            atendimentoAtual.getVetResponsavel().getAgendaConsultas().remove(atendimentoAtual);
-   
-            atendimentoAtual.getPetAtendido().getHistorico().remove(atendimentoAtual);
-            
-            JOptionPane.showMessageDialog(this, "Agendamento cancelado!");
+            AtendimentoController.excluir(atendimentoAtual);         
+            JOptionPane.showMessageDialog(this, "Agendamento cancelado com sucesso!");
             this.dispose();
         }
     }//GEN-LAST:event_btnRemoverActionPerformed

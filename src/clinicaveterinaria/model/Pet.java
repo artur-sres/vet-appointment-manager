@@ -12,19 +12,19 @@ import java.time.Period;
  * @author Artur
  */
 public class Pet {
-    protected Especie especie;
-    protected String nome;
-    protected LocalDate dataNascimento;
-    protected int idade;
-    protected Sexo sexo;
-    protected boolean isCastrado;
-    protected boolean isVacinado;
-    protected double peso;
-    protected String temperamento;
-    protected String raca;
-    protected String alergias;
-    protected Tutor tutor;
-    protected ArrayList<Atendimento> consultasHistorico = new ArrayList<>();
+    private Especie especie;
+    private String nome;
+    private LocalDate dataNascimento;
+    private int idade;
+    private Sexo sexo;
+    private boolean isCastrado;
+    private boolean isVacinado;
+    private double peso;
+    private String temperamento;
+    private String raca;
+    private String alergias;
+    private Tutor tutor;
+    private ArrayList<Atendimento> consultasHistorico = new ArrayList<>();
 
 
     /**
@@ -65,14 +65,11 @@ public class Pet {
 
         for (Atendimento agendado : this.consultasHistorico) {
             if (ignorar != null && agendado.equals(ignorar)) {
-                continue; 
+                continue;
             }
 
             if (agendado.getData().equals(dataAtendimento)) {
-                LocalTime inicioAgendado = agendado.getHora();
-                LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
-
-                if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
+                if (agendado.temConflito(horaInicio, duracaoMinutos)) {
                     return false; 
                 }
             }

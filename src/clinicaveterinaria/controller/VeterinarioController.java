@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Artur
  */
 public class VeterinarioController {
-    public static ArrayList<MedVet> listaVeterinarios = new ArrayList<>();
+    private static ArrayList<MedVet> listaVeterinarios = new ArrayList<>();
     
     /**
      * Chama o construtor para MedVet e adiciona na listaVeterinarios
@@ -32,5 +32,10 @@ public class VeterinarioController {
         veterinario.setTelefone(telefone);
         
     }
+
+    public static ArrayList<MedVet> getListaVeterinarios() {
+        return listaVeterinarios;
+    }
+    
     
 }

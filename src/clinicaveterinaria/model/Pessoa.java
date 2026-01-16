@@ -5,9 +5,9 @@ package clinicaveterinaria.model;
  * @author Artur
  */
 public abstract class Pessoa {
-    protected String nome;
-    protected String email;
-    protected String telefone;
+    private String nome;
+    private String email;
+    private String telefone;
 
     /**
      * Construtor

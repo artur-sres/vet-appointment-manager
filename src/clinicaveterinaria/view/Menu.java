@@ -3,15 +3,14 @@ package clinicaveterinaria.view;
 import clinicaveterinaria.controller.AtendimentoController;
 import clinicaveterinaria.model.Atendimento;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.swing.ImageIcon;
 
 
 public class Menu extends javax.swing.JFrame {
+    private List<Atendimento> agenda;
+    
     public Menu() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
@@ -28,36 +27,23 @@ public class Menu extends javax.swing.JFrame {
     }
 
     private void carregarAgendaDoDia() {
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); 
+        DefaultTableModel modelo = (DefaultTableModel) agendaDia.getModel();
+        modelo.setRowCount(0);
 
-        modelo.setColumnIdentifiers(new String[] {"Veterinário", "Espécie", "Nome", "Atendimento", "Horário"});
-
-        LocalDate hoje = LocalDate.now();
+        this.agenda = AtendimentoController.getAtendimentosDoDia();
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-        if (AtendimentoController.listaAtendimentos != null) {
-            java.util.List<clinicaveterinaria.model.Atendimento> agendaHoje = new java.util.ArrayList<>();
-
-            for (Atendimento a : AtendimentoController.listaAtendimentos) {
-                if (a.getData().equals(hoje)) {
-                    agendaHoje.add(a);
-                }
-            }
-
-            Collections.sort(agendaHoje, Comparator.comparing(Atendimento::getHora));
-
-            for (Atendimento a : agendaHoje) {
-                modelo.addRow(new Object[]{
-                    a.getVetResponsavel().getNome(),
-                    a.getPetAtendido().getEspecie().toString(),
-                    a.getPetAtendido().getNome(),
-                    a.getProcedimento().name(),
-                    a.getHora().format(formatoHora)
-                });
-            }
+        for (Atendimento a : agenda) {
+             modelo.addRow(new Object[]{
+                a.getVetResponsavel().getNome(),      
+                a.getPetAtendido().getEspecie(),      
+                a.getPetAtendido().getNome(),         
+                a.getProcedimento().name(),           
+                a.getHora().format(formatoHora)        
+            });
         }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,23 +57,23 @@ public class Menu extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        agendaDia = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        cadastros = new javax.swing.JMenu();
+        cadastrarVet = new javax.swing.JMenuItem();
+        gerenciarVet = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        cadastrarNovoTutor = new javax.swing.JMenuItem();
-        gerenciarTutores = new javax.swing.JMenuItem();
+        cadastrarTutor = new javax.swing.JMenuItem();
+        gerenciarTutor = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        cadastrarPet = new javax.swing.JMenuItem();
+        gerenciarPet = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        agendamentos = new javax.swing.JMenu();
+        historicoAgendamentos = new javax.swing.JMenuItem();
+        novoAtendimento = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
 
         jMenu4.setText("jMenu4");
@@ -99,19 +85,10 @@ public class Menu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("AGENDA DO DIA:");
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        agendaDia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        agendaDia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Veterinário", "Espécie", "Nome", "Atendimento", "Horário"
@@ -125,72 +102,72 @@ public class Menu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(30);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        agendaDia.setRowHeight(30);
+        agendaDia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                agendaDiaMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(agendaDia);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/Menu.png"))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("(Para visualizar clique duas vezes no atendimento desejado)");
 
-        jMenu1.setText("Cadastros");
-        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cadastros.setText("Cadastros");
+        cadastros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem7.setText("Cadastrar Novo Veterinário");
-        jMenuItem7.addActionListener(this::jMenuItem7ActionPerformed);
-        jMenu1.add(jMenuItem7);
+        cadastrarVet.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cadastrarVet.setText("Cadastrar Novo Veterinário");
+        cadastrarVet.addActionListener(this::cadastrarVetActionPerformed);
+        cadastros.add(cadastrarVet);
 
-        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem8.setText("Gerenciar Veterinários");
-        jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
-        jMenu1.add(jMenuItem8);
-        jMenu1.add(jSeparator1);
+        gerenciarVet.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        gerenciarVet.setText("Gerenciar Veterinários");
+        gerenciarVet.addActionListener(this::gerenciarVetActionPerformed);
+        cadastros.add(gerenciarVet);
+        cadastros.add(jSeparator1);
 
-        cadastrarNovoTutor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cadastrarNovoTutor.setText("Cadastrar Novo Tutor");
-        cadastrarNovoTutor.addActionListener(this::cadastrarNovoTutorActionPerformed);
-        jMenu1.add(cadastrarNovoTutor);
+        cadastrarTutor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cadastrarTutor.setText("Cadastrar Novo Tutor");
+        cadastrarTutor.addActionListener(this::cadastrarTutorActionPerformed);
+        cadastros.add(cadastrarTutor);
 
-        gerenciarTutores.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        gerenciarTutores.setText("Gerenciar Tutores");
-        gerenciarTutores.addActionListener(this::gerenciarTutoresActionPerformed);
-        jMenu1.add(gerenciarTutores);
-        jMenu1.add(jSeparator2);
+        gerenciarTutor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        gerenciarTutor.setText("Gerenciar Tutores");
+        gerenciarTutor.addActionListener(this::gerenciarTutorActionPerformed);
+        cadastros.add(gerenciarTutor);
+        cadastros.add(jSeparator2);
 
-        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem11.setText("Cadastrar Novo Pet");
-        jMenuItem11.addActionListener(this::jMenuItem11ActionPerformed);
-        jMenu1.add(jMenuItem11);
+        cadastrarPet.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cadastrarPet.setText("Cadastrar Novo Pet");
+        cadastrarPet.addActionListener(this::cadastrarPetActionPerformed);
+        cadastros.add(cadastrarPet);
 
-        jMenuItem12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem12.setText("Gerenciar Pets");
-        jMenuItem12.addActionListener(this::jMenuItem12ActionPerformed);
-        jMenu1.add(jMenuItem12);
-        jMenu1.add(jSeparator5);
+        gerenciarPet.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        gerenciarPet.setText("Gerenciar Pets");
+        gerenciarPet.addActionListener(this::gerenciarPetActionPerformed);
+        cadastros.add(gerenciarPet);
+        cadastros.add(jSeparator5);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(cadastros);
 
-        jMenu5.setText("Agendamentos");
-        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        agendamentos.setText("Agendamentos");
+        agendamentos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem2.setText("Histórico de Agendamentos");
-        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
-        jMenu5.add(jMenuItem2);
+        historicoAgendamentos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        historicoAgendamentos.setText("Histórico de Atendimentos");
+        historicoAgendamentos.addActionListener(this::historicoAgendamentosActionPerformed);
+        agendamentos.add(historicoAgendamentos);
 
-        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem1.setText("Agendar Novo Atendimento");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jMenu5.add(jMenuItem1);
-        jMenu5.add(jSeparator3);
+        novoAtendimento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        novoAtendimento.setText("Cadastrar Novo Atendimento");
+        novoAtendimento.addActionListener(this::novoAtendimentoActionPerformed);
+        agendamentos.add(novoAtendimento);
+        agendamentos.add(jSeparator3);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(agendamentos);
 
         setJMenuBar(jMenuBar1);
 
@@ -226,107 +203,89 @@ public class Menu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarNovoTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarNovoTutorActionPerformed
+    private void cadastrarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarTutorActionPerformed
         CadastrarTutor novoTutor = new CadastrarTutor();
         novoTutor.setVisible(true);
-    }//GEN-LAST:event_cadastrarNovoTutorActionPerformed
+    }//GEN-LAST:event_cadastrarTutorActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void gerenciarPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarPetActionPerformed
         ListaGerenciarPets tela = new ListaGerenciarPets();
         tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_gerenciarPetActionPerformed
 
-    private void gerenciarTutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarTutoresActionPerformed
+    private void gerenciarTutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarTutorActionPerformed
         ListaGerenciarTutores tela = new ListaGerenciarTutores();
         tela.setVisible(true);
-    }//GEN-LAST:event_gerenciarTutoresActionPerformed
+    }//GEN-LAST:event_gerenciarTutorActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void historicoAgendamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historicoAgendamentosActionPerformed
         ListaGerenciarAtendimentos tela = new ListaGerenciarAtendimentos();
-        tela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_historicoAgendamentosActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void novoAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoAtendimentoActionPerformed
         CadastrarAtendimento tela = new CadastrarAtendimento();
         tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_novoAtendimentoActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void cadastrarPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarPetActionPerformed
         CadastrarPet tela = new CadastrarPet();
         tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_cadastrarPetActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void gerenciarVetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciarVetActionPerformed
         ListaGerenciarVeterinarios tela = new ListaGerenciarVeterinarios();
         tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_gerenciarVetActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void cadastrarVetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarVetActionPerformed
         CadastrarVeterinario tela = new CadastrarVeterinario();
         tela.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_cadastrarVetActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+    private void agendaDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agendaDiaMouseClicked
         if (evt.getClickCount() == 2) {
-            int linhaSelecionada = jTable1.getSelectedRow();
+            int linhaSelecionada = agendaDia.getSelectedRow();
             
-            if (linhaSelecionada != -1) {
-                LocalDate hoje = java.time.LocalDate.now();
-                List<Atendimento> agendaHoje = new java.util.ArrayList<>();
-
-                if (AtendimentoController.listaAtendimentos != null) {
-                    for (Atendimento a : AtendimentoController.listaAtendimentos) {
-                        if (a.getData().equals(hoje)) {
-                            agendaHoje.add(a);
-                        }
+            if (linhaSelecionada != -1 && agenda != null && linhaSelecionada < agenda.size()) {
+                Atendimento atendimentoAlvo = agenda.get(linhaSelecionada);
+                VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);
+                
+                tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent e) {
+                        carregarAgendaDoDia(); 
                     }
-                }
-
-                Collections.sort(agendaHoje, Comparator.comparing(Atendimento::getHora));
-
-                if (linhaSelecionada < agendaHoje.size()) {
-                    Atendimento atendimentoAlvo = agendaHoje.get(linhaSelecionada);
-
-                    VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);    
-                    
-                    tela.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosed(java.awt.event.WindowEvent e) {
-                            carregarAgendaDoDia(); 
-                        }
-                    });
-                    
-                    tela.setVisible(true);
-                }
+                });
+                
+                tela.setVisible(true);
             }
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_agendaDiaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem cadastrarNovoTutor;
+    private javax.swing.JTable agendaDia;
+    private javax.swing.JMenu agendamentos;
+    private javax.swing.JMenuItem cadastrarPet;
+    private javax.swing.JMenuItem cadastrarTutor;
+    private javax.swing.JMenuItem cadastrarVet;
+    private javax.swing.JMenu cadastros;
     private java.awt.Canvas canvas1;
-    private javax.swing.JMenuItem gerenciarTutores;
+    private javax.swing.JMenuItem gerenciarPet;
+    private javax.swing.JMenuItem gerenciarTutor;
+    private javax.swing.JMenuItem gerenciarVet;
+    private javax.swing.JMenuItem historicoAgendamentos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem novoAtendimento;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,8 +2,8 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.AtendimentoController;
 import clinicaveterinaria.model.Atendimento;
+import clinicaveterinaria.util.GerenciadorViews;
 import java.time.format.DateTimeFormatter;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public class ListaGerenciarAtendimentos extends javax.swing.JFrame {
@@ -11,8 +11,7 @@ public class ListaGerenciarAtendimentos extends javax.swing.JFrame {
     public ListaGerenciarAtendimentos() {
         initComponents();
         carregarTabela();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         
         this.addWindowListener(
                 new java.awt.event.WindowAdapter() {
@@ -27,10 +26,9 @@ public class ListaGerenciarAtendimentos extends javax.swing.JFrame {
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tblAtendimentos.getModel();
         modelo.setNumRows(0); 
-
         DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        for (Atendimento a : AtendimentoController.listaAtendimentos) {
+        for (Atendimento a : AtendimentoController.getListaAtendimentos()) {
             modelo.addRow(new Object[]{
                 a.getVetResponsavel().getNome(),
                 a.getPetAtendido().getEspecie().toString(),
@@ -140,7 +138,7 @@ public class ListaGerenciarAtendimentos extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             int linha = tblAtendimentos.getSelectedRow();
             if (linha != -1) {
-                Atendimento atendimentoSelecionado = AtendimentoController.listaAtendimentos.get(linha);
+                Atendimento atendimentoSelecionado = AtendimentoController.getListaAtendimentos().get(linha);
                 
                 VisualizarAtendimento telaVisualizar = new VisualizarAtendimento(atendimentoSelecionado);
                 telaVisualizar.setVisible(true);

@@ -1,17 +1,14 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.MedVet;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 
 public class VisualizarVeterinario extends javax.swing.JFrame {
     private MedVet veterinario;
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarVeterinario.class.getName());
 
     public VisualizarVeterinario(MedVet veterinario) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         this.veterinario = veterinario;
         
         txtNome.setText(veterinario.getNome());
@@ -160,7 +157,7 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
             javax.swing.JOptionPane.YES_NO_OPTION);
         
         if (opcao == javax.swing.JOptionPane.YES_OPTION) {
-            clinicaveterinaria.controller.VeterinarioController.listaVeterinarios.remove(this.veterinario);
+            clinicaveterinaria.controller.VeterinarioController.getListaVeterinarios().remove(this.veterinario);
             
             javax.swing.JOptionPane.showMessageDialog(this, "Veterinário removido com sucesso!");
 

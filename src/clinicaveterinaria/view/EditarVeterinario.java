@@ -2,18 +2,15 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.model.MedVet;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 
 public class EditarVeterinario extends javax.swing.JFrame {
     MedVet veterinario;
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarVeterinario.class.getName());
 
     public EditarVeterinario(MedVet veterinario) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         this.veterinario = veterinario;
         
         txtNome.setText(veterinario.getNome());

@@ -2,7 +2,7 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 
 public class EditarTutor extends javax.swing.JFrame {
@@ -12,8 +12,7 @@ public class EditarTutor extends javax.swing.JFrame {
 
     public EditarTutor(Tutor tutor) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         
         this.tutor = tutor;
         txtNome.setText(tutor.getNome());

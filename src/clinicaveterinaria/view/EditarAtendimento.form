@@ -50,7 +50,6 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="cmbHora" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="btnHorariosDisponiveis" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -109,9 +108,7 @@
                   <Component id="cmbAno1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="btnHorariosDisponiveis" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmbHora" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -181,14 +178,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Tipo de Atendimento:"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnHorariosDisponiveis">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Hor&#xe1;rios Dispon&#xed;veis Para a Data"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHorariosDisponiveisActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboAtendimento">
       <Properties>

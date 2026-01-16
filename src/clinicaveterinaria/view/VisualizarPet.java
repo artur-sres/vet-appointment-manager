@@ -1,15 +1,14 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Pet;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 
 public class VisualizarPet extends javax.swing.JFrame {
     private Pet pet;
 
     public VisualizarPet(Pet petSelecionado) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         
         this.pet = petSelecionado;
         txtNome.setText(this.pet.getNome());
@@ -37,7 +36,7 @@ public class VisualizarPet extends javax.swing.JFrame {
         ckbCastrado.setEnabled(false);
         ckbVacinacao.setEnabled(false);
         
-        clinicaveterinaria.util.DataUtil.inicializarCombos(cmbDia, cmbMes, cmbAno);
+        clinicaveterinaria.util.DataUtil.inicializarCombosCadastro(cmbDia, cmbMes, cmbAno);
 
         java.time.LocalDate data = this.pet.getDataNascimento();
         cmbDia.setSelectedItem(String.format("%02d", data.getDayOfMonth()));

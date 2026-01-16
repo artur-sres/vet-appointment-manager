@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Artur
  */
 public class PetController {
-    public static ArrayList<Pet> listaPets = new ArrayList<>();
+    private static ArrayList<Pet> listaPets = new ArrayList<>();
     
     /**
      * Chama o construtor e cadastra um Pet na listaPets e relaciona com um tutor anteriormente cadastrado
@@ -87,5 +87,11 @@ public class PetController {
         
         listaPets.remove(pet);
     }
+
+    public static ArrayList<Pet> getListaPets() {
+        return listaPets;
+    }
+    
+    
 }
 

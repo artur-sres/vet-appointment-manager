@@ -2,11 +2,11 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.Pet;
+import clinicaveterinaria.util.GerenciadorViews;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public class AtendimentosPets extends javax.swing.JFrame {
@@ -14,8 +14,7 @@ public class AtendimentosPets extends javax.swing.JFrame {
 
     public AtendimentosPets(Pet pet) {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         this.pet = pet;
         carregarTabela();
     }

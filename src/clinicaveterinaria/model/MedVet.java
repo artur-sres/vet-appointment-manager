@@ -56,22 +56,16 @@ public class MedVet extends Pessoa {
         //Validação da agenda para evitar conflitos
         for (Atendimento agendado : this.agendaConsultas) {
             
-            //Se for o atendimento que esta sendo editado, ignora
-            if (ignorar != null && agendado.equals(ignorar)) {
-                continue; 
-            }
+             if (ignorar != null && agendado.equals(ignorar)) {
+                 continue;
+             }
 
             if (agendado.getData().equals(dataAtendimento)) {
-                LocalTime inicioAgendado = agendado.getHora();
-                LocalTime fimAgendado = inicioAgendado.plusMinutes(agendado.getDuracaoMinutos());
-
-                //Se houver sobreposição de horários
-                if (horaInicio.isBefore(fimAgendado) && horaFim.isAfter(inicioAgendado)) {
-                    return false;
+                if (agendado.temConflito(horaInicio, duracaoMinutos)) {
+                    return false; 
                 }
             }
         }
-
         return true;
     }
 

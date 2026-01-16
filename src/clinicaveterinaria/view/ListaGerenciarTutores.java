@@ -3,15 +3,14 @@ package clinicaveterinaria.view;
 import javax.swing.JOptionPane;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Tutor;
-import javax.swing.ImageIcon;
+import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.table.DefaultTableModel;
 
 public class ListaGerenciarTutores extends javax.swing.JFrame {
     
     public ListaGerenciarTutores() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
-        this.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        GerenciadorViews.configurar(this);
         carregarTabela();
         
         this.addWindowListener(
@@ -29,7 +28,7 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
 
         modelo.setNumRows(0);
 
-        for (Tutor t : TutorController.listaTutores) {
+        for (Tutor t : TutorController.getListaTutores()) {
             modelo.addRow(new Object[]{
                 t.getNome()
             });
@@ -159,10 +158,9 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
 
     private void btnAvançarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvançarActionPerformed
         int linhaSelecionada = tabelaTutores.getSelectedRow();
-        
         if (linhaSelecionada != -1) {
             this.dispose();
-            Tutor tutorSelecionado = TutorController.listaTutores.get(linhaSelecionada);
+            Tutor tutorSelecionado = TutorController.getListaTutores().get(linhaSelecionada);
             VisualizarTutor tela = new VisualizarTutor(tutorSelecionado);
             tela.setVisible(true);    
         } else {
