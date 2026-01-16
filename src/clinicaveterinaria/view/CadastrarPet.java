@@ -5,7 +5,7 @@ import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Enums.Especie;
 import clinicaveterinaria.model.Enums.Sexo;
 import clinicaveterinaria.model.Tutor;
-import clinicaveterinaria.util.DataUtil;
+import static clinicaveterinaria.util.DataUtil.inicializarCombosCadastro;
 import clinicaveterinaria.util.GerenciadorViews;
 import java.awt.HeadlessException;
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ public class CadastrarPet extends javax.swing.JFrame {
     public CadastrarPet() {
         initComponents();
         GerenciadorViews.configurar(this);
-        DataUtil.inicializarCombosCadastro(cmbDia, cmbMes, cmbAno);
+        inicializarCombosCadastro(cmbDia, cmbMes, cmbAno);
         inicializarCombos();
     }
     
@@ -26,7 +26,7 @@ public class CadastrarPet extends javax.swing.JFrame {
         cmbTutor.removeAllItems();
         cmbTutor.addItem("Tutor"); 
         
-        for (clinicaveterinaria.model.Tutor t : clinicaveterinaria.controller.TutorController.getListaTutores()) {
+        for (Tutor t : TutorController.getListaTutores()) {
             cmbTutor.addItem(t.getNome());
         }
         

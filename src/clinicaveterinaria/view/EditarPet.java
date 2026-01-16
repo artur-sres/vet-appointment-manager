@@ -8,6 +8,7 @@ import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.DataUtil;
 import clinicaveterinaria.util.GerenciadorViews;
 import java.time.LocalDate;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 // View responsável por editar dados de um Pet
@@ -31,8 +32,8 @@ public class EditarPet extends javax.swing.JFrame {
         for (clinicaveterinaria.model.Tutor t : TutorController.getListaTutores()) {
             cmbTutor.addItem(t.getNome());
         }
-        cmbEspecie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CACHORRO", "GATO" }));
-        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MACHO", "FEMEA" }));
+        cmbEspecie.setModel(new DefaultComboBoxModel<>(new String[] { "CACHORRO", "GATO" }));
+        cmbSexo.setModel(new DefaultComboBoxModel<>(new String[] { "MACHO", "FEMEA" }));
     }
 
     // Parte que preenche os dados atuais do Pet
@@ -315,7 +316,7 @@ public class EditarPet extends javax.swing.JFrame {
             int dia = Integer.parseInt((String) cmbDia.getSelectedItem());
             int mes = cmbMes.getSelectedIndex() + 1;
             int ano = Integer.parseInt((String) cmbAno.getSelectedItem());
-            LocalDate dataNasc = java.time.LocalDate.of(ano, mes, dia);
+            LocalDate dataNasc = LocalDate.of(ano, mes, dia);
 
             Especie especie = Especie.valueOf(cmbEspecie.getSelectedItem().toString());
             Sexo sexo = Sexo.valueOf(cmbSexo.getSelectedItem().toString());

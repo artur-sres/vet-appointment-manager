@@ -11,6 +11,7 @@ import clinicaveterinaria.util.DataUtil;
 import static clinicaveterinaria.util.DataUtil.getNumeroMes;
 import clinicaveterinaria.util.GerenciadorViews;
 import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         atualizarListaHorarios();
         
         // Listeners para que os horários se mantenham atualizados
-        java.awt.event.ActionListener listener = e -> atualizarListaHorarios();
+        ActionListener listener = e -> atualizarListaHorarios();
         comboVet.addActionListener(listener);
         comboPet.addActionListener(listener); 
         comboDuracao.addActionListener(listener);

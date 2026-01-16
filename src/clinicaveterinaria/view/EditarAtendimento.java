@@ -10,6 +10,7 @@ import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.util.DataUtil;
 import clinicaveterinaria.util.GerenciadorViews; 
 import java.awt.HeadlessException;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -47,7 +48,7 @@ public class EditarAtendimento extends javax.swing.JFrame {
         
         cmbDia1.addActionListener(evt -> atualizarListaHorarios());
 
-        java.awt.event.ActionListener listenerGeral = e -> atualizarListaHorarios();
+        ActionListener listenerGeral = e -> atualizarListaHorarios();
         comboVet.addActionListener(listenerGeral);
         comboPet.addActionListener(listenerGeral);
         cmbDuracao.addActionListener(listenerGeral);
