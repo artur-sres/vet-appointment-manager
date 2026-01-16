@@ -11,8 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 public class AtendimentosVeterinarios extends javax.swing.JFrame {
-
     private MedVet veterinario;
+    private List<Atendimento> listaExibida;
 
     public AtendimentosVeterinarios(MedVet vet) {
         initComponents();
@@ -24,22 +24,27 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
     private void carregarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
+        
         DateTimeFormatter fmtData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-        List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
-        Collections.sort(lista, (a1, a2) -> {
+        this.listaExibida = new ArrayList<>(veterinario.getAgendaConsultas());
+        Collections.sort(listaExibida, (a1, a2) -> {
             int c = a2.getData().compareTo(a1.getData());
-            if (c != 0) return c;
+            if (c != 0) {
+                return c;
+            }
             return a2.getHora().compareTo(a1.getHora());
         });
 
-        for (Atendimento a : lista) {
+        for (Atendimento a : listaExibida) {
             modelo.addRow(new Object[]{
+                a.getVetResponsavel().getNome(),
+                a.getPetAtendido().getEspecie(),
+                a.getPetAtendido().getNome(),
+                a.getProcedimento(),
                 a.getData().format(fmtData),
-                a.getHora(),
-                a.getPetAtendido().getNome(),       
-                a.getPetAtendido().getTutor().getNome(), 
-                a.getProcedimento().name()
+                a.getHora().format(formatoHora) 
             });
         }
     }
@@ -123,28 +128,21 @@ public class AtendimentosVeterinarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if (evt.getClickCount() == 2) { // Duplo clique
+        if (evt.getClickCount() == 2) { 
             int linha = jTable1.getSelectedRow();
-            if (linha == -1) return;
-
-            List<Atendimento> lista = new ArrayList<>(veterinario.getAgendaConsultas());
-            Collections.sort(lista, (a1, a2) -> {
-                int c = a2.getData().compareTo(a1.getData());
-                if (c != 0) return c;
-                return a2.getHora().compareTo(a1.getHora());
-            });
-
-            Atendimento selecionado = lista.get(linha);
-            
-            VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
-            tela.setVisible(true);
-            
-            tela.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
-                    carregarTabela();
-                }
-            });
+            if (linha != -1 && listaExibida != null && linha < listaExibida.size()) {
+                Atendimento selecionado = listaExibida.get(linha);
+                
+                VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
+                tela.setVisible(true);
+                
+                tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent e) {
+                        carregarTabela();
+                    }
+                });
+            }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
