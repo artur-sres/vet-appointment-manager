@@ -3,6 +3,7 @@ package clinicaveterinaria.view;
 import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.GerenciadorViews;
 
+// View para visualizar os dados de um tutor
 public class VisualizarTutor extends javax.swing.JFrame {
     Tutor tutor;
 
@@ -17,6 +18,7 @@ public class VisualizarTutor extends javax.swing.JFrame {
         txtEndereco.setText(tutor.getEndereco());
         txtCPF.setText(tutor.getCPF());
 
+        // Trava a edição
         txtNome.setEditable(false);
         txtCPF.setEditable(false);
         txtEmail.setEditable(false);

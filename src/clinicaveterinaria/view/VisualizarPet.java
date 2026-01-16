@@ -3,6 +3,7 @@ package clinicaveterinaria.view;
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.util.GerenciadorViews;
 
+// View para visualizar os dados de um Pet
 public class VisualizarPet extends javax.swing.JFrame {
     private Pet pet;
 
@@ -25,6 +26,7 @@ public class VisualizarPet extends javax.swing.JFrame {
         cmbTutor.removeAllItems();
         cmbTutor.addItem(pet.getTutor().getNome());
         
+        // Trava a edição 
         txtNome.setEditable(false);
         txtAlergias.setEditable(false);
         txtRaca.setEditable(false);

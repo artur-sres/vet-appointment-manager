@@ -6,12 +6,12 @@ import java.time.YearMonth;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+// Classe que guarda metódos úteis relacionados a datas, horarios, etc
 public class DataUtil {
     private static final String[] meses = {
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-    };
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
     
+    // Usado pelas view's de CadastrasPet e EditarPet para encher comboBox's com datas corretas
     public static void inicializarCombosCadastro(JComboBox cmbDia, JComboBox cmbMes, JComboBox cmbAno) {
         cmbDia.removeAllItems();
         cmbMes.removeAllItems();
@@ -29,6 +29,7 @@ public class DataUtil {
         }
     }
     
+    // Usado pelas view's de CadastrarAtendimento e EditarAtendimento para encher comboBox's com datas corretas
     public static void inicializarCombosAgendamento(JComboBox cmbDia, JComboBox cmbMes, JComboBox cmbAno) {
         // 1. Preenche Anos (Atual + 1)
         cmbAno.removeAllItems();
@@ -43,6 +44,7 @@ public class DataUtil {
         atualizarDiasAgendamento(cmbDia, cmbMes, cmbAno);
     }
     
+    // Usado para mantes meses de uma comboBox condizente com a realidade do ano atual
     public static void atualizarMesesAgendamento(JComboBox cmbMes, int anoSelecionado) {
         // Remove listeners para evitar disparos acidentais
         ActionListener[] listeners = cmbMes.getActionListeners();
@@ -51,9 +53,8 @@ public class DataUtil {
         cmbMes.removeAllItems();
         
         int anoAtual = LocalDate.now().getYear();
-        int mesAtual = LocalDate.now().getMonthValue(); // 1 a 12
+        int mesAtual = LocalDate.now().getMonthValue(); 
         
-        // Se for o ano atual, começa do mês atual. Se for ano que vem, começa de Janeiro.
         int inicio = (anoSelecionado == anoAtual) ? (mesAtual - 1) : 0;
 
         for (int i = inicio; i < meses.length; i++) {
@@ -64,6 +65,7 @@ public class DataUtil {
         for (ActionListener l : listeners) cmbMes.addActionListener(l);
     }
     
+    // Usado para mantes dias de uma comboBox condizente com a realidade da mês atual
     public static void atualizarDiasAgendamento(JComboBox cmbDia, JComboBox cmbMes, JComboBox cmbAno) {
         if (cmbAno.getSelectedItem() == null || cmbMes.getSelectedItem() == null) return;
 
@@ -87,6 +89,7 @@ public class DataUtil {
         }
     }
 
+    // Monta uma LocalDate ao receber um DIA, um MES e um ANO
     public static LocalDate montarData(JComboBox cmbDia, JComboBox cmbMes, JComboBox cmbAno) throws Exception {
         try {
             int dia = Integer.parseInt(cmbDia.getSelectedItem().toString());
@@ -95,7 +98,7 @@ public class DataUtil {
             int ano = Integer.parseInt(cmbAno.getSelectedItem().toString());
 
             return LocalDate.of(ano, mes, dia);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             throw new Exception("Data inválida ou incompleta.");
         }
     }

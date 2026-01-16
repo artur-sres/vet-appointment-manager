@@ -5,7 +5,7 @@ import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.controller.PetController;
 import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.Enums.Procedimento;
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.util.DataUtil;
 import static clinicaveterinaria.util.DataUtil.getNumeroMes;
@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+// View para cadastro de um Atendimento
 public class CadastrarAtendimento extends javax.swing.JFrame {
    
     public CadastrarAtendimento() {
@@ -31,6 +32,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         comboDuracao.addActionListener(listener);
     }
     
+    // Preenche as listas com as informações necessárias para um agendamento
     private void inicializarListas() {
         DataUtil.inicializarCombosAgendamento(cmbDia1, cmbMes1, cmbAno1);
         cmbAno1.addActionListener(evt -> {
@@ -48,7 +50,7 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         cmbDia1.addActionListener(evt -> atualizarListaHorarios());
 
         comboVet.removeAllItems();
-        for (MedVet vet : VeterinarioController.getListaVeterinarios()) {
+        for (Veterinario vet : VeterinarioController.getListaVeterinarios()) {
             comboVet.addItem(vet.getNome());
         }
         comboVet.setSelectedIndex(-1);
@@ -65,7 +67,6 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         }
         comboAtendimento.setSelectedIndex(-1);
 
-
         comboDuracao.removeAllItems();
         for (int i = 30; i <= 240; i += 30) {
             comboDuracao.addItem(String.valueOf(i));
@@ -80,11 +81,12 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         }
     }
     
+    // Os listeners fazem com que os horários disponíveis sempre estejam de acordo com as entidades selecionadas
     private void atualizarListaHorarios() {
-        cmbHora.removeAllItems(); // Começa limpando
+        cmbHora.removeAllItems(); 
 
         try {
-            //Se faltar qualquer dado, para não dar erro
+            //Se faltar qualquer dado, para não dar erro no terminal
             if (comboVet.getSelectedItem() == null || comboPet.getSelectedItem() == null || 
                 cmbDia1.getSelectedItem() == null || cmbMes1.getSelectedItem() == null || 
                 cmbAno1.getSelectedItem() == null) {
@@ -93,8 +95,8 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
 
             // Recupera os dados
             String nomeVet = (String) comboVet.getSelectedItem();
-            MedVet vet = null;
-            for (MedVet v : VeterinarioController.getListaVeterinarios()) {
+            Veterinario vet = null;
+            for (Veterinario v : VeterinarioController.getListaVeterinarios()) {
                 if (v.getNome().equals(nomeVet)) { 
                     vet = v; 
                     break; 
@@ -129,15 +131,15 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             }
 
         } catch (NumberFormatException e) {
-            // Ignora erros de formatação enquanto o usuário digita/seleciona
+            // Ignora erros
         }
     }
   
-    private MedVet getVetSelecionado() {
+    private Veterinario getVetSelecionado() {
         String nome = (String) comboVet.getSelectedItem();
         if (nome == null) return null;
 
-        for (MedVet v : VeterinarioController.getListaVeterinarios()) {
+        for (Veterinario v : VeterinarioController.getListaVeterinarios()) {
             if (v.getNome().equals(nome)) 
                 return v;
         }
@@ -343,9 +345,10 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Faz algumas verificações e monta o objeto final
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            MedVet vet = getVetSelecionado();
+            Veterinario vet = getVetSelecionado();
             Pet pet = getPetSelecionado();
             LocalDate data = getDataSelecionada();
             String horarioTexto = (String) cmbHora.getSelectedItem();

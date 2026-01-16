@@ -5,6 +5,7 @@ import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 
+// View responsável por editar os dados de um tutor
 public class EditarTutor extends javax.swing.JFrame {
     Tutor tutor;
     

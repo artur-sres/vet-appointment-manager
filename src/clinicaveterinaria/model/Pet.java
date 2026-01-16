@@ -7,10 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.time.Period;
 
-/**
- * Classe Model para Pet
- * @author Artur
- */
+// Model para Pet
 public class Pet {
     private Especie especie;
     private String nome;
@@ -26,10 +23,6 @@ public class Pet {
     private Tutor tutor;
     private ArrayList<Atendimento> consultasHistorico = new ArrayList<>();
 
-
-    /**
-     * Construtor
-     */
     public Pet(Especie especie, String nome, LocalDate dataNascimento, Sexo sexo, boolean isCastrado,  boolean isVacinado, double peso, String temperamento, String raca, String alergias, Tutor tutor) {
         this.especie = especie;
         this.nome = nome;
@@ -46,23 +39,15 @@ public class Pet {
         this.tutor = tutor;
     }
     
-    /**
-     * Verifica se o Pet já tem algum agendamento que pode vir a conflitar com um futuro novo Agendamento
-     * Esse metodo é usado quando se esta cadastrando um novo Atendimento
-     * @return uma chamada para a função que contém toda a lógica necessária, retorna um valor booleano
-     */
+    // Verifica se o Pet já tem algum agendamento que pode vir a conflitar com um futuro novo Agendamento
+    // Esse metodo é usado quando se esta cadastrando um novo Atendimento
     public boolean isHorarioDisponivel(LocalDate dataAtendimento, LocalTime horaInicio, int duracaoMinutos) {
         return isHorarioDisponivel(dataAtendimento, horaInicio, duracaoMinutos, null);
     }
     
-    /**
-     * Verifica se um horario é vago para adicionar um novo agendamento para o Pet
-     * Este metodo é usado quando se vai editar um agendamento, então ele ignora o horario do agendamento atual para que ele apareça normalmente
-     * @return um valor booleano, se True = horario dispoíivel, se False = horario não disponível
-     */
+    // Verifica se um horario é vago para adicionar um novo agendamento para o Pet
+    // Este metodo é usado quando se vai editar um agendamento, então ele ignora o horario do agendamento atual para que ele apareça normalmente
     public boolean isHorarioDisponivel(LocalDate dataAtendimento, LocalTime horaInicio, int duracaoMinutos, Atendimento ignorar) {
-        LocalTime horaFim = horaInicio.plusMinutes(duracaoMinutos);
-
         for (Atendimento agendado : this.consultasHistorico) {
             if (ignorar != null && agendado.equals(ignorar)) {
                 continue;
@@ -187,6 +172,5 @@ public class Pet {
     public ArrayList<Atendimento> getHistorico() {
         return consultasHistorico;
     }
-    
-    
+     
 }

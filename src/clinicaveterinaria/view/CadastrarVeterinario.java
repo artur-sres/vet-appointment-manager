@@ -4,9 +4,8 @@ import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 
+// View responsável por realizar o cadastro de um Veterinário
 public class CadastrarVeterinario extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarVeterinario.class.getName());
 
     public CadastrarVeterinario() {
         initComponents();

@@ -6,17 +6,11 @@ import static clinicaveterinaria.util.ValidarDados.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- * Classe que guarda os metódos responsáveis por cuidar da lógica dos Pets
- * @author Artur
- */
+// Classe com guarda toda a lógica responsável por gerenciar os pets
+// Metódos possuem nomes autoexplicativos
 public class PetController {
-    private static ArrayList<Pet> listaPets = new ArrayList<>();
+    private static final ArrayList<Pet> listaPets = new ArrayList<>();
     
-    /**
-     * Chama o construtor e cadastra um Pet na listaPets e relaciona com um tutor anteriormente cadastrado
-     * @throws Exception Quando dados inválidos são inseridos
-     */
     public static void cadastrarPet(Tutor tutor, Especie especie, String nome, String raca, Sexo sexo, String pesoTexto, LocalDate nascimento, String alergias, String temperamento, boolean vacinado, boolean castrado) throws Exception{
         validarDados(nome, raca, alergias, temperamento);
         
@@ -32,10 +26,6 @@ public class PetController {
         listaPets.add(novoPet);
     }
    
-    /**
-     * Edita os dados de um Pet já existente
-     * @throws Exception Quando dados inválidos são inseridos
-     */
     public static void editarPet(Pet pet, Tutor novoTutor, clinicaveterinaria.model.Enums.Especie especie, String nome, String raca, clinicaveterinaria.model.Enums.Sexo sexo, String pesoTexto, java.time.LocalDate nascimento, String alergias, String temperamento, boolean vacinado, boolean castrado) throws Exception {
         validarDados(nome, raca, alergias, temperamento);
 
@@ -46,7 +36,7 @@ public class PetController {
             throw new Exception("O peso informado é inválido!");
         }
 
-        //Lógica para troca de tutor
+        // Troca de tutor
         if (novoTutor != null && pet.getTutor() != novoTutor) {
             pet.getTutor().getAnimais().remove(pet);
             pet.setTutor(novoTutor);
@@ -65,9 +55,6 @@ public class PetController {
         pet.setIsCastrado(castrado);
     }
     
-    /**
-     * Exclui um Pet do sistema, apagando seus agendamentos e desvinculando do Tutor
-     */
     public static void excluirPet(Pet pet) {
         if (pet == null) {
             return;

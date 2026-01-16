@@ -6,6 +6,7 @@ import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.table.DefaultTableModel;
 
+// Mostra todos os tutores do sistema
 public class ListaGerenciarTutores extends javax.swing.JFrame {
     
     public ListaGerenciarTutores() {
@@ -13,6 +14,7 @@ public class ListaGerenciarTutores extends javax.swing.JFrame {
         GerenciadorViews.configurar(this);
         carregarTabela();
         
+        // Garante que a lista se mantenha atualizada
         this.addWindowListener(
                 new java.awt.event.WindowAdapter() {
                     @Override

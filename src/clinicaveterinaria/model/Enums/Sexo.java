@@ -1,9 +1,6 @@
 package clinicaveterinaria.model.Enums;
 
-/**
- * Classe Enum para adicionar o tipo Sexo
- * @author Artur
- */
+// Enum para adicionar o tipo Sexo
 public enum Sexo {
     MACHO("Macho"),
     FEMEA("Fêmea");

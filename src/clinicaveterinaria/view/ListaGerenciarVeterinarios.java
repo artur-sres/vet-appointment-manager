@@ -1,7 +1,7 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.VeterinarioController;
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -21,7 +21,7 @@ public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
 
         modelo.setNumRows(0);
 
-        for (MedVet t : VeterinarioController.getListaVeterinarios()) {
+        for (Veterinario t : VeterinarioController.getListaVeterinarios()) {
             modelo.addRow(new Object[]{
                 t.getNome()
             });
@@ -128,7 +128,7 @@ public class ListaGerenciarVeterinarios extends javax.swing.JFrame {
 
         if (linhaSelecionada != -1) {
             this.dispose();
-            MedVet veterinarioSelecionado = VeterinarioController.getListaVeterinarios().get(linhaSelecionada);
+            Veterinario veterinarioSelecionado = VeterinarioController.getListaVeterinarios().get(linhaSelecionada);
             VisualizarVeterinario tela = new VisualizarVeterinario(veterinarioSelecionado);
             tela.setVisible(true);
         } else {

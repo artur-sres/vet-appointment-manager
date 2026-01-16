@@ -1,12 +1,13 @@
 package clinicaveterinaria.view;
 
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.util.GerenciadorViews;
 
+// View para visualizar os dados de um veterinário
 public class VisualizarVeterinario extends javax.swing.JFrame {
-    private MedVet veterinario;
+    private final Veterinario veterinario;
 
-    public VisualizarVeterinario(MedVet veterinario) {
+    public VisualizarVeterinario(Veterinario veterinario) {
         initComponents();
         GerenciadorViews.configurar(this);
         this.veterinario = veterinario;
@@ -15,6 +16,7 @@ public class VisualizarVeterinario extends javax.swing.JFrame {
         txtEmail.setText(veterinario.getEmail());
         txtTelefone.setText(veterinario.getTelefone());
         
+        // Trava a edição
         txtNome.setEditable(false);
         txtTelefone.setEditable(false);
         txtEmail.setEditable(false);

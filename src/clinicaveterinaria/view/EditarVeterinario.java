@@ -1,14 +1,14 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.VeterinarioController;
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 
 public class EditarVeterinario extends javax.swing.JFrame {
-    MedVet veterinario;
+    Veterinario veterinario;
 
-    public EditarVeterinario(MedVet veterinario) {
+    public EditarVeterinario(Veterinario veterinario) {
         initComponents();
         GerenciadorViews.configurar(this);
         this.veterinario = veterinario;

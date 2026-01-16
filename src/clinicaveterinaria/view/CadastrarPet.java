@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
+// View responsável por realizar o cadastro de um Pet
 public class CadastrarPet extends javax.swing.JFrame {
     
     public CadastrarPet() {
@@ -255,6 +256,7 @@ public class CadastrarPet extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
+            // Monta a data de nascimento
             int dia = Integer.parseInt((String) cmbDia.getSelectedItem());
             int mes = cmbMes.getSelectedIndex() + 1; 
             int ano = Integer.parseInt((String) cmbAno.getSelectedItem());
@@ -264,6 +266,7 @@ public class CadastrarPet extends javax.swing.JFrame {
             if(indiceTutor == 0){
                 JOptionPane.showMessageDialog(null, "O tutor deve ser cadastrado previamente!");
             }
+            
             Especie especie = Especie.valueOf(cmbEspecie.getSelectedItem().toString());
             Sexo sexo = Sexo.valueOf(cmbSexo.getSelectedItem().toString());
             if (indiceTutor != 0) {

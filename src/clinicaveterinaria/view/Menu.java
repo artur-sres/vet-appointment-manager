@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.ImageIcon;
 
-
+// View do Menu Principal do sistema, ele tem o caminho para todas as outras sessões
 public class Menu extends javax.swing.JFrame {
     private List<Atendimento> agenda;
     
@@ -16,6 +16,7 @@ public class Menu extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/clinicaveterinaria/imagens/icon.png")).getImage());
         carregarAgendaDoDia();
         
+        // Garante que a agenda do dia sempre esteja atualizada, para em caso de edição de Agendamentos
         this.addWindowListener(
                 new java.awt.event.WindowAdapter() {
                     @Override

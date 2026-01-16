@@ -6,12 +6,15 @@ import clinicaveterinaria.util.GerenciadorViews;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+// Mostra todos os Pets do sistema
 public class ListaGerenciarPets extends javax.swing.JFrame {
 
     public ListaGerenciarPets() {
         initComponents();
         GerenciadorViews.configurar(this);
         carregarTabela();
+        
+        // Garante que a lista se mantenha atualizada
         this.addWindowListener(
                 new java.awt.event.WindowAdapter() {
                     @Override

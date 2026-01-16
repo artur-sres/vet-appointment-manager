@@ -1,7 +1,7 @@
 package clinicaveterinaria.controller;
 
 import clinicaveterinaria.model.Atendimento;
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.model.Pet;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,10 +10,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+// Classe que guarda toda a lógica que gerencia os atendimentos
+// Metódos possuem nomes autoexplicativos
 public class AtendimentoController {
     private static final ArrayList<Atendimento> listaAtendimentos = new ArrayList<>();
 
-    
     public static void cadastrar(Atendimento novoAtendimento) {
         listaAtendimentos.add(novoAtendimento);
 
@@ -53,7 +54,9 @@ public class AtendimentoController {
         return agendaDia;
     }
     
-    public static List<String> buscarHorariosDisponiveis(MedVet vet, Pet pet, LocalDate data, int duracaoMin, Atendimento ignorar) {
+    // Esse metódo retorna uma lista de horários disponívies para agendar atendimentos
+    // Verifica se não conflita com outros horários já agendados para Veterinários ou para Pets
+    public static List<String> buscarHorariosDisponiveis(Veterinario vet, Pet pet, LocalDate data, int duracaoMin, Atendimento ignorar) {
         List<String> horariosLivres = new ArrayList<>();
         
         LocalTime horarioAnalise = LocalTime.of(8, 0);
@@ -94,7 +97,6 @@ public class AtendimentoController {
         // Remove da lista geral
         listaAtendimentos.remove(atendimento);
     }
-    
     
     //Getters e Setters 
     public static ArrayList<Atendimento> getListaAtendimentos() {

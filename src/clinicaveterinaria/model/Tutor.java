@@ -1,18 +1,12 @@
 package clinicaveterinaria.model;
 import java.util.ArrayList;
 
-/**
- * Classe Model para Tutor
- * @author Artur
- */
+// Model para Tutor
 public class Tutor extends Pessoa{
     private String endereco;
     private String cpf;
     private ArrayList<Pet> pets;
 
-    /**
-     * Construtor
-     */
     public Tutor(String nome, String email, String telefone, String endereco, String cpf) {
         super(nome, email, telefone);
         this.endereco = endereco;
@@ -20,9 +14,6 @@ public class Tutor extends Pessoa{
         this.pets = new ArrayList<>();
     }
 
-    /**
-     * Adiciona um novo Pet a lista de Pets do Tutoe
-     */
     public void adicionarPet(Pet novoPet){
         pets.add(novoPet);
     }
@@ -56,6 +47,5 @@ public class Tutor extends Pessoa{
     public String toString() {
         return getNome();
     }
-    
     
 }

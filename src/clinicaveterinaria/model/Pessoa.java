@@ -1,17 +1,11 @@
 package clinicaveterinaria.model;
 
-/**
- * Classe Model para Pessoa
- * @author Artur
- */
+// Model para a superclasse Pessoa
 public abstract class Pessoa {
     private String nome;
     private String email;
     private String telefone;
 
-    /**
-     * Construtor
-     */
     public Pessoa(String nome, String email, String telefone) {
         this.nome = nome;
         this.email = email;

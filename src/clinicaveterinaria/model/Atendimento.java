@@ -4,24 +4,17 @@ import clinicaveterinaria.model.Enums.Procedimento;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Classe Model para Atendimento
- * @author Artur
- */
+// Model para Atendimento
 public class Atendimento { 
     private Procedimento procedimento;
     private Pet petAtendido;
-    private MedVet vetResponsavel;
+    private Veterinario vetResponsavel;
     private LocalDate data; 
     private LocalTime hora; 
     private String descricao;
     private int duracaoMinutos; 
 
-    
-    /**
-     * Construtor da Classe
-     */
-    public Atendimento(Procedimento procedimento, Pet petAtendido, MedVet vetResponsavel, LocalDate data, LocalTime hora, String descricao) {
+    public Atendimento(Procedimento procedimento, Pet petAtendido, Veterinario vetResponsavel, LocalDate data, LocalTime hora, String descricao) {
         this.procedimento = procedimento;
         this.petAtendido = petAtendido;
         this.vetResponsavel = vetResponsavel;
@@ -30,16 +23,15 @@ public class Atendimento {
         this.descricao = descricao;
     }
 
+    // Verifica se tem algum conflito nos horários escolhidos
     public boolean temConflito(LocalTime horaInicioNovo, int duracaoMinutosNovo) {
         LocalTime horaFimNovo = horaInicioNovo.plusMinutes(duracaoMinutosNovo);
-
         LocalTime meuInicio = this.getHora();
         LocalTime meuFim = meuInicio.plusMinutes(this.getDuracaoMinutos());
-
         return horaInicioNovo.isBefore(meuFim) && horaFimNovo.isAfter(meuInicio);
     }
+    
     //Getters e Setters
-
     public int getDuracaoMinutos() {
         return duracaoMinutos;
     }
@@ -64,11 +56,11 @@ public class Atendimento {
         this.petAtendido = petAtendido;
     }
 
-    public MedVet getVetResponsavel() {
+    public Veterinario getVetResponsavel() {
         return vetResponsavel;
     }
 
-    public void setVetResponsavel(MedVet vetResponsavel) {
+    public void setVetResponsavel(Veterinario vetResponsavel) {
         this.vetResponsavel = vetResponsavel;
     }
 

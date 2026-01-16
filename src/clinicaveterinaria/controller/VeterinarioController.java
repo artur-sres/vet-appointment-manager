@@ -1,31 +1,21 @@
 package clinicaveterinaria.controller;
 
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import static clinicaveterinaria.util.ValidarDados.validarDados;
 import java.util.ArrayList;
 
-/**
- * Classe que guarda os metódos responsáveis por cuidar da lógica dos MedVet
- * @author Artur
- */
+// Classe que guarda toda a lógica que gerencia os veterinários
+// Metódos possuem nomes autoexplicativos
 public class VeterinarioController {
-    private static ArrayList<MedVet> listaVeterinarios = new ArrayList<>();
+    private static final ArrayList<Veterinario> listaVeterinarios = new ArrayList<>();
     
-    /**
-     * Chama o construtor para MedVet e adiciona na listaVeterinarios
-     * @throws Exception 
-     */
     public static void cadastrarVeterinario(String nome, String email, String telefone) throws Exception{
         validarDados(nome, email, telefone);
-        MedVet novoVeterinario = new MedVet(nome, email, telefone);
+        Veterinario novoVeterinario = new Veterinario(nome, email, telefone);
         listaVeterinarios.add(novoVeterinario);
     }
     
-    /**
-     * Edita os dados de um MedVet já existente
-     * @throws Exception Quando dados inválidos são inseridos
-     */
-    public static void editarVeterinario(MedVet veterinario, String nome, String email, String telefone)throws Exception{
+    public static void editarVeterinario(Veterinario veterinario, String nome, String email, String telefone)throws Exception{
         validarDados(nome, email, telefone);
         veterinario.setNome(nome);
         veterinario.setEmail(email);
@@ -33,7 +23,7 @@ public class VeterinarioController {
         
     }
 
-    public static ArrayList<MedVet> getListaVeterinarios() {
+    public static ArrayList<Veterinario> getListaVeterinarios() {
         return listaVeterinarios;
     }
     

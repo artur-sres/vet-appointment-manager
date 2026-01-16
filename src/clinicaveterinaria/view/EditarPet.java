@@ -1,4 +1,5 @@
 package clinicaveterinaria.view;
+import static clinicaveterinaria.controller.PetController.editarPet;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.model.Enums.Especie;
 import clinicaveterinaria.model.Enums.Sexo;
@@ -7,7 +8,11 @@ import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.DataUtil;
 import clinicaveterinaria.util.GerenciadorViews;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
+// View responsável por editar dados de um Pet
+// Faz o mesmo processo de preencher as comboBox's com dados atuais
+// A diferença é que as caracteristicas para aquele Pet já estão pré-selecionadas
 public class EditarPet extends javax.swing.JFrame {
     private final Pet pet;
 
@@ -30,6 +35,7 @@ public class EditarPet extends javax.swing.JFrame {
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MACHO", "FEMEA" }));
     }
 
+    // Parte que preenche os dados atuais do Pet
     private void preencherDados() {
         txtNome.setText(this.pet.getNome());
         txtAlergias.setText(this.pet.getAlergias());
@@ -311,8 +317,8 @@ public class EditarPet extends javax.swing.JFrame {
             int ano = Integer.parseInt((String) cmbAno.getSelectedItem());
             LocalDate dataNasc = java.time.LocalDate.of(ano, mes, dia);
 
-            Especie especie = clinicaveterinaria.model.Enums.Especie.valueOf(cmbEspecie.getSelectedItem().toString());
-            Sexo sexo = clinicaveterinaria.model.Enums.Sexo.valueOf(cmbSexo.getSelectedItem().toString());
+            Especie especie = Especie.valueOf(cmbEspecie.getSelectedItem().toString());
+            Sexo sexo = Sexo.valueOf(cmbSexo.getSelectedItem().toString());
             
             Tutor novoTutor = this.pet.getTutor();
             if(!(pet.getTutor().getNome()).equals(cmbTutor.getSelectedItem())){
@@ -320,7 +326,7 @@ public class EditarPet extends javax.swing.JFrame {
                 novoTutor = TutorController.getListaTutores().get(indiceTutor);
             }
             
-            clinicaveterinaria.controller.PetController.editarPet(
+            editarPet(
                 this.pet,         
                 novoTutor,        
                 especie,
@@ -335,13 +341,13 @@ public class EditarPet extends javax.swing.JFrame {
                 ckbCastrado.isSelected()
             );
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Dados do pet atualizados com sucesso!");
+            JOptionPane.showMessageDialog(this, "Dados do pet atualizados com sucesso!");
             this.dispose();
             VisualizarPet tela = new VisualizarPet(pet);
             tela.setVisible(true);
 
         } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnAplicarActionPerformed
 

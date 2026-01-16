@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import clinicaveterinaria.controller.TutorController;
 import clinicaveterinaria.util.GerenciadorViews;
 
+// View responsável por realizar o cadstro de um Tutor
 public class CadastrarTutor extends javax.swing.JFrame {
 
     public CadastrarTutor() {

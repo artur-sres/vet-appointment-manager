@@ -2,10 +2,10 @@ package clinicaveterinaria.view;
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.GerenciadorViews;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+// Mostra todos os pets de um determinado tutor
 public class PetsTutores extends javax.swing.JFrame {
     private final Tutor tutor;
 

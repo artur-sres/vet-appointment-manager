@@ -6,6 +6,7 @@ import clinicaveterinaria.util.GerenciadorViews;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
+// View para visualizar os dados de um determinado Atendimento já agendado
 public class VisualizarAtendimento extends javax.swing.JFrame {
 
     private final Atendimento atendimentoAtual;
@@ -18,6 +19,7 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
         bloquearCampos(); 
     }
     
+    // Preenche os dados existentes
     private void preencherDados() {
         if (atendimentoAtual == null) return;
 
@@ -33,6 +35,7 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
         txtDuracao.setText(atendimentoAtual.getDuracaoMinutos() + " min");
     }
     
+    // Bloqueia os campos para que não possam ser editados
     private void bloquearCampos() {
         txtAtendimento.setEditable(false);
         txtVet.setEditable(false);
@@ -216,6 +219,7 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // Remove um atendimento e libera espaço tanto nos horários de um Veterinário como do Paciente (Pet)
         int opcao = JOptionPane.showConfirmDialog(this, 
             "Tem certeza que deseja cancelar este agendamento?", 
             "Cancelar Agendamento", 

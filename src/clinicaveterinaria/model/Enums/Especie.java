@@ -1,9 +1,6 @@
 package clinicaveterinaria.model.Enums;
 
-/**
- * Classe Enum para adicionar o tipo Especie
- * @author Artur
- */
+// Enum para adicionar o tipo Especie
 public enum Especie {
     CACHORRO("Cachorro"),
     GATO("Gato");

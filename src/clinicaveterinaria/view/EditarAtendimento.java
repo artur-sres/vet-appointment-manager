@@ -5,10 +5,9 @@ import clinicaveterinaria.controller.PetController;
 import clinicaveterinaria.controller.VeterinarioController;
 import clinicaveterinaria.model.Atendimento;
 import clinicaveterinaria.model.Enums.Procedimento;
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.util.DataUtil;
-import static clinicaveterinaria.util.DataUtil.getNumeroMes;
 import clinicaveterinaria.util.GerenciadorViews; 
 import java.awt.HeadlessException;
 import java.time.LocalDate;
@@ -16,6 +15,7 @@ import java.time.LocalTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+// View para a edição de um Atendimento
 public class EditarAtendimento extends javax.swing.JFrame {
     private final Atendimento atendimentoOriginal;
 
@@ -27,6 +27,7 @@ public class EditarAtendimento extends javax.swing.JFrame {
         preencherCampos();
     }
     
+    // Preenche as listas com as informações necessárias para um agendamento
     private void inicializarListas() {
         DataUtil.inicializarCombosAgendamento(cmbDia1, cmbMes1, cmbAno1);
 
@@ -52,7 +53,7 @@ public class EditarAtendimento extends javax.swing.JFrame {
         cmbDuracao.addActionListener(listenerGeral);
 
         comboVet.removeAllItems();
-        for (MedVet vet : VeterinarioController.getListaVeterinarios()) {
+        for (Veterinario vet : VeterinarioController.getListaVeterinarios()) {
             comboVet.addItem(vet.getNome());
         }
 
@@ -72,6 +73,7 @@ public class EditarAtendimento extends javax.swing.JFrame {
         }
     }
 
+    // Preenche as comboBox com as informações atuais do Atendimento a ser editado
     private void preencherCampos() {
         if (atendimentoOriginal == null) return;
 
@@ -90,36 +92,38 @@ public class EditarAtendimento extends javax.swing.JFrame {
         cmbHora.setSelectedItem(atendimentoOriginal.getHora().toString());
     }
 
+    // Os listeners fazem com que os horários disponíveis sempre estejam de acordo com as entidades selecionadas
     private void atualizarListaHorarios() {
-        cmbHora.removeAllItems();     
+        cmbHora.removeAllItems();   
+        
         try {
-            MedVet vet = getVetSelecionado();
+            //Se faltar qualquer dado, para não dar erro no terminal
+            Veterinario vet = getVetSelecionado();
             Pet pet = getPetSelecionado();
             LocalDate data = getDataSelecionada();
             
             if (vet == null || pet == null || data == null) {
                 return;
             }
-
             int duracao = Integer.parseInt((String) cmbDuracao.getSelectedItem());
-
             List<String> horarios = AtendimentoController.buscarHorariosDisponiveis(vet, pet, data, duracao, this.atendimentoOriginal);
-
             for (String h : horarios) {
                 cmbHora.addItem(h);
             }
             
-            if (horarios.isEmpty()) cmbHora.addItem("Sem horários");
+            if (horarios.isEmpty()) {
+                cmbHora.addItem("Sem horários");
+            }
 
         } catch (NumberFormatException e) {
             // Ignora erros 
         }
     }
     
-    private MedVet getVetSelecionado() {
+    private Veterinario getVetSelecionado() {
         String nome = (String) comboVet.getSelectedItem();
         if (nome == null) return null;
-        for (MedVet v : VeterinarioController.getListaVeterinarios()) {
+        for (Veterinario v : VeterinarioController.getListaVeterinarios()) {
             if (v.getNome().equals(nome)) return v;
         }
         return null;
@@ -307,15 +311,14 @@ public class EditarAtendimento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Faz algumas verificações e edita o objeto final
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            // 1. Coleta e Validações (Iguais ao Cadastrar)
-            MedVet vet = getVetSelecionado();
+            Veterinario vet = getVetSelecionado();
             Pet pet = getPetSelecionado();
             LocalDate data = getDataSelecionada();
             String horarioTexto = (String) cmbHora.getSelectedItem();
 
-            // Verifica Nulos
             if (vet == null || pet == null) {
                 JOptionPane.showMessageDialog(this, "Veterinário e Pet são obrigatórios!");
                 return;
@@ -328,8 +331,6 @@ public class EditarAtendimento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Selecione um horário válido!");
                 return;
             }
-
-            // 2. Lógica Exclusiva do EDITAR (Troca de Ponteiros)
 
             // Se trocou de Veterinário: Tira da agenda do antigo, põe na do novo
             if (!atendimentoOriginal.getVetResponsavel().equals(vet)) {
@@ -344,8 +345,8 @@ public class EditarAtendimento extends javax.swing.JFrame {
                 pet.getHistorico().add(atendimentoOriginal);
                 atendimentoOriginal.setPetAtendido(pet);
             }
-
-            // 3. Atualiza os dados simples
+            
+            // Atualiza os dados simples
             atendimentoOriginal.setData(data);
             atendimentoOriginal.setHora(LocalTime.parse(horarioTexto));
             atendimentoOriginal.setDuracaoMinutos(Integer.parseInt((String) cmbDuracao.getSelectedItem()));

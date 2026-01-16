@@ -1,20 +1,23 @@
 package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Atendimento;
-import clinicaveterinaria.model.MedVet;
+import clinicaveterinaria.model.Veterinario;
 import clinicaveterinaria.model.Pet;
-import clinicaveterinaria.util.GerenciadorViews; // ou GerenciadorJanela
+import clinicaveterinaria.util.GerenciadorViews; 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
+// View responsável por mostras históricos de atendimentos de pets ou veterinários
+// faz uso de sobrecarga de metódos (construtor) para conseguir aceitar ambos
 public class HistoricoAtendimentos extends javax.swing.JFrame {
     private final Pet petAlvo;
-    private final MedVet vetAlvo;
+    private final Veterinario vetAlvo;
     private List<Atendimento> listaExibida; 
 
+    // Construtor para Pet
     public HistoricoAtendimentos(Pet pet) {
         initComponents();
         GerenciadorViews.configurar(this);
@@ -26,7 +29,8 @@ public class HistoricoAtendimentos extends javax.swing.JFrame {
         carregarTabela();
     }
 
-    public HistoricoAtendimentos(MedVet vet) {
+    // Construtor para Veterinário
+    public HistoricoAtendimentos(Veterinario vet) {
         initComponents();
         GerenciadorViews.configurar(this);
         
@@ -149,7 +153,6 @@ public class HistoricoAtendimentos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // Verifica se foi duplo clique
     if (evt.getClickCount() == 2) {
         int linha = jTable1.getSelectedRow();
         
@@ -160,6 +163,7 @@ public class HistoricoAtendimentos extends javax.swing.JFrame {
             VisualizarAtendimento tela = new VisualizarAtendimento(selecionado);
             tela.setVisible(true);
             
+            // Mantém a tabela atualizada mesmo que edições sejam feitas
             tela.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent e) {
