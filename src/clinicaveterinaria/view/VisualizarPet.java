@@ -5,7 +5,7 @@ import clinicaveterinaria.util.GerenciadorViews;
 
 // View para visualizar os dados de um Pet
 public class VisualizarPet extends javax.swing.JFrame {
-    private Pet pet;
+    private final Pet pet;
 
     public VisualizarPet(Pet petSelecionado) {
         initComponents();
@@ -329,16 +329,10 @@ public class VisualizarPet extends javax.swing.JFrame {
             javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-            // Chama a função cascata que criamos no Controller
             clinicaveterinaria.controller.PetController.excluirPet(this.pet);
-            
             javax.swing.JOptionPane.showMessageDialog(this, "Pet excluído com sucesso!");
-            
-            // Fecha a tela de edição
             this.dispose();
-            
-            // Opcional: Se quiser voltar para o menu ou lista de pets, pode instanciar aqui.
-            // Ex: new ListaGerenciarPets().setVisible(true);
+ 
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
@@ -347,7 +341,9 @@ public class VisualizarPet extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbTutorActionPerformed
 
     private void btnCancelar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar2ActionPerformed
-
+        VisualizarTutor tela = new VisualizarTutor(this.pet.getTutor());
+        this.dispose();
+        tela.setVisible(true);
     }//GEN-LAST:event_btnCancelar2ActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed

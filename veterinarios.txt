@@ -1,0 +1,10 @@
+Dr. Ana Souza;ana.souza@vet.com;11911111111;true
+Dr. Bruno Lima;bruno.lima@vet.com;11922222222;true
+Dra. Carla Mendes;carla.mendes@vet.com;11933333333;true
+Dr. Daniel Rocha;daniel.rocha@vet.com;11944444444;true
+Dra. Elena Torres;elena.torres@vet.com;11955555555;true
+Dr. Fabio Dias;fabio.dias@vet.com;11966666666;true
+Dra. Gabriela Silva;gabriela.silva@vet.com;11977777777;true
+Dr. Hugo Martins;hugo.martins@vet.com;11988888888;true
+Dra. Irene Costa;irene.costa@vet.com;11999999999;true
+Dr. Jorge Alves;jorge.alves@vet.com;11900000000;true
