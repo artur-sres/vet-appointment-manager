@@ -58,7 +58,7 @@ public class TutorController {
                 writer.write(linha);
                 writer.newLine();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new Exception("Não foi possivel salvar os dados");
         }
     }
@@ -77,7 +77,7 @@ public class TutorController {
                     listaTutores.add(tutor);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new Exception ("Não foi possivel carregar os dados");
         }
     }

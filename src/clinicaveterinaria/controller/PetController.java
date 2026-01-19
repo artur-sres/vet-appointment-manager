@@ -102,7 +102,7 @@ public class PetController {
                 writer.write(linha);
                 writer.newLine();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new Exception ("Não foi possivel salvar os dados");
         }
     }

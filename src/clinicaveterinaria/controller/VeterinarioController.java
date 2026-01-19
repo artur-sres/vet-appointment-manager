@@ -40,7 +40,7 @@ public class VeterinarioController {
                 writer.write(linha);
                 writer.newLine();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new Exception ("Não foi possivel salvar os dados");
         }
     }
@@ -66,7 +66,7 @@ public class VeterinarioController {
                     listaVeterinarios.add(vet);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new Exception ("Não foi possivel carregar os dados");
         }
     }

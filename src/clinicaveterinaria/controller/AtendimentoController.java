@@ -46,7 +46,6 @@ public class AtendimentoController {
     public static void salvarDados() throws Exception {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_ATENDIMENTOS))) {
             for (Atendimento att : listaAtendimentos) {
-                // Estrutura: PROCEDIMENTO;EMAIL_VET;CPF_TUTOR;NOME_PET;DATA;HORA;DURACAO;DESCRICAO
                 String linha = String.format("%s;%s;%s;%s;%s;%s;%d;%s",
                     att.getProcedimento().name(),
                     att.getVetResponsavel().getEmail(),      
@@ -60,7 +59,7 @@ public class AtendimentoController {
                 writer.write(linha);
                 writer.newLine();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new Exception ("Não foi possivel salvar os dados");
         }
     }
