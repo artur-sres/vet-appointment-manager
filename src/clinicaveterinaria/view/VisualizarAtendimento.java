@@ -99,7 +99,7 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
 
         jLabel5.setText("Data:");
 
-        jLabel6.setText("Horários Disponíveis:");
+        jLabel6.setText("Horário Marcado:");
 
         jLabel9.setText("Descrição:");
 

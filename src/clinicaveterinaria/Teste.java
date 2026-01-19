@@ -365,64 +365,73 @@ public class Teste {
     }
 
     public static void testeAtendimentos() {
-        try {
-            if (PetController.getListaPets().isEmpty() || VeterinarioController.getListaVeterinarios().isEmpty()) {
-                return;
-            }
-
-            Random random = new Random();
-
-            LocalDate dataInicio = LocalDate.of(2026, 1, 10);
-            LocalDate dataFim = LocalDate.of(2026, 1, 30);
-
-            String[] descricoesSimples = {"Check-up de rotina", "Vacina anual", "Aplicação de remédio", "Retorno"};
-            String[] descricoesMedias = {"Animal vomitando", "Coceira intensa", "Dor na pata", "Não está comendo", "Exame de sangue"};
-            String[] descricoesComplexas = {"Castração", "Cirurgia ortopédica", "Limpeza de tártaro", "Sutura de ferimento"};
-
-            for (LocalDate data = dataInicio; !data.isAfter(dataFim); data = data.plusDays(1)) {
-                int qtdAtendimentosHoje;
-                boolean periodoCritico = !data.isBefore(LocalDate.of(2026, 1, 19)) && 
-                                         !data.isAfter(LocalDate.of(2026, 1, 28));
-
-                if (periodoCritico) {
-                    qtdAtendimentosHoje = 5 + random.nextInt(4); 
-                } else {
-                    qtdAtendimentosHoje = 2 + random.nextInt(3);
-                }
-
-                for (int i = 0; i < qtdAtendimentosHoje; i++) {
-                    var pet = PetController.getListaPets().get(random.nextInt(PetController.getListaPets().size()));
-                    var vet = VeterinarioController.getListaVeterinarios().get(random.nextInt(VeterinarioController.getListaVeterinarios().size()));
-
-                    LocalTime hora = LocalTime.of(8 + random.nextInt(10), random.nextBoolean() ? 0 : 30);
-
-                    Procedimento proc;
-                    String descricao;
-                    int duracao;
-
-                    int tipoSorteio = random.nextInt(100); 
-
-                    if (tipoSorteio < 40) { 
-                        proc = Procedimento.CONSULTA;
-                        descricao = descricoesMedias[random.nextInt(descricoesMedias.length)];
-                        duracao = 30 + random.nextInt(31); 
-                    } else if (tipoSorteio < 70) { 
-                        proc = random.nextBoolean() ? Procedimento.VACINACAO : Procedimento.EXAME;
-                        descricao = descricoesSimples[random.nextInt(descricoesSimples.length)];
-                        duracao = 20; 
-                    } else {
-                        proc = Procedimento.CIRURGIA;
-                        descricao = descricoesComplexas[random.nextInt(descricoesComplexas.length)];
-                        duracao = 60 + random.nextInt(61);
-                    }
-
-                    Atendimento atendimento = new Atendimento(proc, pet, vet, data, hora, descricao);    
-                    atendimento.setDuracaoMinutos(duracao);
-                    AtendimentoController.cadastrar(atendimento);
-                }
-            }
-        } catch (Exception e) {
-            
+    try {
+        if (PetController.getListaPets().isEmpty() || VeterinarioController.getListaVeterinarios().isEmpty()) {
+            return;
         }
+
+        Random random = new Random();
+        LocalDate hoje = LocalDate.now(); // Pega a data atual do sistema
+
+        // 1. ALTERAÇÃO: Define o início e fim baseados no dia de hoje
+        // Assim garantimos que o "hoje" sempre está incluído no teste
+        LocalDate dataInicio = hoje.minusDays(5); // Começa 5 dias atrás
+        LocalDate dataFim = hoje.plusDays(15);    // Vai até 15 dias pra frente
+
+        String[] descricoesSimples = {"Check-up de rotina", "Vacina anual", "Aplicação de remédio", "Retorno"};
+        String[] descricoesMedias = {"Animal vomitando", "Coceira intensa", "Dor na pata", "Não está comendo", "Exame de sangue"};
+        String[] descricoesComplexas = {"Castração", "Cirurgia ortopédica", "Limpeza de tártaro", "Sutura de ferimento"};
+
+        for (LocalDate data = dataInicio; !data.isAfter(dataFim); data = data.plusDays(1)) {
+            int qtdAtendimentosHoje;
+            
+            boolean periodoCritico = !data.isBefore(hoje.plusDays(5)) && !data.isAfter(hoje.plusDays(10));
+
+
+            if (data.isEqual(hoje)) {
+                qtdAtendimentosHoje = 11 + random.nextInt(5); 
+            } else if (periodoCritico) {
+                qtdAtendimentosHoje = 5 + random.nextInt(4); 
+            } else {
+                qtdAtendimentosHoje = 2 + random.nextInt(3);
+            }
+
+            for (int i = 0; i < qtdAtendimentosHoje; i++) {
+                var pet = PetController.getListaPets().get(random.nextInt(PetController.getListaPets().size()));
+                var vet = VeterinarioController.getListaVeterinarios().get(random.nextInt(VeterinarioController.getListaVeterinarios().size()));
+
+                LocalTime hora = LocalTime.of(8 + random.nextInt(10), random.nextBoolean() ? 0 : 30);
+
+                Procedimento proc;
+                String descricao;
+                int duracao;
+                int tipoSorteio = random.nextInt(100); 
+
+                if (tipoSorteio < 40) { 
+                    proc = Procedimento.CONSULTA;
+                    descricao = descricoesMedias[random.nextInt(descricoesMedias.length)];
+                    duracao = 30 + random.nextInt(31); 
+                } else if (tipoSorteio < 70) { 
+                    proc = random.nextBoolean() ? Procedimento.VACINACAO : Procedimento.EXAME;
+                    descricao = descricoesSimples[random.nextInt(descricoesSimples.length)];
+                    duracao = 20; 
+                } else {
+                    proc = Procedimento.CIRURGIA;
+                    descricao = descricoesComplexas[random.nextInt(descricoesComplexas.length)];
+                    duracao = 60 + random.nextInt(61);
+                }
+
+                Atendimento atendimento = new Atendimento(proc, pet, vet, data, hora, descricao);    
+                atendimento.setDuracaoMinutos(duracao);
+                
+                try {
+                    AtendimentoController.cadastrar(atendimento);
+                } catch (Exception ex) {
+                }
+            }
+        }
+    } catch (Exception e) {
+        System.out.println("Erro ao gerar dados de teste: " + e.getMessage());
     }
+}
 }

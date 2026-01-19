@@ -7,6 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 //Classe main do programa
 public class Main {
     public static void main(String[] args) {  
+        // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
         // Aplica o Look And Feel do Sistema Operacional 
         try {
              UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

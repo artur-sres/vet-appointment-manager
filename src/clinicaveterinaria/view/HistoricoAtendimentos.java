@@ -23,7 +23,7 @@ public class HistoricoAtendimentos extends javax.swing.JFrame {
         GerenciadorViews.configurar(this);
         
         this.petAlvo = pet;
-        this.vetAlvo = null; // Garante que o outro é nulo
+        this.vetAlvo = null; 
         
         setTitle("Histórico do Paciente: " + pet.getNome());
         carregarTabela();
@@ -63,12 +63,12 @@ public class HistoricoAtendimentos extends javax.swing.JFrame {
 
         for (Atendimento a : this.listaExibida) {
             modelo.addRow(new Object[]{
-                a.getData().format(fmtData),
-                a.getHora(),
-                a.getProcedimento().name(),
                 a.getVetResponsavel().getNome(),
+                a.getPetAtendido().getEspecie().toString(),
                 a.getPetAtendido().getNome(),
-                a.getPetAtendido().getEspecie()
+                a.getProcedimento(),
+                a.getData().format(fmtData),
+                a.getHora().toString(),
             });
         }
     }

@@ -2,8 +2,9 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.controller.AtendimentoController;
 import clinicaveterinaria.model.Atendimento;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.table.DefaultTableModel;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.ImageIcon;
 
@@ -32,7 +33,6 @@ public class Menu extends javax.swing.JFrame {
         modelo.setRowCount(0);
 
         this.agenda = AtendimentoController.getAtendimentosDoDia();
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
         for (Atendimento a : agenda) {
              modelo.addRow(new Object[]{
@@ -40,7 +40,7 @@ public class Menu extends javax.swing.JFrame {
                 a.getPetAtendido().getEspecie(),      
                 a.getPetAtendido().getNome(),         
                 a.getProcedimento().name(),           
-                a.getHora().format(formatoHora)        
+                a.getHora()      
             });
         }
     }
@@ -252,9 +252,9 @@ public class Menu extends javax.swing.JFrame {
                 Atendimento atendimentoAlvo = agenda.get(linhaSelecionada);
                 VisualizarAtendimento tela = new VisualizarAtendimento(atendimentoAlvo);
                 
-                tela.addWindowListener(new java.awt.event.WindowAdapter() {
+                tela.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(java.awt.event.WindowEvent e) {
+                    public void windowClosed(WindowEvent e) {
                         carregarAgendaDoDia(); 
                     }
                 });
