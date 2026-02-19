@@ -1,17 +1,16 @@
-# Sistema de Clínica Veterinária
+# Gerenciador de Agendamentos para Clínica Veterinária
 
 ![Java](https://img.shields.io/badge/Java-orange?logo=java&logoColor=white)
 ![UFC](https://img.shields.io/badge/Universidade%20Federal%20do%20Cear%C3%A1-blue)
 ![Programação Orientada a Objetos](https://img.shields.io/badge/Programação%20Orientada%20a%20Objetos-orange)
 ![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 
-## Sobre o Projeto
+## Sobre 
 
-Este projeto foi desenvolvido como trabalho final para a disciplina de **Programação Orientada a Objetos**, ministrada pelo Prof. Dr. Mayrton Dias de Queiroz, na Universidade Federal do Ceará (UFC).
+O projeto foi o trabalho final para a disciplina de Programação Orientada a Objetos durante o curso de Engenharia de Software, ministrada pelo Prof. Dr. Mayrton Dias de Queiroz.
 
-O objetivo é simular o dia a dia de uma clínica veterinária, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de atendimentos.
+Implementa um sistema em Java para simular o dia a dia de uma clínica veterinária, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de atendimentos. 
 
-> **Curiosidade:** A inspiração para o tema veio de uma amiga, Letícia, que cursa Medicina Veterinária. Frequentemente brincamos que eu serei o desenvolvedor do sistema oficial quando ela abrir sua própria clínica no futuro.
 
 ## Funcionalidades Principais
 
@@ -51,18 +50,14 @@ O código segue o padrão de arquitetura **MVC** (Model-View-Controller) para me
 
 ## Como Executar
 
-1. Certifique-se de ter o **Java (JDK)** instalado em sua máquina.
+1. Certifique-se de ter o **Java (JDK)** instalado.
 2. Clone este repositório.
 3. Abra o projeto no **NetBeans** (recomendado, pois o projeto utiliza a estrutura de arquivos desta IDE).
-4. Caso prefira linha de comando, compile e execute a classe principal:
-   ```bash
-   java -cp bin clinicaveterinaria.Main
-    
-## Alguns Prints do Sistema
+4. Compile e execute a classe principal.
+
+## Screenshots da Interface
 
 ![Menu do Sistema](assets/1.png)
-![Menu do Sistema](assets/foto.png)
-![Menu do Sistema](assets/2.png)
 ![Menu do Sistema](assets/6.png)
 
 ## Autor
