@@ -60,7 +60,5 @@ O código segue o padrão de arquitetura **MVC** (Model-View-Controller) para me
 ![Menu do Sistema](assets/1.png)
 ![Menu do Sistema](assets/6.png)
 
-## Autor
 
-Feito por **[Artur Saraiva Rabelo](https://github.com/artur-sres)**.
 
