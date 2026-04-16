@@ -3,7 +3,6 @@
 ![Java](https://img.shields.io/badge/Java-orange?logo=java&logoColor=white)
 ![UFC](https://img.shields.io/badge/Universidade%20Federal%20do%20Cear%C3%A1-blue)
 ![Programação Orientada a Objetos](https://img.shields.io/badge/Programação%20Orientada%20a%20Objetos-orange)
-![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 
 ## Sobre 
 
@@ -52,7 +51,7 @@ O código segue o padrão de arquitetura **MVC** (Model-View-Controller) para me
 
 1. Certifique-se de ter o **Java (JDK)** instalado.
 2. Clone este repositório.
-3. Abra o projeto no **NetBeans** (recomendado, pois o projeto utiliza a estrutura de arquivos desta IDE).
+3. Abra o projeto no **NetBeans** (pois o projeto utiliza a estrutura de arquivos desta IDE).
 4. Compile e execute a classe principal.
 
 ## Screenshots da Interface
