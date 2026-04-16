@@ -9,7 +9,7 @@ import java.io.*;
 // Metódos possuem nomes autoexplicativos
 public class TutorController {
     private static final ArrayList<Tutor> listaTutores = new ArrayList<>();
-    private static final String ARQUIVO_DADOS = "tutores.txt";
+    private static final String ARQUIVO_TUTORES = "database/tutores.txt";
     
     public static void cadastrarTutor(String nome, String email, String telefone, String endereco, String cpf)throws Exception{
         validarDados(nome, email, telefone, endereco, cpf);
@@ -46,7 +46,13 @@ public class TutorController {
     }
     
     public static void salvarDados () throws Exception {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_DADOS))) {
+        File arquivo = new File(ARQUIVO_TUTORES);
+        File diretorio = arquivo.getParentFile(); 
+        
+        if (diretorio != null && !diretorio.exists()) {
+            diretorio.mkdirs(); 
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
             for (Tutor tutor : listaTutores) {
                 String linha = String.format("%s;%s;%s;%s;%s",
                         tutor.getNome(),      
@@ -64,7 +70,7 @@ public class TutorController {
     }
     
     public static void carregarDados() throws Exception {
-        File arquivo = new File(ARQUIVO_DADOS);
+        File arquivo = new File(ARQUIVO_TUTORES);
         if (!arquivo.exists()) {
             return; 
         }

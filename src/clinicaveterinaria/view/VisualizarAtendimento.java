@@ -226,8 +226,13 @@ public class VisualizarAtendimento extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION);
             
         if (opcao == JOptionPane.YES_OPTION) {
-            AtendimentoController.excluir(atendimentoAtual);         
-            JOptionPane.showMessageDialog(this, "Agendamento cancelado com sucesso!");
+            try{
+                AtendimentoController.excluir(atendimentoAtual); 
+                JOptionPane.showMessageDialog(this, "Agendamento cancelado com sucesso!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao alterar os dados: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
             this.dispose();
         }
     }//GEN-LAST:event_btnRemoverActionPerformed

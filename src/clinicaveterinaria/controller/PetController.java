@@ -11,7 +11,7 @@ import java.io.*;
 // Metódos possuem nomes autoexplicativos
 public class PetController {
     private static final ArrayList<Pet> listaPets = new ArrayList<>();
-    private static final String ARQUIVO_PETS = "pets.txt";
+    private static final String ARQUIVO_PETS = "database/pets.txt";
     
     public static void cadastrarPet(Tutor tutor, Especie especie, String nome, String raca, Sexo sexo, String pesoTexto, LocalDate nascimento, String alergias, String temperamento, boolean vacinado, boolean castrado) throws Exception{
         validarDados(nome, raca, alergias, temperamento);
@@ -83,7 +83,13 @@ public class PetController {
     }
     
     public static void salvarDados() throws Exception {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_PETS))) {
+        File arquivo = new File(ARQUIVO_PETS);
+        File diretorio = arquivo.getParentFile(); 
+        
+        if (diretorio != null && !diretorio.exists()) {
+            diretorio.mkdirs(); 
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
             for (Pet pet : listaPets) {
                 // Formato corrigido usando .name() para os Enums
                 String linha = String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",

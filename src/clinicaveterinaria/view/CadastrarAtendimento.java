@@ -379,9 +379,12 @@ public class CadastrarAtendimento extends javax.swing.JFrame {
             Atendimento novoAtendimento = new Atendimento(procedimento, pet, vet, data, hora, txtDescricao.getText());
             novoAtendimento.setDuracaoMinutos(duracao);
 
-            AtendimentoController.cadastrar(novoAtendimento); 
-
-            JOptionPane.showMessageDialog(this, "Agendamento realizado!");
+            try{
+                AtendimentoController.cadastrar(novoAtendimento); 
+                JOptionPane.showMessageDialog(this, "Agendamento realizado!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar os dados: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }         
             this.dispose();
 
         } catch (HeadlessException | NumberFormatException e) {

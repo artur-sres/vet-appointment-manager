@@ -16,7 +16,7 @@ import java.io.*;
 // Metódos possuem nomes autoexplicativos
 public class AtendimentoController {
     private static final ArrayList<Atendimento> listaAtendimentos = new ArrayList<>();
-    private static final String ARQUIVO_ATENDIMENTOS = "atendimentos.txt";
+    private static final String ARQUIVO_ATENDIMENTOS = "database/atendimentos.txt";
 
     public static void cadastrar(Atendimento novoAtendimento) throws Exception {
         listaAtendimentos.add(novoAtendimento);
@@ -44,7 +44,14 @@ public class AtendimentoController {
     }
 
     public static void salvarDados() throws Exception {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_ATENDIMENTOS))) {
+        File arquivo = new File(ARQUIVO_ATENDIMENTOS);
+        File diretorio = arquivo.getParentFile(); 
+        
+        if (diretorio != null && !diretorio.exists()) {
+            diretorio.mkdirs(); 
+        }
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
             for (Atendimento att : listaAtendimentos) {
                 String linha = String.format("%s;%s;%s;%s;%s;%s;%d;%s",
                     att.getProcedimento().name(),

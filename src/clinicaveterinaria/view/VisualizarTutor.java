@@ -2,6 +2,7 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Tutor;
 import clinicaveterinaria.util.GerenciadorViews;
+import javax.swing.JOptionPane;
 
 // View para visualizar os dados de um tutor
 public class VisualizarTutor extends javax.swing.JFrame {
@@ -171,8 +172,14 @@ public class VisualizarTutor extends javax.swing.JFrame {
             javax.swing.JOptionPane.WARNING_MESSAGE); // Ícone de alerta amarelo
 
         if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-            clinicaveterinaria.controller.TutorController.excluirTutor(this.tutor);
-            javax.swing.JOptionPane.showMessageDialog(this, "Tutor e todos seus vínculos excluídos!"); 
+            try{
+                clinicaveterinaria.controller.TutorController.excluirTutor(this.tutor);
+                javax.swing.JOptionPane.showMessageDialog(this, "Tutor e todos seus vínculos excluídos!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao alterar os dados: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            
+             
             this.dispose();
         }
     }//GEN-LAST:event_btnRemoverActionPerformed

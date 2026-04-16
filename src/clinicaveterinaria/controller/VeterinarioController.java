@@ -9,7 +9,7 @@ import java.io.*;
 // Metódos possuem nomes autoexplicativos
 public class VeterinarioController {
     private static final ArrayList<Veterinario> listaVeterinarios = new ArrayList<>();
-    private static final String ARQUIVO_VETERINARIOS = "veterinarios.txt";
+    private static final String ARQUIVO_VETERINARIOS = "database/veterinarios.txt";
     
     public static void cadastrarVeterinario(String nome, String email, String telefone) throws Exception{
         validarDados(nome, email, telefone);
@@ -28,8 +28,14 @@ public class VeterinarioController {
         salvarDados();
     }
     
-    public static void salvarDados() throws Exception{
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_VETERINARIOS))) {
+    public static void salvarDados() throws Exception{File arquivo = new File(ARQUIVO_VETERINARIOS);
+        File diretorio = arquivo.getParentFile(); 
+        
+        if (diretorio != null && !diretorio.exists()) {
+            diretorio.mkdirs(); 
+        }
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
             for (Veterinario vet : listaVeterinarios) {
                 String linha = String.format("%s;%s;%s;%s",
                         vet.getNome(),

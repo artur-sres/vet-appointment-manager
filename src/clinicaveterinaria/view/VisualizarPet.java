@@ -2,6 +2,7 @@ package clinicaveterinaria.view;
 
 import clinicaveterinaria.model.Pet;
 import clinicaveterinaria.util.GerenciadorViews;
+import javax.swing.JOptionPane;
 
 // View para visualizar os dados de um Pet
 public class VisualizarPet extends javax.swing.JFrame {
@@ -329,8 +330,12 @@ public class VisualizarPet extends javax.swing.JFrame {
             javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-            clinicaveterinaria.controller.PetController.excluirPet(this.pet);
-            javax.swing.JOptionPane.showMessageDialog(this, "Pet excluído com sucesso!");
+            try{
+                clinicaveterinaria.controller.PetController.excluirPet(this.pet);
+                javax.swing.JOptionPane.showMessageDialog(this, "Pet excluído com sucesso!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao alterar os dados: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
             this.dispose();
  
         }
