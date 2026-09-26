@@ -1,11 +1,5 @@
 # Gerenciador de Agendamentos para Clínica Veterinária
 
-![Java](https://img.shields.io/badge/Java-orange?logo=java&logoColor=white)
-![UFC](https://img.shields.io/badge/Universidade%20Federal%20do%20Cear%C3%A1-blue)
-![Programação Orientada a Objetos](https://img.shields.io/badge/Programação%20Orientada%20a%20Objetos-orange)
-
-## Sobre 
-
 O projeto foi o trabalho final para a disciplina de Programação Orientada a Objetos durante o curso de Engenharia de Software, ministrada pelo Prof. Dr. Mayrton Dias de Queiroz.
 
 Implementa um sistema em Java para simular o dia a dia de uma clínica veterinária, permitindo o gerenciamento completo de tutores, animais (pets) e veterinários, além do agendamento de atendimentos. 
